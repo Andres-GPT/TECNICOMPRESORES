@@ -31,7 +31,9 @@ nav a {
 
 .container {
     padding: 2rem;
+    margin: 0px auto;
     position: relative;
+    max-width: 800px;
 }
 
 .title {
@@ -67,14 +69,31 @@ nav a {
 }
 
 .history-button {
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center; /* Centra el contenido del botón verticalmente */
+    justify-content: center; /* Centra el texto horizontalmente */
+    margin-bottom: 0; /* Elimina cualquier margen que desplace el botón */
     padding: 0.5rem 1rem;
     background-color: #ccc;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    max-height: 40px;
 }
 
 .history-button:hover {
     background-color: #bbb;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+}
+
+#title {
+    display: flex;
+    justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
+    align-items: center; /* Alinea los elementos verticalmente */
+    gap: 1rem; /* Espacio entre el título y el botón */
+    height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
 }
