@@ -9,12 +9,6 @@ import {
 
 const router = Router();
 
-//ruta de prueba
-router.get("/test", (req, res) => {
-  console.log("Prueba");
-  res.send("Prueba");
-});
-
 router.get("/", getClientes);
 router.get("/:cedula", getCliente);
 
