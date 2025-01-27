@@ -36,11 +36,13 @@ const Maquina = sequelize.define(
     },
     estante: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 0,
     },
     nivel: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: 0,
     },
     id_cliente: {
       type: Sequelize.INTEGER,
