@@ -33,7 +33,7 @@ export const registerMaquina = async (req, res) => {
   }
 };
 
-//Editar el estado de una maquina
+//Editar una maquina
 export const editMaquina = async (req, res) => {
   try {
     const { id } = req.params;

@@ -7,6 +7,7 @@ import cors from "cors";
 import db from "./database/db.js";
 import clienteRoutes from "./routes/cliente.routes.js";
 import maquinaRoutes from "./routes/maquina.routes.js";
+import procedimientoRoutes from "./routes/procedimiento.routes.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded());
 //Rutas
 app.use("/clientes", clienteRoutes);
 app.use("/maquinas", maquinaRoutes);
+app.use("/procedimientos", procedimientoRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
