@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import db from "./database/db.js";
+import clienteRoutes from "./routes/cliente.routes.js";
 
 dotenv.config();
 
@@ -24,10 +25,8 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 
-//Aqui se ponen las rutas RONQUILLO!!!!!!!!!!!
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+//Rutas
+app.use("/clientes", clienteRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
