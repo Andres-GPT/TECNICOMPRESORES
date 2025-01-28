@@ -29,9 +29,9 @@ nav a {
 }
 
 main {
-    padding: 2rem;
-    margin: 0 auto;
-    max-width: 900px;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
 }
 
 .form-container {
@@ -96,6 +96,15 @@ textarea:focus {
 }
 
 #logo {
+  display: flex;
+  align-items: center;
+}
+
+.title {
     display: flex;
-    align-items: center;
+    justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
+    align-items: center; /* Alinea los elementos verticalmente */
+    gap: 1rem; /* Espacio entre el título y el botón */
+    height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
+    margin-bottom: 30px;
   }
