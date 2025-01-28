@@ -1,11 +1,11 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
 }
 
 header {
-  background-color: #3C3C3C;
+  background-color: #3c3c3c;
   color: white;
   padding: 1rem;
   display: flex;
@@ -44,22 +44,29 @@ nav a {
 .card {
   margin: 20px 20px;
   background-color: white;
-  border: 2px solid #EC3037;
+  border: 2px solid #ec3037;
   border-radius: 10px;
   text-align: center;
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  transition: all 0.3s ease-in-out;
 }
 
 .card h3 {
-  color: #EC3037;
+  color: #ec3037;
   margin: 0 0 0.5rem 0;
 }
 
 .card p {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #F9E217;
+  color: #f9e217;
   margin: 0;
 }
 
@@ -69,7 +76,7 @@ nav a {
   justify-content: center; /* Centra el texto horizontalmente */
   margin-bottom: 0; /* Elimina cualquier margen que desplace el botón */
   padding: 0.5rem 1rem;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -78,6 +85,9 @@ nav a {
 
 .history-button:hover {
   background-color: #bbb;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  transition: all 0.3s ease-in-out;
 }
 
 #logo {

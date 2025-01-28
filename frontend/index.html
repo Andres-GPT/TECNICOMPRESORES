@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <script src="js/config.js"></script>
     <title>Tecnicompresores</title>
 </head>
 
@@ -24,29 +25,29 @@
     <div class="container">
         <div id="title">
             <h1 class="title">Inicio</h1>
-            <button class="history-button">Historial de Máquinas</button>
+            <button class="history-button" onclick="location.href='maquinas_terminadas.html'">Historial de Máquinas</button>
         </div>
         <div class="cards">
-            <div class="card">
+            <div class="card" onclick="location.href='maquinas_pendientes_revision.html'">
                 <h3>Máquinas Pendientes por Revisión</h3>
-                <p>#0</p>
+                <p>#</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="location.href='maquinas_pendientes_confirmacion.html'">
                 <h3>Máquinas Pendientes por Confirmación</h3>
-                <p>#0</p>
+                <p>#</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="location.href='maquinas_en_proceso.html'">
                 <h3>Máquinas en Proceso</h3>
-                <p>#0</p>
+                <p>#</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="location.href='maquinas_pendientes_recoger.html'">
                 <h3>Máquinas Pendientes por Recoger</h3>
-                <p>#0</p>
+                <p>#</p>
             </div>
         </div>
     </div>
 
-
+<script src="js/index.js"></script>
 </body>
 
 </html>

@@ -11,8 +11,6 @@ const inputDescripcion = document.getElementById("descripcion");
 const inputObservaciones = document.getElementById("observaciones");
 const inputFecha = document.getElementById("fecha");
 
-const link = "http://localhost:4444";
-
 formRegister.addEventListener("submit", validarFormulario);
 
 async function validarFormulario(event) {
