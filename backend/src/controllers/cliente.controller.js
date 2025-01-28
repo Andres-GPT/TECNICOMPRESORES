@@ -4,10 +4,11 @@ import Cliente from "../models/cliente.js";
 
 export const registerCliente = async (req, res) => {
   try {
-    const { cedula, nombre, apellido, email, telefono, direccion } = req.body;
+    const { cedula, nombre, apellido, correo, telefono, direccion } = req.body;
+    console.log("bodyCliente", req.body);
 
     //Verificar si existe el cliente
-    const clienteExistente = Cliente.findOne({ cedula });
+    const clienteExistente = await Cliente.findByPk(cedula);
 
     if (clienteExistente) {
       res.status(409).json({ mensaje: "El cliente ya existe" });
@@ -15,7 +16,7 @@ export const registerCliente = async (req, res) => {
     }
 
     //Verificar si el email existe
-    const emailExistente = Cliente.findOne({ email });
+    const emailExistente = await Cliente.findOne({ where: { correo } });
 
     if (emailExistente) {
       res.status(409).json({ mensaje: "El email ya existe" });
@@ -28,11 +29,10 @@ export const registerCliente = async (req, res) => {
       cedula,
       nombre,
       apellido,
-      email,
+      correo,
       telefono,
       direccion,
     });
-
     res.status(201).json({
       error: false,
       mensaje: "Cliente registrado correctamente",
@@ -112,7 +112,7 @@ export const deleteCliente = async (req, res) => {
     });
     return;
   }
-};  
+};
 
 //Obtener todos los clientes
 export const getClientes = async (req, res) => {

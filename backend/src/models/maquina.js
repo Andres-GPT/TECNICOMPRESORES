@@ -56,7 +56,7 @@ const Maquina = sequelize.define(
 );
 
 //Relacion con la id de cliente
-Maquinas.belongsTo(Cliente, {
+Maquina.belongsTo(Cliente, {
   foreignKey: "id_cliente", targetkey: "cedula", as: "cliente_maquina",
 });
 
