@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/registro.css">
+    <title>Tecnicompresores</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="logo">
+            <img src="img/logo.png" alt="Logo">
+            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        </div>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Registro</a>
+            <a href="#">Máquinas</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Registro</h1>
+
+        <div class="existing-client">
+            <button>Cliente existente</button>
+        </div>
+
+        <div class="form-container">
+            <div class="form-section">
+                <h3>Datos del Cliente</h3>
+                <div class="form-group">
+                    <label for="cedula">Cédula</label>
+                    <input type="text" id="cedula" name="cedula">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono">
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo">
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Datos de la Máquina</h3>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" name="observaciones"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button>Registrar</button>
+        </div>
+    </div>
+</body>
+
+</html>
