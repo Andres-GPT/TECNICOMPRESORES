@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/registro.css">
     <title>Tecnicompresores</title>
     <style>
-        
+
     </style>
 </head>
 
@@ -31,55 +31,58 @@
             <button>Cliente existente</button>
         </div>
 
-        <div class="form-container">
-            <div class="form-section">
-                <h3>Datos del Cliente</h3>
-                <div class="form-group">
-                    <label for="cedula">Cédula</label>
-                    <input type="text" id="cedula" name="cedula">
+        <form action="">
+            <div class="form-container">
+                <div class="form-section">
+                    <h3>Datos del Cliente</h3>
+                    <div class="form-group">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" id="cedula" name="cedula">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" name="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" id="direccion" name="direccion">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre">
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido">
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" id="telefono" name="telefono">
-                </div>
-                <div class="form-group">
-                    <label for="correo">Correo</label>
-                    <input type="email" id="correo" name="correo">
-                </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input type="text" id="direccion" name="direccion">
+
+                <div class="form-section">
+                    <h3>Datos de la Máquina</h3>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" name="observaciones"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" name="fecha">
+                    </div>
                 </div>
             </div>
 
-            <div class="form-section">
-                <h3>Datos de la Máquina</h3>
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion" name="descripcion"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="observaciones">Observaciones</label>
-                    <textarea id="observaciones" name="observaciones"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="fecha">Fecha</label>
-                    <input type="date" id="fecha" name="fecha">
-                </div>
+            <div class="button-container">
+                <button>Registrar</button>
             </div>
-        </div>
+        </form>
 
-        <div class="button-container">
-            <button>Registrar</button>
-        </div>
     </div>
 </body>
 

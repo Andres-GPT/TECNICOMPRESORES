@@ -40,7 +40,7 @@ nav a {
     justify-content: space-between;
     gap: 1rem;
     background: #fff;
-    border: 2px solid #e6e600;
+    border: 2px solid #F9E217;
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@ nav a {
 
 .form-section h3 {
     margin-bottom: 1rem;
-    color: #b30000;
+    color: #EC3037;
 }
 
 .form-group {
@@ -84,7 +84,7 @@ nav a {
 }
 
 .button-container button {
-    background-color: #b30000;
+    background-color: #EC3037;
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -94,7 +94,7 @@ nav a {
 }
 
 .button-container button:hover {
-    background-color: #990000;
+    background-color: #EC3037;
 }
 
 .existing-client {
