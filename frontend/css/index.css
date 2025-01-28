@@ -34,12 +34,6 @@ nav a {
   position: relative;
   max-width: 800px;
 }
-
-.title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
 .cards {
   margin-top: 40px;
   display: grid;
