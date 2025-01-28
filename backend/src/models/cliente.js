@@ -19,7 +19,7 @@ const Cliente = sequelize.define(
       allowNull: false,
     },
     telefono: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     correo: {

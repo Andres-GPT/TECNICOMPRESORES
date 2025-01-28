@@ -5,6 +5,7 @@ import Maquina from "../models/maquina.js";
 export const registerMaquina = async (req, res) => {
   try {
     const { descripcion, observacion, id_cliente } = req.body;
+    console.log("bodyMaquina", req.body);
 
     //Generar la fecha actual
     const fecha_entrada = new Date();
