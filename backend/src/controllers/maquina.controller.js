@@ -5,8 +5,6 @@ import Maquina from "../models/maquina.js";
 export const registerMaquina = async (req, res) => {
   try {
     const { descripcion, observacion, id_cliente } = req.body;
-    console.log("bodyMaquina", req.body);    
-
     //Crear la maquina
     const nuevaMaquina = await Maquina.create({
       descripcion,
@@ -37,7 +35,7 @@ export const editMaquina = async (req, res) => {
     const { estado, estante, nivel } = req.body;
 
     //Verificar si existe la maquina
-    const maquinaExistente = Maquina.findByPk({ id });
+    const maquinaExistente = await Maquina.findByPk(id);
 
     if (!maquinaExistente) {
       res.status(404).json({ mensaje: "La maquina no existe" });
@@ -71,7 +69,7 @@ export const deleteMaquina = async (req, res) => {
     const { id } = req.params;
 
     //Verificar si existe la maquina
-    const maquinaExistente = Maquina.findByPk({ id });
+    const maquinaExistente = await Maquina.findByPk(id);
 
     if (!maquinaExistente) {
       res.status(404).json({ mensaje: "La maquina no existe" });
@@ -120,7 +118,7 @@ export const getMaquina = async (req, res) => {
     const { id } = req.params;
 
     //Verificar si existe la maquina
-    const maquinaExistente = Maquina.findByPk({ id });
+    const maquinaExistente = await Maquina.findByPk(id);
 
     if (!maquinaExistente) {
       res.status(404).json({ mensaje: "La maquina no existe" });

@@ -51,21 +51,20 @@ export const registerCliente = async (req, res) => {
 export const editCliente = async (req, res) => {
   try {
     const { cedula } = req.params;
-    const { nombre, apellido, email, telefono, direccion } = req.body;
+    const { nombre, apellido, correo, telefono, direccion } = req.body;
 
     //Verificar si existe el cliente
-    const clienteExistente = Cliente.findByPk({ cedula });
+    const clienteExistente = await Cliente.findByPk(cedula);
 
     if (!clienteExistente) {
       res.status(404).json({ mensaje: "El cliente no existe" });
       return;
     }
-
     //Actualizar el cliente
     await clienteExistente.update({
       nombre,
       apellido,
-      email,
+      correo,
       telefono,
       direccion,
     });
@@ -90,7 +89,7 @@ export const deleteCliente = async (req, res) => {
     const { cedula } = req.params;
 
     //Verificar si existe el cliente
-    const clienteExistente = Cliente.findByPk({ cedula });
+    const clienteExistente = await Cliente.findByPk(cedula);
 
     if (!clienteExistente) {
       res.status(404).json({ mensaje: "El cliente no existe" });
@@ -139,7 +138,7 @@ export const getCliente = async (req, res) => {
     const { cedula } = req.params;
 
     //Verificar si existe el cliente
-    const clienteExistente = Cliente.findByPk({ cedula });
+    const clienteExistente = await Cliente.findByPk(cedula);
 
     if (!clienteExistente) {
       res.status(404).json({ mensaje: "El cliente no existe" });
