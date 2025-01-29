@@ -12,79 +12,102 @@ formRegister.addEventListener("submit", validarFormulario);
 
 async function validarFormulario(event) {
   event.preventDefault();
+
+  // Validar que ningún campo esté vacío
   if (
-    inputCedula.value === "" ||
-    inputNombre.value === "" ||
-    inputApellido.value === "" ||
-    inputTelefono.value === "" ||
-    inputCorreo.value === "" ||
-    inputDescripcion.value === "" ||
-    inputObservaciones.value === ""
+    !inputCedula.value.trim() ||
+    !inputNombre.value.trim() ||
+    !inputApellido.value.trim() ||
+    !inputTelefono.value.trim() ||
+    !inputCorreo.value.trim() ||
+    !inputDireccion.value.trim() ||
+    !inputDescripcion.value.trim() ||
+    !inputObservaciones.value.trim()
   ) {
     alert("Todos los campos son obligatorios");
     return;
   }
 
-  // Verificar si el cliente ya existe
-  const clienteExistente = await obtenerCliente(inputCedula.value.trim());
-  
-  if (clienteExistente && clienteExistente.cliente) {
-    // Si el cliente ya existe, verificar si los datos han cambiado
-    const cliente = clienteExistente.cliente;
-    const datosActualizados = {
-      cedula: inputCedula.value,
-      nombre: inputNombre.value,
-      apellido: inputApellido.value,
-      telefono: inputTelefono.value,
-      correo: inputCorreo.value,
-      direccion: inputDireccion.value,
-    };
-
-    const datosHanCambiado = Object.keys(datosActualizados).some(
-      (key) => cliente[key] !== datosActualizados[key]
-    );
-
-    if (datosHanCambiado) {
-      // Si los datos han cambiado, hacer un PUT para actualizar
-      const clienteActualizado = await actualizarUsuario(datosActualizados);
-      if (clienteActualizado.error) {
-        alert("Error al actualizar el usuario");
-        return;
-      }
-      console.log("Usuario actualizado:", clienteActualizado);
-    }
-  } else {
-    // Si el cliente no existe, crearlo
-    const usuarioNuevo = await crearUsuario({
-      cedula: inputCedula.value,
-      nombre: inputNombre.value,
-      apellido: inputApellido.value,
-      telefono: inputTelefono.value,
-      correo: inputCorreo.value,
-      direccion: inputDireccion.value,
-    });
-
-    if (usuarioNuevo.error) {
-      alert("Error al registrar el usuario");
-      return;
-    }
-    console.log("Usuario registrado:", usuarioNuevo);
-  }
-
-  // Registrar la máquina
-  const maquinaNueva = await crearMaquina({
-    id_cliente: inputCedula.value,
-    descripcion: inputDescripcion.value,
-    observacion: inputObservaciones.value,
-  });
-
-  if (maquinaNueva.error) {
-    alert("Error al registrar la máquina");
+  // Validar que cédula y teléfono sean números
+  if (isNaN(inputCedula.value) || isNaN(inputTelefono.value)) {
+    alert("Cédula y teléfono deben ser valores numéricos");
     return;
   }
 
-  alert("Usuario y máquina registrados correctamente");
-  location.href = "index.html";
+  // Validar formato del correo
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(inputCorreo.value.trim())) {
+    alert("Correo inválido");
+    return;
+  }
+
+  try {
+    // Verificar si el cliente ya existe
+    const clienteExistente = await obtenerCliente(inputCedula.value.trim());
+
+    if (clienteExistente && clienteExistente.cliente) {
+      const cliente = clienteExistente.cliente;
+      const datosActualizados = {
+        cedula: inputCedula.value.trim(),
+        nombre: inputNombre.value.trim(),
+        apellido: inputApellido.value.trim(),
+        telefono: inputTelefono.value.trim(),
+        correo: inputCorreo.value.trim(),
+        direccion: inputDireccion.value.trim(),
+      };
+
+      const datosHanCambiado = Object.keys(datosActualizados).some(
+        (key) => cliente[key] && cliente[key] !== datosActualizados[key]
+      );
+
+      if (datosHanCambiado) {
+        const clienteActualizado = await actualizarUsuario(datosActualizados);
+        if (clienteActualizado.error)
+          throw new Error("Error al actualizar el usuario");
+        console.log("Usuario actualizado:", clienteActualizado);
+      }
+    } else {
+      // Si el cliente no existe, crearlo
+      const usuarioNuevo = await crearUsuario({
+        cedula: inputCedula.value.trim(),
+        nombre: inputNombre.value.trim(),
+        apellido: inputApellido.value.trim(),
+        telefono: inputTelefono.value.trim(),
+        correo: inputCorreo.value.trim(),
+        direccion: inputDireccion.value.trim(),
+      });
+
+      if (usuarioNuevo.error) throw new Error("Error al registrar el usuario");
+      console.log("Usuario registrado:", usuarioNuevo);
+    }
+
+    // Registrar la máquina
+    const maquinaNueva = await crearMaquina({
+      id_cliente: clienteExistente?.cliente?.id || inputCedula.value.trim(),
+      descripcion: inputDescripcion.value.trim(),
+      observacion: inputObservaciones.value.trim(),
+    });
+
+    if (maquinaNueva.error) throw new Error("Error al registrar la máquina");
+
+    const reciboDatos = {
+      cedula: inputCedula.value.trim(),
+      nombre: inputNombre.value.trim(),
+      apellido: inputApellido.value.trim(),
+      telefono: inputTelefono.value.trim(),
+      correo: inputCorreo.value.trim(),
+      direccion: inputDireccion.value.trim(),
+      descripcion: inputDescripcion.value.trim(),
+      observaciones: inputObservaciones.value.trim(),
+    };
+
+    sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
+    alert("Usuario y máquina registrados correctamente");
+    location.href = "recibo_registro.html";
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
 }
 
 async function crearUsuario(data) {
@@ -178,15 +201,19 @@ inputCedula.addEventListener("blur", async () => {
   const cedula = inputCedula.value.trim();
   if (cedula) {
     const cliente = await obtenerCliente(cedula);
-    if (cliente && cliente.cliente) { // Aseguramos que existe el cliente
+    if (cliente && cliente.cliente) {
+      // Aseguramos que existe el cliente
       console.log("Datos del cliente:", cliente);
-      
+
       // Asignar los valores al formulario
       document.getElementById("nombre").value = cliente.cliente.nombre || "";
-      document.getElementById("apellido").value = cliente.cliente.apellido || "";
-      document.getElementById("telefono").value = cliente.cliente.telefono || "";
+      document.getElementById("apellido").value =
+        cliente.cliente.apellido || "";
+      document.getElementById("telefono").value =
+        cliente.cliente.telefono || "";
       document.getElementById("correo").value = cliente.cliente.correo || "";
-      document.getElementById("direccion").value = cliente.cliente.direccion || "";
+      document.getElementById("direccion").value =
+        cliente.cliente.direccion || "";
     } else {
       console.log("No se encontró el cliente.");
       limpiarFormulario(); // Limpia los campos si no se encuentra cliente
