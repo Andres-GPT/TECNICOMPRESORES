@@ -28,22 +28,33 @@
             <h1>Maquinas Pendientes por Revisión</h1>
         </div>
 
+        <div class="filtros">
+            <h3>Filtros</h3>
+            <h4>Cédula</h4>
+            <input placeholder="Ingrese el ID de un Usuario" type="text" id="idUsuario">
+            <h4>Nombre</h4>
+            <input placeholder="Ingrese el Nombre de un Usuario" type="text" id="nombreUsuario">
+            <h4>Fecha</h4>
+            <input placeholder="Ingrese el Nombre de un Usuario" type="date" id="nombreUsuario">
+            <button onclick="filtro()" type="button">Buscar</button>
+        </div>
+
         <table class="table-custom">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Cédula</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Observaciones</th>
-                <th scope="col">Fecha</th>
-              </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cédula</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Observaciones</th>
+                    <th scope="col">Fecha</th>
+                </tr>
             </thead>
             <tbody>
-             
+
             </tbody>
-          </table>
+        </table>
 
     </div>
 </body>

@@ -34,15 +34,6 @@ nav a {
   max-width: 900px;
 }
 
-.titulo {
-  display: flex;
-  justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
-  align-items: center; /* Alinea los elementos verticalmente */
-  gap: 1rem; /* Espacio entre el título y el botón */
-  height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
-  margin-bottom: 30px;
-}
-
 .form-container {
   display: flex;
   justify-content: space-between;
@@ -183,4 +174,19 @@ nav a {
 .table-custom tbody tr td:last-child,
 .table-custom thead th:last-child {
   border-right: 1px solid #ddd; /* Línea más fina a la derecha */
+}
+
+.titulo {
+  display: flex;
+  justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
+  align-items: center; /* Alinea los elementos verticalmente */
+  gap: 1rem; /* Espacio entre el título y el botón */
+  height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
+  margin-bottom: 5px;
+}
+
+.filtros {
+  margin-left: 30px;
+  margin-bottom: 30px;
+  display: flex;
 }
