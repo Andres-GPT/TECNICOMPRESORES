@@ -73,7 +73,7 @@ export const getMaquinasRevision = async (req, res) => {
 export const editMaquina = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado, estante, nivel } = req.body;
+    const { descripcion, observacion,estado, estante, nivel } = req.body;
 
     //Verificar si existe la maquina
     const maquinaExistente = await Maquina.findByPk(id);
@@ -85,6 +85,8 @@ export const editMaquina = async (req, res) => {
 
     //Actualizar la maquina
     await maquinaExistente.update({
+      descripcion,
+      observacion,
       estado,
       estante,
       nivel,

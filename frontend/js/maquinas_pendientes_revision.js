@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // Seleccionar el tbody de la tabla
         const tbody = document.querySelector(".table-custom tbody");
 
         if (!tbody) {
@@ -19,13 +18,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // Crear una variable para almacenar el HTML de las filas
         let filas = '';
 
-        // Iterar sobre las máquinas y crear el HTML para cada fila
         data.maquinas.forEach(maquina => {
             filas += `
-                <tr>
+                <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
                     <th scope="row">${maquina.id}</th>
                     <td>${maquina.cedula}</td>
                     <td>${maquina.nombre}</td>
@@ -37,8 +34,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
         });
 
-        // Insertar todas las filas generadas en el tbody
         tbody.innerHTML = filas;
+
+        // Agregar evento de clic a cada fila
+        document.querySelectorAll(".table-custom tbody tr").forEach(row => {
+            row.addEventListener("click", function() {
+                const id = this.getAttribute("data-id");
+                const cedula = this.getAttribute("data-cedula");
+                window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
+            });
+        });
 
     } catch (error) {
         console.error("Error al obtener los datos:", error);
