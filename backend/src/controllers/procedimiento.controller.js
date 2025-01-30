@@ -7,16 +7,12 @@ export const registerProcedimiento = async (req, res) => {
     const { descripcion, costo_revision, costo_procedimiento, id_maquina } =
       req.body;
 
-    //Obtener la fecha actual
-    const fecha_revision = new Date();
-
     //Crear el procedimiento
     const nuevoProcedimiento = await Procedimiento.create({
       descripcion,
       estado_cliente: "pendiente",
       costo_revision,
       costo_procedimiento,
-      fecha_revision,
       id_maquina,
     });
     res.status(201).json({
