@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const telefonoInput = document.getElementById("telefono");
     const correoInput = document.getElementById("correo");
     const direccionInput = document.getElementById("direccion");
-    
+
     const descripcionInput = document.getElementById("descripcion");
     const observacionesInput = document.getElementById("observaciones");
     const procedimientoInput = document.getElementById("descripcion_procedimiento");
@@ -25,41 +25,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     cedulaInput.value = cedula;
     cedulaInput.readOnly = true;
 
+    let clienteOriginal = {};
+    let maquinaOriginal = {};
+
     try {
         // Obtener datos del cliente
         const clienteResponse = await fetch(`${link}/clientes/${cedula}`);
         const clienteData = await clienteResponse.json();
-        console.log(clienteData.cliente);	
 
-        if (clienteData.error) {
-            console.error("Error obteniendo el cliente:", clienteData.mensaje);
-        } else {
+        if (!clienteData.error) {
+            clienteOriginal = { ...clienteData.cliente }; // Guardar valores originales
             nombreInput.value = clienteData.cliente.nombre || "";
             apellidoInput.value = clienteData.cliente.apellido || "";
             telefonoInput.value = clienteData.cliente.telefono || "";
             correoInput.value = clienteData.cliente.correo || "";
             direccionInput.value = clienteData.cliente.direccion || "";
+        } else {
+            console.error("Error obteniendo el cliente:", clienteData.mensaje);
         }
 
         // Obtener datos de la máquina
         const maquinaResponse = await fetch(`${link}/maquinas/${id}`);
         const maquinaData = await maquinaResponse.json();
-        console.log(maquinaData.maquina);
 
-        if (maquinaData.error) {
-            console.error("Error obteniendo la máquina:", maquinaData.mensaje);
-        } else {
+        if (!maquinaData.error) {
+            maquinaOriginal = { ...maquinaData.maquina }; // Guardar valores originales
             descripcionInput.value = maquinaData.maquina.descripcion || "";
             observacionesInput.value = maquinaData.maquina.observacion || "";
+        } else {
+            console.error("Error obteniendo la máquina:", maquinaData.mensaje);
         }
 
     } catch (error) {
         console.error("Error al obtener los datos:", error);
     }
 
-    // Manejo del formulario
     document.getElementById("form-register").addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        let clienteModificado = false;
+        let maquinaModificada = false;
 
         // Datos del cliente a actualizar
         const clienteActualizado = {
@@ -70,40 +75,58 @@ document.addEventListener("DOMContentLoaded", async () => {
             direccion: direccionInput.value
         };
 
-        // Datos de la máquina a actualizar
+        // Verificar si hay cambios en los datos del cliente
+        for (let key in clienteActualizado) {
+            if (clienteActualizado[key] !== clienteOriginal[key]) {
+                clienteModificado = true;
+                break;
+            }
+        }
+
+        // Datos de la máquina a actualizar (el estado siempre cambia)
         const maquinaActualizada = {
             descripcion: descripcionInput.value,
-            observaciones: observacionesInput.value
+            observaciones: observacionesInput.value,
+            estado: "En espera de aprobación" // Estado siempre se actualiza
         };
 
-        // Datos del procedimiento a registrar
-        const procedimientoNuevo = {
-            id_maquina: id,
-            descripcion: procedimientoInput.value,
-            costo_revision: costoRevisionInput.value,
-            costo_procedimiento: costoProcedimientoInput.value
-        };
+        // Verificar si hay cambios en los datos de la máquina (sin incluir el estado)
+        for (let key in maquinaActualizada) {
+            if (key !== "estado" && maquinaActualizada[key] !== maquinaOriginal[key]) {
+                maquinaModificada = true;
+                break;
+            }
+        }
 
         try {
-            // Actualizar datos del cliente (PUT)
-            await fetch(`${link}/clientes/${cedula}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(clienteActualizado)
-            });
+            if (clienteModificado) {
+                await fetch(`${link}/clientes/${cedula}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(clienteActualizado)
+                });
+                console.log("Cliente actualizado.");
+            }
 
-            // Actualizar datos de la máquina (PUT)
-            await fetch(`${link}/maquinas/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(maquinaActualizada)
-            });
+            if (maquinaModificada || maquinaOriginal.estado !== "En espera de aprobación") {
+                await fetch(`${link}/maquinas/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(maquinaActualizada)
+                });
+                console.log("Máquina actualizada.");
+            }
 
             // Registrar procedimiento (POST)
             await fetch(`${link}/procedimientos`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(procedimientoNuevo)
+                body: JSON.stringify({
+                    id_maquina: id,
+                    descripcion: procedimientoInput.value,
+                    costo_revision: costoRevisionInput.value,
+                    costo_procedimiento: costoProcedimientoInput.value
+                })
             });
 
             alert("Datos actualizados y procedimiento registrado correctamente.");
