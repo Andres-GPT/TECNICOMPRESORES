@@ -96,22 +96,6 @@ nav a {
   background-color: #ec3037;
 }
 
-.existing-client button {
-  display: flex;
-  align-items: center; /* Centra el contenido del botón verticalmente */
-  justify-content: center; /* Centra el texto horizontalmente */
-  padding: 0.5rem 1rem;
-  background-color: #d9d9d9;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  max-height: 40px;
-}
-
-.existing-client button:hover {
-  background-color: #bbb;
-}
-
 #logo {
   display: flex;
   align-items: center;
@@ -145,6 +129,7 @@ nav a {
 /* Estilos para las filas */
 .table-custom tbody tr {
   transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 /* Estilos para las celdas */
