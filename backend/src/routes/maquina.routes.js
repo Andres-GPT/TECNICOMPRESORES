@@ -5,11 +5,13 @@ import {
   deleteMaquina,
   getMaquinas,
   getMaquina,
+  getMaquinasRevision,
 } from "../controllers/maquina.controller.js";
 
 const router = Router();
 
 router.get("/", getMaquinas);
+router.get("/revision", getMaquinasRevision);
 router.get("/:id", getMaquina);
 
 router.post("/", registerMaquina);

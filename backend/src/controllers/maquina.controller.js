@@ -1,4 +1,5 @@
 import Maquina from "../models/maquina.js";
+import Cliente from "../models/cliente.js";
 
 //Registrar una maquina
 
@@ -27,6 +28,46 @@ export const registerMaquina = async (req, res) => {
     return;
   }
 };
+
+// Obtener las maquinas de revisión con datos del cliente
+export const getMaquinasRevision = async (req, res) => {
+  try {
+    const maquinasRevision = await Maquina.findAll({
+      where: {
+        estado: "pendiente por revisión",
+      },
+      include: {
+        model: Cliente,
+        as: "cliente_maquina", // Alias utilizado en la relación
+        attributes: ["nombre", "apellido"], // Campos que deseas obtener del cliente
+      },
+      raw: true, // Esto devuelve los datos como objetos simples en lugar de instancias de Sequelize
+    });
+
+    // Si se encontraron máquinas, devolver los datos correctamente
+    res.status(200).json({
+      error: false,
+      mensaje: "Máquinas de revisión obtenidas correctamente",
+      maquinas: maquinasRevision.map((maquina) => ({
+        id: maquina.id,
+        cedula: maquina.id_cliente, // Usamos id_cliente en lugar de acceder a Cliente directamente
+        nombre: maquina["cliente_maquina.nombre"], // Acceso al cliente relacionado
+        apellido: maquina["cliente_maquina.apellido"], // Acceso al cliente relacionado
+        descripcion: maquina.descripcion,
+        observaciones: maquina.observacion, // Asegúrate de que el campo en la base de datos sea 'observacion'
+        // Formatear la fecha para que solo muestre la fecha (sin la hora)
+        fecha: new Date(maquina.fecha_entrada).toLocaleDateString("es-CO"), // Formato de fecha 'YYYY-MM-DD'
+      })),
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      mensaje: "Error al obtener las maquinas de revisión",
+      error,
+    });
+  }
+};
+
 
 //Editar una maquina
 export const editMaquina = async (req, res) => {
