@@ -48,7 +48,7 @@ export const editProcedimiento = async (req, res) => {
     }
 
     //Editar el estado del procedimiento
-    await procedimiento.update({ estado });
+    await procedimiento.update({ estado_cliente: estado });
 
     res.status(200).json({
       error: false,
