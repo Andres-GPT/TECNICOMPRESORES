@@ -29,14 +29,13 @@
         </div>
 
         <div class="filtros">
-            <h3>Filtros</h3>
-            <h4>Cédula</h4>
-            <input placeholder="Ingrese el ID de un Usuario" type="text" id="idUsuario">
-            <h4>Nombre</h4>
-            <input placeholder="Ingrese el Nombre de un Usuario" type="text" id="nombreUsuario">
-            <h4>Fecha</h4>
-            <input placeholder="Ingrese el Nombre de un Usuario" type="date" id="nombreUsuario">
-            <button onclick="filtro()" type="button">Buscar</button>
+            <h3 class="tituloFiltros">Filtros</h3>
+            <h4 class="tituloFiltros">Cédula</h4>
+            <input placeholder="Ingrese la Cédula" type="text" id="cedula">
+            <button onclick="filtroCedula()" type="button">Buscar</button>
+            <h4 class="tituloFiltros">Fecha</h4>
+            <input type="date" id="fecha">
+            <button onclick="filtroFecha()" type="button">Buscar</button>
         </div>
 
         <table class="table-custom">

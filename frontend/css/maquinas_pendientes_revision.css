@@ -186,7 +186,52 @@ nav a {
 }
 
 .filtros {
-  margin-left: 30px;
+  margin-left: 10px;
   margin-bottom: 30px;
   display: flex;
+  align-items: center;
+}
+
+.tituloFiltros {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.filtros input[type="text"],
+.filtros input[type="date"] {
+  width: 200px; /* Ajusta el ancho según sea necesario */
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 20px;
+}
+
+.filtros input[type="text"]:focus,
+.filtros input[type="date"]:focus {
+  border-color: #d9d9d9;
+  box-shadow: 0 0 5px rgba(236, 48, 55, 0.5);
+  outline: none;
+}
+
+.filtros button {
+  background-color: #d9d9d9;
+  color: rgb(0, 0, 0);
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* Espaciado entre botones y inputs */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.filtros button:hover {
+  background-color: #bbb;
+  transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
+}
+
+.filtros button:active {
+  transform: translateY(0); /* Efecto al hacer clic */
 }
