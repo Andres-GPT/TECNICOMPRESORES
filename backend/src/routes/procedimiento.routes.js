@@ -4,10 +4,10 @@ import {registerProcedimiento, editProcedimiento, deleteProcedimiento, getProced
 
 const router = Router();
 
-router.post("/procedimiento", registerProcedimiento);
-router.put("/procedimiento/:id", editProcedimiento);
-router.delete("/procedimiento/:id", deleteProcedimiento);
-router.get("/procedimientos", getProcedimientos);
-router.get("/procedimiento/:id", getProcedimiento);
+router.post("/", registerProcedimiento);
+router.put("/:id", editProcedimiento);
+router.delete("/:id", deleteProcedimiento);
+router.get("/", getProcedimientos);
+router.get("/:id", getProcedimiento);
 
 export default router;
