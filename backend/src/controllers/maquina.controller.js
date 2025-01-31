@@ -1,5 +1,6 @@
 import Maquina from "../models/maquina.js";
 import Cliente from "../models/cliente.js";
+import Procedimiento from "../models/procedimiento.js";
 
 //Registrar una maquina
 
@@ -68,6 +69,67 @@ export const getMaquinasRevision = async (req, res) => {
   }
 };
 
+// Obtener las maquinas de confirmación con datos del cliente y procedimiento
+export const getMaquinasConfirmacion = async (req, res) => {
+  try {
+    //obtener las maquinas con los datos del cliente
+    const maquinasConfirmacion = await Maquina.findAll({
+      where: {
+        estado: "en espera de aprobación",
+      },
+      include: {
+        model: Cliente,
+        as: "cliente_maquina", // Alias utilizado en la relación
+        attributes: ["nombre", "apellido"], // Campos que deseas obtener del cliente
+      },
+    });
+
+    //obtener los procedimientos asociados a cada maquina
+    const procedimientos = await Procedimiento.findAll({
+      where: {
+        id_maquina: {
+          [Op.in]: maquinasConfirmacion.map((maquina) => maquina.id),
+        },
+      },
+      include: {
+        model: Maquina,
+        as: "maquina_procedimiento", // Alias utilizado en la relación
+        attributes: ["id", "id_cliente"], // Campos que deseas obtener del cliente
+      },
+    });
+
+    //juntar los datos de las maquinas y procedimientos
+    const maquinasConfirmacionFinal = maquinasConfirmacion.map((maquina) => {
+      const procedimiento = procedimientos.find(
+        (procedimiento) => procedimiento.id_maquina === maquina.id
+      );
+      return {
+        id: maquina.id,
+        cedula: maquina.id_cliente,
+        nombre: maquina.cliente_maquina?.nombre || "N/A", // Acceso correcto
+        apellido: maquina.cliente_maquina?.apellido || "N/A", // Acceso correcto
+        descripcion: maquina.descripcion,
+        procedimiento: procedimiento ? procedimiento.descripcion : "N/A",
+        fecha: maquina.fecha_entrada
+          ? new Date(maquina.fecha_entrada).toISOString().split("T")[0] // Formato YYYY-MM-DD
+          : "Fecha no disponible",
+      };
+    });
+
+    // Si se encontraron máquinas, devolver los datos correctamente
+    res.status(200).json({
+      error: false,
+      mensaje: "Máquinas de confirmacion obtenidas correctamente",
+      maquinas: maquinasConfirmacionFinal,
+    });
+  } catch (error) {
+    console.error("Error en getMaquinasConfirmacion:", error);
+    res.status(500).json({
+      mensaje: "Error al obtener las maquinas de confirmación",
+      error,
+    });
+  }
+};
 
 import { Op } from "sequelize"; // Importa Op para usar operadores en la consulta
 
@@ -132,13 +194,11 @@ export const getMaquinasFiltro = async (req, res) => {
   }
 };
 
-
-
 //Editar una maquina
 export const editMaquina = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado, estante, nivel } = req.body;
+    const { descripcion, observaciones, estado, estante, nivel } = req.body;
 
     //Verificar si existe la maquina
     const maquinaExistente = await Maquina.findByPk(id);
@@ -150,6 +210,8 @@ export const editMaquina = async (req, res) => {
 
     //Actualizar la maquina
     await maquinaExistente.update({
+      descripcion,
+      observacion:observaciones,
       estado,
       estante,
       nivel,

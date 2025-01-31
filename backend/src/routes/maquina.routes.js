@@ -6,6 +6,7 @@ import {
   getMaquinas,
   getMaquina,
   getMaquinasRevision,
+  getMaquinasConfirmacion,
   getMaquinasFiltro,
 } from "../controllers/maquina.controller.js";
 
@@ -13,6 +14,7 @@ const router = Router();
 
 router.get("/", getMaquinas);
 router.get("/revision", getMaquinasRevision);
+router.get("/confirmacion", getMaquinasConfirmacion);
 router.get("/:id", getMaquina);
 
 router.post("/", registerMaquina);

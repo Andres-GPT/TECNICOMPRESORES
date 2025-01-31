@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const maquinaActualizada = {
             descripcion: descripcionInput.value,
             observaciones: observacionesInput.value,
-            estado: "En espera de aprobación" // Estado siempre se actualiza
+            estado: "en espera de aprobación" // Estado siempre se actualiza
         };
 
         // Verificar si hay cambios en los datos de la máquina (sin incluir el estado)
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 console.log("Cliente actualizado.");
             }
 
-            if (maquinaModificada || maquinaOriginal.estado !== "En espera de aprobación") {
+            if (maquinaModificada || maquinaOriginal.estado !== "en espera de aprobación") {
                 await fetch(`${link}/maquinas/${id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },

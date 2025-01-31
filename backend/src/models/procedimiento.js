@@ -16,7 +16,7 @@ const Procedimiento = sequelize.define(
       allowNull: false,
     },
     estado_cliente: {
-      type: Sequelize.ENUM("aceptado", "rechazado", "en proceso", "pendiente"),
+      type: Sequelize.ENUM("aceptado", "rechazado", "pendiente"),
       allowNull: false,
       defaultValue: "pendiente",
     },

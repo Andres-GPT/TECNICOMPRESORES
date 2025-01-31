@@ -1,4 +1,6 @@
 import Procedimiento from "../models/procedimiento.js";
+import Maquina from "../models/maquina.js";
+import Cliente from "../models/cliente.js";
 
 //Registrar un procedimiento
 
@@ -33,7 +35,10 @@ export const registerProcedimiento = async (req, res) => {
 export const editProcedimiento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado } = req.body;
+    const { descripcion, costo_revision, costo_procedimiento, estado } =
+      req.body;
+
+    console.log(req.body);
 
     //Obtener el procedimiento
     const procedimiento = await Procedimiento.findByPk(id);
@@ -44,7 +49,12 @@ export const editProcedimiento = async (req, res) => {
     }
 
     //Editar el estado del procedimiento
-    await procedimiento.update({ estado_cliente: estado });
+    await procedimiento.update({
+      descripcion,
+      costo_revision,
+      costo_procedimiento,
+      estado_cliente: estado,
+    });
 
     res.status(200).json({
       error: false,
@@ -126,6 +136,62 @@ export const getProcedimiento = async (req, res) => {
       error: false,
       mensaje: "Procedimiento obtenido correctamente",
       procedimiento: procedimiento,
+    });
+  } catch (error) {
+    res.status(500).json({
+      mensaje: "Error al obtener el procedimiento",
+      error,
+    });
+    return;
+  }
+};
+
+//Funcion para obtener el procedimiento de una máquina y los datos del cliente
+export const getProcedimientoCompleto = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtener el ID de la máquina
+
+    //Obtener la maquina con los datos del cliente
+    const maquina = await Maquina.findByPk(id, {
+      include: {
+        model: Cliente,
+        as: "cliente_maquina", // Alias utilizado en la relación
+        attributes: [
+          "cedula",
+          "nombre",
+          "apellido",
+          "telefono",
+          "correo",
+          "direccion",
+        ], // Campos que deseas obtener del cliente
+      },
+    });
+
+    if (!maquina) {
+      res.status(404).json({ mensaje: "La máquina no existe" });
+      return;
+    }
+
+    //obtener el procedimiento de la maquina
+    const procedimiento = await Procedimiento.findOne({
+      where: {
+        id_maquina: id,
+      },
+    });
+
+    if (!procedimiento) {
+      res.status(404).json({ mensaje: "El procedimiento no existe" });
+      return;
+    }
+
+    //jutar los datos del cliente, maquina y procedimiento
+    res.status(200).json({
+      error: false,
+      mensaje: "Procedimiento obtenido correctamente",
+      procedimiento: {
+        ...procedimiento.toJSON(),
+        maquina: maquina.toJSON(),
+      },
     });
   } catch (error) {
     res.status(500).json({
