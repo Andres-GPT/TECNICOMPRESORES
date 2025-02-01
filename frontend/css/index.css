@@ -93,6 +93,7 @@ nav a {
 #logo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 #title {
@@ -101,4 +102,13 @@ nav a {
   align-items: center; /* Alinea los elementos verticalmente */
   gap: 1rem; /* Espacio entre el título y el botón */
   height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
+}
+
+.card, .history-button {
+  transition: all 0.3s ease-in-out;
+  transform: translateY(0); /* Asegura que la posición inicial sea 0 */
+}
+
+.card:not(:hover), .history-button:not(:hover) {
+  transform: translateY(0); /* Regresa a su posición original */
 }

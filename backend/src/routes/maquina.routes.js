@@ -5,20 +5,16 @@ import {
   deleteMaquina,
   getMaquinas,
   getMaquina,
-  getMaquinasRevision,
-  getMaquinasConfirmacion,
-  getMaquinasFiltro,
+  getMaquinasEstado,
 } from "../controllers/maquina.controller.js";
 
 const router = Router();
 
 router.get("/", getMaquinas);
-router.get("/revision", getMaquinasRevision);
-router.get("/confirmacion", getMaquinasConfirmacion);
+router.get("/estado/:estado", getMaquinasEstado);
 router.get("/:id", getMaquina);
 
 router.post("/", registerMaquina);
-router.post("/filtro", getMaquinasFiltro);
 
 router.put("/:id", editMaquina);
 

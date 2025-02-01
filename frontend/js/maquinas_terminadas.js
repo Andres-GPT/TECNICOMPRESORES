@@ -6,7 +6,7 @@ let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 async function mostrarUsuarios() {
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const response = await fetch(`${link}/maquinas/estado/2`); // Reemplaza con tu endpoint real
+      const response = await fetch(`${link}/maquinas/estado/5`); // Reemplaza con tu endpoint real
       const data = await response.json();
       console.log(data);
 
