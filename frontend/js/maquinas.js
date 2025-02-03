@@ -22,7 +22,7 @@ async function mostrarUsuarios() {
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
-        observaciones: maquina.observaciones,
+        estado: maquina.estado,
         fecha: maquina.fecha 
       }));
 
@@ -52,22 +52,13 @@ function renderizarTabla(data) {
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
-          <td>${maquina.observaciones}</td>
+          <td>${maquina.estado}</td>
           <td>${maquina.fecha}</td>
       </tr>
     `;
   });
 
-  tbody.innerHTML = filas;
-
-  // Agregar evento de clic a cada fila
-  document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
-    row.addEventListener("click", function () {
-      const id = this.getAttribute("data-id");
-      const cedula = this.getAttribute("data-cedula");
-      window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
-    });
-  });
+  tbody.innerHTML = filas;  
 }
 
 // Filtrar por Cédula

@@ -65,7 +65,7 @@ function renderizarTabla(data) {
     row.addEventListener("click", function () {
       const id = this.getAttribute("data-id");
       const cedula = this.getAttribute("data-cedula");
-      window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
+      window.location.href = `confirmacion_procedimiento.html?id=${id}&cedula=${cedula}`;
     });
   });
 }

@@ -58,16 +58,7 @@ function renderizarTabla(data) {
     `;
   });
 
-  tbody.innerHTML = filas;
-
-  // Agregar evento de clic a cada fila
-  document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
-    row.addEventListener("click", function () {
-      const id = this.getAttribute("data-id");
-      const cedula = this.getAttribute("data-cedula");
-      window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
-    });
-  });
+  tbody.innerHTML = filas;  
 }
 
 // Filtrar por Cédula

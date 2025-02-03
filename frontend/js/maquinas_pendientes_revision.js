@@ -8,7 +8,6 @@ async function mostrarUsuarios() {
     try {
       const response = await fetch(`${link}/maquinas/estado/1`); // Reemplaza con tu endpoint real
       const data = await response.json();
-      console.log(data);
 
       if (data.error) {
         console.error("Error obteniendo las máquinas:", data.mensaje);
@@ -16,18 +15,17 @@ async function mostrarUsuarios() {
       }
 
       // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map(maquina => ({
+      maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
         observaciones: maquina.observaciones,
-        fecha: maquina.fecha 
+        fecha: maquina.fecha,
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
-
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
@@ -77,7 +75,9 @@ function filtroCedula() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.cedula == cedula);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.cedula == cedula
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -88,7 +88,9 @@ function filtroFecha() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.fecha === fecha);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.fecha === fecha
+  );
   renderizarTabla(maquinasFiltradas);
 }
 

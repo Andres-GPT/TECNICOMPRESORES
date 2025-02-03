@@ -20,7 +20,7 @@ const Configuracion = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
-    ultima_actualizacion: {
+    fecha_modificacion: {
       type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),

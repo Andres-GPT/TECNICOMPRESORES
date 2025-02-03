@@ -80,6 +80,7 @@ export const getMaquinasEstado = async (req, res) => {
         nombre: maquina.cliente_maquina?.nombre || "N/A",
         apellido: maquina.cliente_maquina?.apellido || "N/A",
         descripcion: maquina.descripcion,
+        estado: maquina.estado,
         observaciones: maquina.observacion,
         fecha: maquina.fecha_entrada
           ? new Date(maquina.fecha_entrada).toISOString().split("T")[0]
