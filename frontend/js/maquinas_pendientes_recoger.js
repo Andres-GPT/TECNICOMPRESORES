@@ -55,11 +55,11 @@ function renderizarTabla(data) {
           <td>${maquina.descripcion}</td>
           <td>${maquina.procedimiento}</td>
           <td>
-            <select name="" id="">
-              <option value="0">${maquina.estante}</option>
-              <option value="1">No recoger</option>
-            </select></td>
-          <td>${maquina.nivel}</td>
+            <input type="number" class="estante-input" data-id="${maquina.id}" value="${maquina.estante}">
+          </td>
+          <td>
+            <input type="number" class="nivel-input" data-id="${maquina.id}" value="${maquina.nivel}">
+          </td>
           <td>${maquina.fecha}</td>
       </tr>
     `;
@@ -67,14 +67,48 @@ function renderizarTabla(data) {
 
   tbody.innerHTML = filas;
 
-  // Agregar evento de clic a cada fila
+  // Agregar evento de clic a cada fila (excepto en los inputs)
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
-    row.addEventListener("click", function () {
-      const id = this.getAttribute("data-id");
-      const cedula = this.getAttribute("data-cedula");
-      window.location.href = `confirmar_entrega.html?id=${id}&cedula=${cedula}`;
+    row.addEventListener("click", function (event) {
+      if (!event.target.classList.contains("estante-input") && !event.target.classList.contains("nivel-input")) {
+        const id = this.getAttribute("data-id");
+        const cedula = this.getAttribute("data-cedula");
+        window.location.href = `confirmar_entrega.html?id=${id}&cedula=${cedula}`;
+      }
     });
   });
+
+  // Agregar eventos a los inputs para actualizar datos al cambiar
+  document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
+    input.addEventListener("blur", async function () {
+      const id = this.getAttribute("data-id");
+      const campo = this.classList.contains("estante-input") ? "estante" : "nivel";
+      const valor = this.value;
+
+      await actualizarDato(id, campo, valor);
+    });
+  });
+}
+
+// Función para actualizar el dato en la API
+async function actualizarDato(id, campo, valor) {
+  try {
+    const response = await fetch(`${link}/maquinas/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ [campo]: valor }),
+    });
+
+    if (!response.status === 200) {
+      throw new Error("Error al actualizar el dato");
+    }
+
+    alert(`Dato actualizado: ${campo} = ${valor} para ID ${id}`);
+  } catch (error) {
+    console.error("Error en la actualización:", error);
+  }
 }
 
 // Filtrar por Cédula
