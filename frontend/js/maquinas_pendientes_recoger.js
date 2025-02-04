@@ -6,7 +6,7 @@ let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 async function mostrarUsuarios() {
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const response = await fetch(`${link}/maquinas/estado/4`); // Reemplaza con tu endpoint real
+      const response = await fetch(`${link}/maquinas/proceso/4`); // Reemplaza con tu endpoint real
       const data = await response.json();
       console.log(data);
 
@@ -16,18 +16,19 @@ async function mostrarUsuarios() {
       }
 
       // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map(maquina => ({
+      maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
-        observaciones: maquina.observaciones,
-        fecha: maquina.fecha 
+        procedimiento: maquina.procedimiento,
+        fecha: maquina.fecha,
+        estante: maquina.estante,
+        nivel: maquina.nivel,
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
-
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
@@ -52,7 +53,13 @@ function renderizarTabla(data) {
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
-          <td>${maquina.observaciones}</td>
+          <td>${maquina.procedimiento}</td>
+          <td>
+            <select name="" id="">
+              <option value="0">${maquina.estante}</option>
+              <option value="1">No recoger</option>
+            </select></td>
+          <td>${maquina.nivel}</td>
           <td>${maquina.fecha}</td>
       </tr>
     `;
@@ -77,7 +84,9 @@ function filtroCedula() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.cedula == cedula);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.cedula == cedula
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -88,7 +97,9 @@ function filtroFecha() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.fecha === fecha);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.fecha === fecha
+  );
   renderizarTabla(maquinasFiltradas);
 }
 

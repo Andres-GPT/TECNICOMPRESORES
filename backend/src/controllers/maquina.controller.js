@@ -85,6 +85,8 @@ export const getMaquinasEstado = async (req, res) => {
         fecha: maquina.fecha_entrada
           ? new Date(maquina.fecha_entrada).toISOString().split("T")[0]
           : "Fecha no disponible",
+        estante: maquina.estante,
+        nivel: maquina.nivel,
       })),
     });
   } catch (error) {
@@ -274,6 +276,8 @@ export const getMaquinasProceso = async (req, res) => {
           procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
           )?.descripcion || "N/A",
+          estante: maquina.estante,
+          nivel: maquina.nivel,
       })),
     });
   } catch (error) {
