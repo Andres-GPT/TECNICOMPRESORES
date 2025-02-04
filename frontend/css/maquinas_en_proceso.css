@@ -129,7 +129,6 @@ nav a {
 /* Estilos para las filas */
 .table-custom tbody tr {
   transition: background-color 0.2s ease-in-out;
-  cursor: pointer;
 }
 
 /* Estilos para las celdas */

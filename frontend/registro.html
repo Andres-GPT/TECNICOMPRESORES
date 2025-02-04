@@ -35,21 +35,21 @@
                     <h3>Datos del Cliente</h3>
                     <div class="form-group">
                         <label for="cedula">Cédula</label>
-                        <input type="text" id="cedula" name="cedula" oninput="obtenerCliente(this.value)">
-                        <small id="cedula-error" style="color: red; display: none;">El cliente ya existe</small>
-                    </div>
-                    
+                        <input type="number" id="cedula" name="cedula" oninput="obtenerCliente(this.value)" required>
+                        <small id="cedula-error" style="color: red; display: none;">Máximo 11 dígitos</small>
+                    </div>                    
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre">
+                        <input type="text" id="nombre" name="nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido">
+                        <input type="text" id="apellido" name="apellido" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
-                        <input type="text" id="telefono" name="telefono">
+                        <input type="number" id="telefono" name="telefono" required>
+                        <small id="telefono-error" style="color: red; display: none;">Máximo 10 dígitos</small>
                     </div>
                     <div class="form-group">
                         <label for="correo">Correo</label>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección</label>
-                        <input type="text" id="direccion" name="direccion">
+                        <input type="text" id="direccion" name="direccion" required>
                     </div>
                 </div>
 

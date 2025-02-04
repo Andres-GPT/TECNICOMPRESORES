@@ -20,6 +20,9 @@ async function mostrarUsuarios() {
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
+        telefono: maquina.telefono,
+        correo: maquina.correo,
+        direccion: maquina.direccion,
         descripcion: maquina.descripcion,
         observaciones: maquina.observaciones,
         fecha: maquina.fecha,
@@ -52,20 +55,55 @@ function renderizarTabla(data) {
           <td>${maquina.descripcion}</td>
           <td>${maquina.observaciones}</td>
           <td>${maquina.fecha}</td>
+          <td>
+            <button onclick="generarRecibo('${maquina.cedula}', '${maquina.nombre}', '${maquina.apellido}', '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
+          </td>
       </tr>
     `;
   });
 
   tbody.innerHTML = filas;
 
-  // Agregar evento de clic a cada fila
+  // Agregar evento de clic a cada fila (excepto en los inputs)
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
-    row.addEventListener("click", function () {
-      const id = this.getAttribute("data-id");
-      const cedula = this.getAttribute("data-cedula");
-      window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
+    row.addEventListener("click", function (event) {
+      if (!event.target.classList.contains("generar-recibo-btn")) {
+        const id = this.getAttribute("data-id");
+        const cedula = this.getAttribute("data-cedula");
+        window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
+      }
     });
   });
+}
+
+// Generar Recibo
+function generarRecibo(
+  cedula,
+  nombre,
+  apellido,
+  telefono,
+  correo,
+  direccion,
+  descripcion,
+  observaciones,
+  fecha
+) {
+  const reciboDatos = {
+    cedula: cedula,
+    nombre: nombre,
+    apellido: apellido,
+    telefono: telefono,
+    correo: correo,
+    direccion: direccion,
+    descripcion: descripcion,
+    observaciones: observaciones,
+    fecha: fecha,
+  };
+
+  console.log(reciboDatos);
+
+  sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
+  location.href = "recibo_registro.html";
 }
 
 // Filtrar por Cédula

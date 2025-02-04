@@ -24,17 +24,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const costoProcedimientoInput = document.getElementById(
     "costo_procedimiento"
   );
+  const notasInput = document.getElementById("notas");
 
-  // Validar teléfono en tiempo real
-  telefonoInput.addEventListener("input", function () {
-    if (this.value.length > 10) {
-      this.value = this.value.slice(0, 10);
-      document.getElementById("telefono-error").style.display = "block";
-    } else {
-      document.getElementById("telefono-error").style.display = "none";
-    }
+  // Hacer todos los inputs readonly, excepto el de notas
+  document.querySelectorAll("input, textarea").forEach((input) => {
+    input.readOnly = true;
   });
-
   cedulaInput.value = cedula;
   cedulaInput.readOnly = true;
 
@@ -42,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let maquinaOriginal = {};
   let procedimientoOriginal = {};
   let id_procedimiento;
+  let notaExistente = null;
 
   try {
     const procedimientoResponse = await fetch(
@@ -76,6 +72,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       costoProcedimientoInput.value =
         procedimientoOriginal.costo_procedimiento || "";
     }
+
+    // Obtener la nota existente
+    const notasResponse = await fetch(`${link}/notas/${id}`);
+    const notasData = await notasResponse.json();
+    if (notasData && notasData.nota) {
+      notasInput.value = notasData.nota.nota;
+      notaExistente = notasData.nota;
+    } else {
+      notasInput.value = "";
+    }
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
@@ -86,68 +92,39 @@ document.addEventListener("DOMContentLoaded", async () => {
       event.preventDefault();
 
       const accion = event.submitter.id; // Identificar si fue "aceptar" o "cancelar"
-      let estadoProcedimiento = "";
-      let estadoMaquina = "";
-      let costo_procedimiento = 0;
 
-      if (accion === "btn-aceptar") {
-        estadoProcedimiento = "aceptado";
-        estadoMaquina = "en proceso";
-        costo_procedimiento = costoProcedimientoInput.value;
-      } else if (accion === "btn-cancelar") {
-        estadoProcedimiento = "rechazado";
-        estadoMaquina = "pendiente por recoger";
-        costo_procedimiento = 0;
-      }
-
-      // Verificar cambios en cliente, máquina y procedimiento
-      const clienteActualizado = {
-        nombre: nombreInput.value,
-        apellido: apellidoInput.value,
-        telefono: telefonoInput.value,
-        correo: correoInput.value,
-        direccion: direccionInput.value,
-      };
-      const maquinaActualizada = {
-        descripcion: descripcionInput.value,
-        observaciones: observacionesInput.value,
-        estado: estadoMaquina,
-      };
-      const procedimientoActualizado = {
-        descripcion: procedimientoInput.value,
-        costo_revision: costoRevisionInput.value,
-        costo_procedimiento: costo_procedimiento,
-        estado: estadoProcedimiento,
-      };
-
-      const cambiosCliente =
-        JSON.stringify(clienteActualizado) !== JSON.stringify(clienteOriginal);
-
-      try {
-        await fetch(`${link}/procedimientos/${id_procedimiento}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(procedimientoActualizado),
-        });
-        await fetch(`${link}/maquinas/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(maquinaActualizada),
-        });
-
-        if (cambiosCliente) {
-          await fetch(`${link}/clientes/${cedula}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(clienteActualizado),
-          });
+      if (accion === "btn-entregar") {
+        // formetear la fecha de entrada
+        const fechaEntradaFormateada = maquinaOriginal.fecha_entrada.split("T")[0];
+        const fechaRevisionFormateada = procedimientoOriginal.fecha_revision.split("T")[0];
+        let costo_procedimiento = 0;
+        if (procedimientoOriginal.estado_cliente === "aceptado") {
+          costo_procedimiento = procedimientoOriginal.costo_procedimiento;
         }
-
-        alert("Actualización realizada correctamente");
-        window.location.href = "index.html";
-      } catch (error) {
-        console.error("Error al actualizar los datos:", error);
-        alert("Hubo un error al actualizar los datos.");
+        const reciboFinalDatos = {
+          cedula: cedula,
+          nombre: clienteOriginal.nombre,
+          apellido: clienteOriginal.apellido,
+          telefono: clienteOriginal.telefono,
+          correo: clienteOriginal.correo,
+          direccion: clienteOriginal.direccion,
+          descripcion: maquinaOriginal.descripcion,
+          observaciones: maquinaOriginal.observacion,
+          fecha: fechaEntradaFormateada,
+          procedimiento: procedimientoOriginal.descripcion,
+          estado: procedimientoOriginal.estado_cliente,
+          fecha_revision: fechaRevisionFormateada,
+          costo_revision: procedimientoOriginal.costo_revision,
+          costo_procedimiento: costo_procedimiento,
+          notas: notasInput.value,
+        };
+        sessionStorage.setItem(
+          "reciboFinalDatos",
+          JSON.stringify(reciboFinalDatos)
+        );
+        location.href = "recibo_final.html";
+      } else if (accion === "btn-noEntregar") {
+        location.href = "maquinas_terminadas.html";
       }
     });
 });

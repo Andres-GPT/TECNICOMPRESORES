@@ -115,7 +115,7 @@ nav a {
 
 /* Estilos para las celdas del encabezado */
 .table-custom thead {
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   color: rgb(0, 0, 0);
   text-align: left;
 }
@@ -133,7 +133,8 @@ nav a {
 }
 
 /* Estilos para las celdas */
-.table-custom tbody td, .table-custom tbody th {
+.table-custom tbody td,
+.table-custom tbody th {
   padding: 10px; /* Espaciado interno */
   border-bottom: 1px solid #ddd; /* Línea de separación entre filas */
   border-left: 1px solid #ddd; /* Línea a la izquierda */
@@ -218,5 +219,25 @@ nav a {
 }
 
 .filtros button:active {
+  transform: translateY(0); /* Efecto al hacer clic */
+}
+
+.generar-recibo-btn {
+  background-color: #1fd000;
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.generar-recibo-btn:hover {
+  background-color: #248f00;
+  transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
+}
+
+.generar-recibo-btn:active {
   transform: translateY(0); /* Efecto al hacer clic */
 }

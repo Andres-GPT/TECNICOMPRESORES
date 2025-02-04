@@ -159,6 +159,16 @@
             <p><strong>Fecha de Entrada:</strong> <span id="fechaHoraEntrada"></span></p>
         </div>
 
+        <div class="section">
+            <h2>Datos del Procedimiento</h2>
+            <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
+            <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
+            <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
+            <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
+            <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
+            <p><strong>Notas Cliente:</strong> <span id="notasCliente"></span></p>
+        </div>
+
         <div class="footer">
             <p><strong>Fecha/Hora de generación:</strong> <span id="fechaRegistro"></span></p>
             <p class="leyenda">
@@ -178,7 +188,7 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             // Obtener los datos guardados en sessionStorage
-            const reciboDatos = JSON.parse(sessionStorage.getItem("reciboDatos"));
+            const reciboDatos = JSON.parse(sessionStorage.getItem("reciboFinalDatos"));
 
             if (reciboDatos) {
                 // Llenar los datos del cliente
@@ -190,6 +200,13 @@
                 document.getElementById("direccionCliente").textContent = reciboDatos.direccion;
                 document.getElementById("descripcionMaquina").textContent = reciboDatos.descripcion;
                 document.getElementById("observacionesMaquina").textContent = reciboDatos.observaciones;
+
+                document.getElementById("descripcionProcedimiento").textContent = reciboDatos.procedimiento;
+                document.getElementById("estadoProcedimiento").textContent = reciboDatos.estado;
+                document.getElementById("fechaRevision").textContent = reciboDatos.fecha_revision;
+                document.getElementById("costoRevision").textContent = reciboDatos.costo_revision;
+                document.getElementById("costoProcedimiento").textContent = reciboDatos.costo_procedimiento;
+                document.getElementById("notasCliente").textContent = reciboDatos.notas;
 
                 // Agregar la fecha/hora actual
                 const fechaActual = new Date();
@@ -222,7 +239,7 @@
             // Convertimos el HTML a texto seleccionable en el PDF
             await pdf.html(receipt, {
                 callback: function (pdf) {
-                    pdf.save(`recibo-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
+                    pdf.save(`recibo-final-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
                 },
                 x: 5, // Margen izquierdo.
                 y: 0, // Margen superior.
@@ -231,8 +248,8 @@
 
         }
         function goBack() {
-            sessionStorage.removeItem("reciboDatos");
-            window.history.back()
+            sessionStorage.removeItem("reciboFinalDatos");
+            window.history.back();
         }
     </script>
 </body>

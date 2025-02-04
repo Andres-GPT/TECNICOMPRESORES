@@ -66,7 +66,7 @@ export const getMaquinasEstado = async (req, res) => {
       include: {
         model: Cliente,
         as: "cliente_maquina", // Alias usado en la relación
-        attributes: ["nombre", "apellido"], // Campos que se desean obtener del cliente
+        attributes: ["nombre", "apellido", "telefono", "correo", "direccion"], // Campos que se desean obtener del cliente
       },
     });
 
@@ -79,6 +79,9 @@ export const getMaquinasEstado = async (req, res) => {
         cedula: maquina.id_cliente,
         nombre: maquina.cliente_maquina?.nombre || "N/A",
         apellido: maquina.cliente_maquina?.apellido || "N/A",
+        telefono: maquina.cliente_maquina?.telefono || "N/A",
+        correo: maquina.cliente_maquina?.correo || "N/A",
+        direccion: maquina.cliente_maquina?.direccion || "N/A",
         descripcion: maquina.descripcion,
         estado: maquina.estado,
         observaciones: maquina.observacion,

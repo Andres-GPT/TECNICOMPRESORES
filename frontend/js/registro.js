@@ -90,6 +90,10 @@ async function validarFormulario(event) {
 
     if (maquinaNueva.error) throw new Error("Error al registrar la máquina");
 
+    // Fecha
+    const fechaActual = new Date();
+    const fechaFormateada = fechaActual.toISOString().split("T")[0];
+
     const reciboDatos = {
       cedula: inputCedula.value.trim(),
       nombre: inputNombre.value.trim(),
@@ -99,6 +103,7 @@ async function validarFormulario(event) {
       direccion: inputDireccion.value.trim(),
       descripcion: inputDescripcion.value.trim(),
       observaciones: inputObservaciones.value.trim(),
+      fecha: fechaFormateada,
     };
 
     sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
@@ -229,3 +234,24 @@ function limpiarFormulario() {
   document.getElementById("correo").value = "";
   document.getElementById("direccion").value = "";
 }
+
+
+// Validar cédula en tiempo real
+inputCedula.addEventListener("input", function () {
+  if (this.value.length > 11) {
+    this.value = this.value.slice(0, 11);
+    document.getElementById("cedula-error").style.display = "block";
+  } else {
+    document.getElementById("cedula-error").style.display = "none";
+  }
+});
+
+// Validar teléfono en tiempo real
+inputTelefono.addEventListener("input", function () {
+  if (this.value.length > 10) {
+    this.value = this.value.slice(0, 10);
+    document.getElementById("telefono-error").style.display = "block";
+  } else {
+    document.getElementById("telefono-error").style.display = "none";
+  }
+});
