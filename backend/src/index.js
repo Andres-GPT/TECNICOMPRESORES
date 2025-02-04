@@ -10,6 +10,7 @@ import maquinaRoutes from "./routes/maquina.routes.js";
 import procedimientoRoutes from "./routes/procedimiento.routes.js";
 import reciboRoutes from "./routes/recibo.routes.js";
 import configuracionRoutes from "./routes/configuracion.routes.js";
+import notasRoutes from "./routes/notas.routes.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/maquinas", maquinaRoutes);
 app.use("/procedimientos", procedimientoRoutes);
 app.use("/recibos", reciboRoutes);
 app.use("/configuraciones", configuracionRoutes);
+app.use("/notas", notasRoutes);
 
 // Error handling
 app.use((error, req, res, next) => {
