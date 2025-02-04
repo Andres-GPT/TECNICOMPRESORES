@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/maquinas_pendientes_revision.css">
+    <link rel="stylesheet" href="css/maquinas_en_proceso.css">
     <script src="js/config.js"></script>
     <title>Tecnicompresores</title>
 </head>
@@ -65,11 +65,15 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Confirmar Registro</h2>
-            <label for="inputEstante">Estante:</label>
-            <input type="text" id="inputEstante" placeholder="Ingrese el estante">
-            <label for="inputNivel">Nivel:</label>
-            <input type="text" id="inputNivel" placeholder="Ingrese el nivel">
-            <button id="btnConfirmar">Confirmar</button>
+            <div class="div-input">
+                <label for="inputEstante">Estante:</label>
+                <input class="input" type="text" id="inputEstante" placeholder="Ingrese el estante">
+            </div>
+            <div class="div-input">
+                <label for="inputNivel">Nivel:</label>
+                <input class="input" type="text" id="inputNivel" placeholder="Ingrese el nivel">
+            </div>
+            <button class="btnModal" id="btnConfirmar">Confirmar</button>
         </div>
     </div>
 
