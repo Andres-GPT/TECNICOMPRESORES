@@ -7,7 +7,7 @@ import Maquina from "./maquina.js";
 const NotaLlamada = sequelize.define(
   "notas_llamadas",
   {
-    id: {
+    id_nota: {
       type: Sequelize.INTEGER,
       primaryKey: true,
     },
