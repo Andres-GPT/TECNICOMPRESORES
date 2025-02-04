@@ -91,22 +91,8 @@ body {
     padding-top: 15px;
   }
   
-  .button-container #btn-cancelar {
-    background-color: #ec3037;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .button-container #btn-cancelar:hover {
-    background-color: #cb1b20;
-  }
-
   .button-container #btn-aceptar {
-    background-color: #bbb;
+    background-color: #ec3037;
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -116,24 +102,10 @@ body {
   }
   
   .button-container #btn-aceptar:hover {
-    background-color: #939292;
-  }
-
-  .button-container #btn-noEntregar {
-    background-color: #ec3037;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .button-container #btn-noEntregar:hover {
     background-color: #cb1b20;
   }
 
-  .button-container #btn-entregar {
+  .button-container #btn-cancelar {
     background-color: #bbb;
     color: white;
     padding: 0.75rem 1.5rem;
@@ -143,7 +115,35 @@ body {
     font-size: 1rem;
   }
   
+  .button-container #btn-cancelar:hover {
+    background-color: #939292;
+  }
+
+  .button-container #btn-entregar {
+    background-color: #ec3037;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
   .button-container #btn-entregar:hover {
+    background-color: #cb1b20;
+  }
+
+  .button-container #btn-noEntregar {
+    background-color: #bbb;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .button-container #btn-noEntregar:hover {
     background-color: #939292;
   }
   

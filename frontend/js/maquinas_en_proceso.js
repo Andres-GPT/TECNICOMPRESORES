@@ -137,8 +137,8 @@ btnConfirmar.addEventListener("click", async () => {
     inputEstante.value = "";
     inputNivel.value = "";
 
-    // Volver a cargar los datos actualizados
-    await mostrarUsuarios();
+    // redireccionar al index
+    location.href = "index.html";
   } catch (error) {
     console.error("Error en la operación:", error);
   }
