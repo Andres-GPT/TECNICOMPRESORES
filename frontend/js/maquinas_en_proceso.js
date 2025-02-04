@@ -1,39 +1,49 @@
 const inputCedula = document.getElementById("cedula");
 const inputFecha = document.getElementById("fecha");
 
-let maquinasData = []; // Se almacenarán los datos obtenidos de la API
+let maquinasData = [];
+let idMaquinaSeleccionada = null; // Se almacenará el ID de la máquina seleccionada
 
+// Elementos del modal
+const modal = document.getElementById("modalEstanteNivel");
+const inputEstante = document.getElementById("inputEstante");
+const inputNivel = document.getElementById("inputNivel");
+const btnConfirmar = document.getElementById("btnConfirmar");
+const closeModal = document.querySelector(".close");
+
+// Mostrar datos al cargar la página
+document.addEventListener("DOMContentLoaded", async () => {
+  await mostrarUsuarios();
+});
+
+// Obtener datos de la API
 async function mostrarUsuarios() {
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const response = await fetch(`${link}/maquinas/estado/3`); // Reemplaza con tu endpoint real
-      const data = await response.json();
-      console.log(data);
+  try {
+    const response = await fetch(`${link}/maquinas/proceso/3`);
+    const data = await response.json();
 
-      if (data.error) {
-        console.error("Error obteniendo las máquinas:", data.mensaje);
-        return;
-      }
-
-      // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map(maquina => ({
-        id: maquina.id,
-        cedula: maquina.cedula,
-        nombre: maquina.nombre,
-        apellido: maquina.apellido,
-        descripcion: maquina.descripcion,
-        observaciones: maquina.observaciones,
-        fecha: maquina.fecha 
-      }));
-
-      renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
-
-    } catch (error) {
-      console.error("Error al obtener los datos:", error);
+    if (data.error) {
+      console.error("Error obteniendo las máquinas:", data.mensaje);
+      return;
     }
-  });
+
+    maquinasData = data.maquinas.map((maquina) => ({
+      id: maquina.id,
+      cedula: maquina.cedula,
+      nombre: maquina.nombre,
+      apellido: maquina.apellido,
+      descripcion: maquina.descripcion,
+      procedimiento: maquina.procedimiento,
+      fecha: maquina.fecha,
+    }));
+
+    renderizarTabla(maquinasData);
+  } catch (error) {
+    console.error("Error al obtener los datos:", error);
+  }
 }
 
+// Renderizar la tabla con los datos
 function renderizarTabla(data) {
   const tbody = document.querySelector(".table-custom tbody");
 
@@ -52,23 +62,98 @@ function renderizarTabla(data) {
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
-          <td>${maquina.observaciones}</td>
+          <td>${maquina.procedimiento}</td>
           <td>${maquina.fecha}</td>
+          <td>
+              <button class="btn-accion" data-id="${maquina.id}">Confirmar</button>
+          </td>
       </tr>
     `;
   });
 
-  tbody.innerHTML = filas;  
+  tbody.innerHTML = filas;
+
+  // Agregar eventos a los botones de acción
+  document.querySelectorAll(".btn-accion").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      idMaquinaSeleccionada = event.target.dataset.id;
+      abrirModal();
+    });
+  });
 }
+
+// Abrir el modal
+function abrirModal() {
+  modal.style.display = "block";
+}
+
+// Cerrar el modal
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+// Confirmar y enviar los datos
+btnConfirmar.addEventListener("click", async () => {
+  if (!idMaquinaSeleccionada) return;
+
+  const estante = inputEstante.value.trim();
+  const nivel = inputNivel.value.trim();
+
+  if (!estante || !nivel) {
+    alert("Por favor ingrese estante y nivel.");
+    return;
+  }
+
+  try {
+    // 1. Actualizar el estado de la máquina
+    const responsePut = await fetch(
+      `${link}/maquinas/${idMaquinaSeleccionada}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ estado: "pendiente por recoger", estante, nivel }),
+      }
+    );
+
+    if (!responsePut.ok) throw new Error("Error al actualizar la máquina.");
+
+    console.log(`Máquina ${idMaquinaSeleccionada} actualizada correctamente.`);
+
+    // 2. Registrar el recibo
+    const responsePost = await fetch(`${link}/recibos`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_maquina: idMaquinaSeleccionada }),
+    });
+
+    if (!responsePost.ok) throw new Error("Error al registrar el recibo.");
+
+    console.log(
+      `Recibo para la máquina ${idMaquinaSeleccionada} registrado correctamente.`
+    );
+
+    // Cerrar modal y limpiar inputs
+    modal.style.display = "none";
+    inputEstante.value = "";
+    inputNivel.value = "";
+
+    // Volver a cargar los datos actualizados
+    await mostrarUsuarios();
+  } catch (error) {
+    console.error("Error en la operación:", error);
+  }
+});
 
 // Filtrar por Cédula
 function filtroCedula() {
   const cedula = inputCedula.value.trim();
   if (!cedula) {
-    renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
+    renderizarTabla(maquinasData);
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.cedula == cedula);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.cedula == cedula
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -76,10 +161,12 @@ function filtroCedula() {
 function filtroFecha() {
   const fecha = inputFecha.value.trim();
   if (!fecha) {
-    renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
+    renderizarTabla(maquinasData);
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.fecha === fecha);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.fecha === fecha
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -97,6 +184,3 @@ inputFecha.addEventListener("keydown", (event) => {
     filtroFecha();
   }
 });
-
-// Inicializar la carga de datos
-mostrarUsuarios();

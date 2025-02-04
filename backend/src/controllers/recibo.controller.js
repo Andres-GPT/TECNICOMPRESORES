@@ -4,14 +4,6 @@ import Recibo from "../models/recibo.js";
 export const createRecibo = async (req, res) => {
   try {
     const { id_maquina } = req.body;
-
-    //Obtener la maquina
-    const maquina = await Recibo.findByPk(id_maquina);
-
-    if (!maquina) {
-      res.status(404).json({ mensaje: "La maquina no existe" });
-      return;
-    }
     //Crear el recibo
     const nuevoRecibo = await Recibo.create({
       id_maquina,

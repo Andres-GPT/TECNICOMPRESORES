@@ -97,7 +97,6 @@ export const getMaquinasEstado = async (req, res) => {
   }
 };
 
-
 //Editar una maquina
 export const editMaquina = async (req, res) => {
   try {
@@ -208,5 +207,81 @@ export const getMaquina = async (req, res) => {
       error,
     });
     return;
+  }
+};
+
+// Obtener maquinas en proceso, datos del cliente y procedimiento
+
+export const getMaquinasProceso = async (req, res) => {
+  try {
+    const { estado } = req.params; // Obtener el estado desde la URL
+
+    // Mapeo de estados según el número recibido
+    const estadosValidos = {
+      1: "pendiente por revisión",
+      2: "en espera de aprobación",
+      3: "en proceso",
+      4: "pendiente por recoger",
+      5: "terminado",
+    };
+
+    let whereCondition = {};
+
+    if (estado == 0) {
+      // Si estado es 0, filtrar todos los estados excepto "terminado"
+      whereCondition = { estado: { [Op.not]: "terminado" } };
+    } else if (estadosValidos[estado]) {
+      // Si el estado es válido, filtrar por ese estado específico
+      whereCondition = { estado: estadosValidos[estado] };
+    } else {
+      return res.status(400).json({
+        error: true,
+        mensaje: "Estado inválido. Usa un número entre 0 y 5.",
+      });
+    }
+    // Obtener las maquinas en proceso y los datos del cliente
+    const maquinasEnProceso = await Maquina.findAll({
+      where: whereCondition,
+      include: {
+        model: Cliente,
+        as: "cliente_maquina", // Alias usado en la relación
+        attributes: ["nombre", "apellido"], // Campos que se desean obtener del cliente
+      },
+    });
+    // por cada maquina, obtener el procedimiento correspondiente
+    const procedimientos = await Procedimiento.findAll({
+      where: { id_maquina: maquinasEnProceso.map((maquina) => maquina.id) },
+    });
+
+    console.log(procedimientos);
+
+    // Devolver los datos
+    res.status(200).json({
+      error: false,
+      mensaje: `Máquinas obtenidas correctamente`,
+      maquinas: maquinasEnProceso.map((maquina) => ({
+        id: maquina.id,
+        cedula: maquina.id_cliente,
+        nombre: maquina.cliente_maquina?.nombre || "N/A",
+        apellido: maquina.cliente_maquina?.apellido || "N/A",
+        descripcion: maquina.descripcion,
+        estado: maquina.estado,
+        observaciones: maquina.observacion,
+        fecha: maquina.fecha_entrada
+          ? new Date(maquina.fecha_entrada).toISOString().split("T")[0]
+          : "Fecha no disponible",
+        procedimiento:
+          procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.descripcion || "N/A",
+      })),
+    });
+  } catch (error) {
+    console.error("Error en getMaquinasEstado:", error);
+    res.status(500).json({
+      error: true,
+      mensaje: "Error al obtener las máquinas",
+      detalles: error.message,
+    });
   }
 };
