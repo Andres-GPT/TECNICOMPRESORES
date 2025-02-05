@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recibo</title>
+    <script src="js/config.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -128,7 +129,7 @@
     <div class="recibo-container" id="recibo">
         <div class="header">
             <div id="logo-container">
-                <img src="img/logo.png" alt="Logo Empresa">
+                <img id="logo" src="img/logo.png" alt="Logo Empresa">
                 <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
             </div>
 
@@ -171,9 +172,9 @@
 
         <div class="footer">
             <p><strong>Fecha/Hora de generación:</strong> <span id="fechaRegistro"></span></p>
-            <p class="leyenda">
-                Nota: No nos hacemos responsables por pérdida o daño del vehículo después de 24 horas de haber sido
-                notificado de la entrega. Por favor revise su vehículo al momento de retirarlo.
+            <p class="leyenda" id="leyenda">
+                Nota: No nos hacemos responsables por pérdida o daño de la máquina después de 24 horas de haber sido
+                notificado de la entrega. Por favor revise su máquina al momento de retirarla.
             </p>
         </div>
     </div>
@@ -185,6 +186,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+        async function fetchConfiguracion() {
+            try {
+                const response = await fetch(`${link}/configuraciones/1`);
+                const data = await response.json();
+                console.log(data.configuracion);
+                if (data && data.configuracion.logo && data.configuracion.leyenda) {
+                    document.getElementById('logo').src = `../../backend/src/${data.configuracion.logo}`;
+                    document.getElementById('leyenda').textContent = data.configuracion.leyenda;
+                }
+            } catch (error) {
+                console.error('Error al cargar la configuración:', error);
+            }
+        }
 
         document.addEventListener("DOMContentLoaded", function () {
             // Obtener los datos guardados en sessionStorage
@@ -214,6 +228,9 @@
                 const horaFormateada = fechaActual.toLocaleTimeString();
                 document.getElementById("fechaRegistro").textContent = `${fechaFormateada} ${horaFormateada}`;
                 document.getElementById("fechaHoraEntrada").textContent = reciboDatos.fecha;
+
+                // Cargar configuraciones (logo y leyenda)
+                fetchConfiguracion();
             } else {
                 alert("No hay datos del recibo almacenados.");
             }
@@ -232,7 +249,6 @@
             const fechaActual = new Date();
             const fechaFormateada = fechaActual.toISOString().split("T")[0];
 
-
             // Seleccionamos el contenedor del recibo
             const receipt = document.getElementById("recibo");
 
@@ -245,8 +261,8 @@
                 y: 0, // Margen superior.
                 width: 780, // Ajusta el ancho disponible en el PDF.
             });
-
         }
+
         function goBack() {
             sessionStorage.removeItem("reciboFinalDatos");
             window.history.back();

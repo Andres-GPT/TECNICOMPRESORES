@@ -6,6 +6,7 @@ import path from "path";
 export const createConfiguracion = async (req, res) => {
   try {
     const { leyenda } = req.body;
+
     let logo = null;
 
     if (req.file) {
@@ -16,7 +17,9 @@ export const createConfiguracion = async (req, res) => {
     const existeConfiguracion = await Configuracion.findOne();
 
     if (existeConfiguracion) {
-      return res.status(400).json({ mensaje: "Ya existe una configuración. Solo puedes editarla." });
+      return res.status(400).json({
+        mensaje: "Ya existe una configuración. Solo puedes editarla.",
+      });
     }
 
     // Crear la configuración
@@ -37,7 +40,6 @@ export const editConfiguracion = async (req, res) => {
   try {
     const { id } = req.params;
     const { leyenda } = req.body;
-    let logo = null;
 
     // Obtener la configuración existente
     const configuracion = await Configuracion.findByPk(id);
@@ -45,36 +47,44 @@ export const editConfiguracion = async (req, res) => {
       return res.status(404).json({ mensaje: "La configuración no existe" });
     }
 
-    // Si se sube una nueva imagen, eliminamos la anterior
+    let logo = configuracion.logo; // Conservar el logo actual si no se sube una nueva imagen
+
+    // Si se sube una nueva imagen, eliminar la anterior
     if (req.file) {
-      logo = `/uploads/${req.file.filename}`;
+      logo = `/uploads/${req.file.filename}`; // Guardar la nueva imagen
 
       // Eliminar la imagen anterior si existía
       if (configuracion.logo) {
-        const imagePath = path.join(process.cwd(), "src/uploads", path.basename(configuracion.logo));
+        const imagePath = path.join(
+          process.cwd(),
+          "src/uploads",
+          path.basename(configuracion.logo)
+        );
         try {
           await fs.promises.unlink(imagePath);
         } catch (err) {
           console.error("Error eliminando la imagen anterior:", err);
+          // No detenemos la ejecución si falla la eliminación de la imagen anterior
         }
       }
-    } else {
-      logo = configuracion.logo;
     }
 
-    // Editar la configuración
+    // Actualizar la configuración
     await configuracion.update({ logo, leyenda });
 
+    // Enviar respuesta exitosa
     res.status(200).json({
       error: false,
-      mensaje: "Configuración editada correctamente",
-      configuracion,
+      mensaje: "Configuración editada correctamente",      
     });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al editar la configuración", error });
+    console.error("Error en editConfiguracion:", error);
+    res.status(500).json({
+      mensaje: "Error al editar la configuración",
+      error: error.message, // Envía solo el mensaje de error para evitar problemas con objetos complejos
+    });
   }
 };
-
 // Obtener una configuración
 export const getConfiguracion = async (req, res) => {
   try {
@@ -93,6 +103,8 @@ export const getConfiguracion = async (req, res) => {
       configuracion,
     });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener la configuración", error });
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener la configuración", error });
   }
 };
