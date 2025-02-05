@@ -183,6 +183,11 @@ nav a {
   margin-right: 10px;
 }
 
+.estante-input,
+.nivel-input {
+  width: 50px;
+}
+
 .filtros input[type="text"],
 .filtros input[type="date"] {
   width: 200px; /* Ajusta el ancho según sea necesario */

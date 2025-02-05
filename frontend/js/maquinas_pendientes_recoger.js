@@ -54,10 +54,10 @@ function renderizarTabla(data) {
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
           <td>${maquina.procedimiento}</td>
-          <td>
+          <td class="estante-input">
             <input type="number" class="estante-input" data-id="${maquina.id}" value="${maquina.estante}">
           </td>
-          <td>
+          <td class="nivel-input">
             <input type="number" class="nivel-input" data-id="${maquina.id}" value="${maquina.nivel}">
           </td>
           <td>${maquina.fecha}</td>
@@ -105,7 +105,7 @@ async function actualizarDato(id, campo, valor) {
       throw new Error("Error al actualizar el dato");
     }
 
-    alert(`Dato actualizado: ${campo} = ${valor} para ID ${id}`);
+    //alert(`Dato actualizado: ${campo} = ${valor} para ID ${id}`);
   } catch (error) {
     console.error("Error en la actualización:", error);
   }
