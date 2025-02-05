@@ -8,7 +8,6 @@ async function mostrarUsuarios() {
     try {
       const response = await fetch(`${link}/maquinas/estado/5`); // Reemplaza con tu endpoint real
       const data = await response.json();
-      console.log(data);
 
       if (data.error) {
         console.error("Error obteniendo las máquinas:", data.mensaje);

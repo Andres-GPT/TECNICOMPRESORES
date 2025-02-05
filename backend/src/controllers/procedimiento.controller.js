@@ -38,8 +38,6 @@ export const editProcedimiento = async (req, res) => {
     const { descripcion, costo_revision, costo_procedimiento, estado } =
       req.body;
 
-    console.log(req.body);
-
     //Obtener el procedimiento
     const procedimiento = await Procedimiento.findByPk(id);
 

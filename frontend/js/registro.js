@@ -64,7 +64,6 @@ async function validarFormulario(event) {
         const clienteActualizado = await actualizarUsuario(datosActualizados);
         if (clienteActualizado.error)
           throw new Error("Error al actualizar el usuario");
-        console.log("Usuario actualizado:", clienteActualizado);
       }
     } else {
       // Si el cliente no existe, crearlo
@@ -78,7 +77,6 @@ async function validarFormulario(event) {
       });
 
       if (usuarioNuevo.error) throw new Error("Error al registrar el usuario");
-      console.log("Usuario registrado:", usuarioNuevo);
     }
 
     // Registrar la máquina
@@ -208,7 +206,6 @@ inputCedula.addEventListener("blur", async () => {
     const cliente = await obtenerCliente(cedula);
     if (cliente && cliente.cliente) {
       // Aseguramos que existe el cliente
-      console.log("Datos del cliente:", cliente);
 
       // Asignar los valores al formulario
       document.getElementById("nombre").value = cliente.cliente.nombre || "";
@@ -220,7 +217,6 @@ inputCedula.addEventListener("blur", async () => {
       document.getElementById("direccion").value =
         cliente.cliente.direccion || "";
     } else {
-      console.log("No se encontró el cliente.");
       limpiarFormulario(); // Limpia los campos si no se encuentra cliente
     }
   }

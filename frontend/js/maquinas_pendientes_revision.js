@@ -100,8 +100,6 @@ function generarRecibo(
     fecha: fecha,
   };
 
-  console.log(reciboDatos);
-
   sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
   location.href = "recibo_registro.html";
 }

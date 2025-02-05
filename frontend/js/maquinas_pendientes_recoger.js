@@ -26,6 +26,7 @@ async function mostrarUsuarios() {
         fecha: maquina.fecha,
         estante: maquina.estante,
         nivel: maquina.nivel,
+        notas: maquina.nota.nota,
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
@@ -54,13 +55,14 @@ function renderizarTabla(data) {
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
           <td>${maquina.procedimiento}</td>
-          <td>
+          <td class="estante-input">
             <input type="number" class="estante-input" data-id="${maquina.id}" value="${maquina.estante}">
           </td>
-          <td>
+          <td class="nivel-input">
             <input type="number" class="nivel-input" data-id="${maquina.id}" value="${maquina.nivel}">
           </td>
           <td>${maquina.fecha}</td>
+          <td>${maquina.notas}</td>
       </tr>
     `;
   });

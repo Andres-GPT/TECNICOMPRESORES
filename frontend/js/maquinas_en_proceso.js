@@ -117,8 +117,6 @@ btnConfirmar.addEventListener("click", async () => {
 
     if (!responsePut.ok) throw new Error("Error al actualizar la máquina.");
 
-    console.log(`Máquina ${idMaquinaSeleccionada} actualizada correctamente.`);
-
     // 2. Registrar el recibo
     const responsePost = await fetch(`${link}/recibos`, {
       method: "POST",
@@ -127,10 +125,6 @@ btnConfirmar.addEventListener("click", async () => {
     });
 
     if (!responsePost.ok) throw new Error("Error al registrar el recibo.");
-
-    console.log(
-      `Recibo para la máquina ${idMaquinaSeleccionada} registrado correctamente.`
-    );
 
     // Cerrar modal y limpiar inputs
     modal.style.display = "none";

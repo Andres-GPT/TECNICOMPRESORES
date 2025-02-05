@@ -123,7 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(clienteActualizado),
           });
-          console.log("Cliente actualizado.");
         }
 
         if (
@@ -135,7 +134,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(maquinaActualizada),
           });
-          console.log("Máquina actualizada.");
         }
 
         // Registrar procedimiento (POST)

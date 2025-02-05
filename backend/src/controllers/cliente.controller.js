@@ -5,7 +5,6 @@ import Cliente from "../models/cliente.js";
 export const registerCliente = async (req, res) => {
   try {
     const { cedula, nombre, apellido, correo, telefono, direccion } = req.body;
-    console.log("bodyCliente", req.body);
 
     //Verificar si existe el cliente
     const clienteExistente = await Cliente.findByPk(cedula);

@@ -1,6 +1,7 @@
 import Maquina from "../models/maquina.js";
 import Cliente from "../models/cliente.js";
 import Procedimiento from "../models/procedimiento.js";
+import NotaLlamada from "../models/nota_llamada.js";
 import { Op } from "sequelize";
 
 //Registrar una maquina
@@ -219,9 +220,8 @@ export const getMaquina = async (req, res) => {
 
 export const getMaquinasProceso = async (req, res) => {
   try {
-    const { estado } = req.params; // Obtener el estado desde la URL
+    const { estado } = req.params;
 
-    // Mapeo de estados según el número recibido
     const estadosValidos = {
       1: "pendiente por revisión",
       2: "en espera de aprobación",
@@ -233,10 +233,8 @@ export const getMaquinasProceso = async (req, res) => {
     let whereCondition = {};
 
     if (estado == 0) {
-      // Si estado es 0, filtrar todos los estados excepto "terminado"
       whereCondition = { estado: { [Op.not]: "terminado" } };
     } else if (estadosValidos[estado]) {
-      // Si el estado es válido, filtrar por ese estado específico
       whereCondition = { estado: estadosValidos[estado] };
     } else {
       return res.status(400).json({
@@ -244,47 +242,65 @@ export const getMaquinasProceso = async (req, res) => {
         mensaje: "Estado inválido. Usa un número entre 0 y 5.",
       });
     }
-    // Obtener las maquinas en proceso y los datos del cliente
+
+    // Obtener las máquinas en proceso junto con los datos del cliente
     const maquinasEnProceso = await Maquina.findAll({
       where: whereCondition,
       include: {
         model: Cliente,
-        as: "cliente_maquina", // Alias usado en la relación
-        attributes: ["nombre", "apellido"], // Campos que se desean obtener del cliente
+        as: "cliente_maquina",
+        attributes: ["nombre", "apellido"],
       },
     });
-    // por cada maquina, obtener el procedimiento correspondiente
+
+    // Obtener los procedimientos de las máquinas
     const procedimientos = await Procedimiento.findAll({
       where: { id_maquina: maquinasEnProceso.map((maquina) => maquina.id) },
     });
 
-    console.log(procedimientos);
+    // Obtener las notas de llamadas de las máquinas
+    const notas = await NotaLlamada.findAll({
+      where: { id_maquina: maquinasEnProceso.map((maquina) => maquina.id) },
+    });
 
-    // Devolver los datos
+    // Construcción de la respuesta final
     res.status(200).json({
       error: false,
       mensaje: `Máquinas obtenidas correctamente`,
-      maquinas: maquinasEnProceso.map((maquina) => ({
-        id: maquina.id,
-        cedula: maquina.id_cliente,
-        nombre: maquina.cliente_maquina?.nombre || "N/A",
-        apellido: maquina.cliente_maquina?.apellido || "N/A",
-        descripcion: maquina.descripcion,
-        estado: maquina.estado,
-        observaciones: maquina.observacion,
-        fecha: maquina.fecha_entrada
-          ? new Date(maquina.fecha_entrada).toISOString().split("T")[0]
-          : "Fecha no disponible",
-        procedimiento:
-          procedimientos.find(
-            (procedimiento) => procedimiento.id_maquina === maquina.id
-          )?.descripcion || "N/A",
+      maquinas: maquinasEnProceso.map((maquina) => {
+        const notaEncontrada = notas.find(
+          (nota) => nota.id_maquina === maquina.id
+        );
+
+        return {
+          id: maquina.id,
+          cedula: maquina.id_cliente,
+          nombre: maquina.cliente_maquina?.nombre || "N/A",
+          apellido: maquina.cliente_maquina?.apellido || "N/A",
+          descripcion: maquina.descripcion,
+          estado: maquina.estado,
+          observaciones: maquina.observacion,
+          fecha: maquina.fecha_entrada
+            ? new Date(maquina.fecha_entrada).toISOString().split("T")[0]
+            : "Fecha no disponible",
+          procedimiento:
+            procedimientos.find(
+              (procedimiento) => procedimiento.id_maquina === maquina.id
+            )?.descripcion || "N/A",
           estante: maquina.estante,
           nivel: maquina.nivel,
-      })),
+          nota: notaEncontrada
+            ? {
+                nota: notaEncontrada.nota,
+              }
+            : {
+                nota: "Sin notas",
+              }, // Si no hay nota, se asigna null
+        };
+      }),
     });
   } catch (error) {
-    console.error("Error en getMaquinasEstado:", error);
+    console.error("Error en getMaquinasProceso:", error);
     res.status(500).json({
       error: true,
       mensaje: "Error al obtener las máquinas",
