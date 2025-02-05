@@ -107,7 +107,7 @@ async function actualizarDato(id, campo, valor) {
       throw new Error("Error al actualizar el dato");
     }
 
-    alert(`Dato actualizado: ${campo} = ${valor} para ID ${id}`);
+    //alert(`Dato actualizado: ${campo} = ${valor} para ID ${id}`);
   } catch (error) {
     console.error("Error en la actualización:", error);
   }
