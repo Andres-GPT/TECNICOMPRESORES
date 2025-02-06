@@ -17,43 +17,32 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const descripcionInput = document.getElementById("descripcion");
   const observacionesInput = document.getElementById("observaciones");
-  const procedimientoInput = document.getElementById(
-    "descripcion_procedimiento"
-  );
+  const procedimientoInput = document.getElementById("descripcion_procedimiento");
   const costoRevisionInput = document.getElementById("costo_revision");
-  const costoProcedimientoInput = document.getElementById(
-    "costo_procedimiento"
-  );
+  const costoProcedimientoInput = document.getElementById("costo_procedimiento");
 
-  // Validar teléfono en tiempo real
-  telefonoInput.addEventListener("input", function () {
-    if (this.value.length > 10) {
-      this.value = this.value.slice(0, 10);
-      document.getElementById("telefono-error").style.display = "block";
-    } else {
-      document.getElementById("telefono-error").style.display = "none";
-    }
-  });
-
-  cedulaInput.value = cedula;
-  cedulaInput.readOnly = true;
+  // Referencias al modal de estante y nivel
+  const modalEstanteNivel = document.getElementById("modalEstanteNivel");
+  const inputEstante = document.getElementById("inputEstante");
+  const inputNivel = document.getElementById("inputNivel");
+  const btnConfirmar = document.getElementById("btnConfirmar");
+  const closeModal = document.querySelector("#modalEstanteNivel .close");
 
   let clienteOriginal = {};
   let maquinaOriginal = {};
   let procedimientoOriginal = {};
   let id_procedimiento;
 
+  cedulaInput.value = cedula;
+  cedulaInput.readOnly = true;
+
   try {
-    const procedimientoResponse = await fetch(
-      `${link}/procedimientos/completo/${id}`
-    );
+    const procedimientoResponse = await fetch(`${link}/procedimientos/completo/${id}`);
     const procedimientoData = await procedimientoResponse.json();
     id_procedimiento = procedimientoData.procedimiento.id;
 
     if (!procedimientoData.error) {
-      clienteOriginal = {
-        ...procedimientoData.procedimiento.maquina.cliente_maquina,
-      };
+      clienteOriginal = { ...procedimientoData.procedimiento.maquina.cliente_maquina };
       nombreInput.value = clienteOriginal.nombre || "";
       apellidoInput.value = clienteOriginal.apellido || "";
       telefonoInput.value = clienteOriginal.telefono || "";
@@ -73,85 +62,109 @@ document.addEventListener("DOMContentLoaded", async () => {
       delete procedimientoOriginal.maquina;
       procedimientoInput.value = procedimientoOriginal.descripcion || "";
       costoRevisionInput.value = procedimientoOriginal.costo_revision || "";
-      costoProcedimientoInput.value =
-        procedimientoOriginal.costo_procedimiento || "";
+      costoProcedimientoInput.value = procedimientoOriginal.costo_procedimiento || "";
     }
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
 
-  document
-    .getElementById("form-register")
-    .addEventListener("submit", async (event) => {
-      event.preventDefault();
+  document.getElementById("form-register").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-      const accion = event.submitter.id; // Identificar si fue "aceptar" o "cancelar"
-      let estadoProcedimiento = "";
-      let estadoMaquina = "";
-      let costo_procedimiento = 0;
+    const accion = event.submitter.id; // Identificar si fue "aceptar" o "cancelar"
 
-      if (accion === "btn-aceptar") {
-        estadoProcedimiento = "aceptado";
-        estadoMaquina = "en proceso";
-        costo_procedimiento = costoProcedimientoInput.value;
-      } else if (accion === "btn-cancelar") {
-        estadoProcedimiento = "rechazado";
-        estadoMaquina = "pendiente por recoger";
-        costo_procedimiento = 0;
+    if (accion === "btn-aceptar") {
+      await procesarProcedimiento("aceptado", "en proceso", costoProcedimientoInput.value);
+    } else if (accion === "btn-cancelar") {
+      // Abre el modal para ingresar estante y nivel
+      modalEstanteNivel.style.display = "block";
+    }
+  });
+
+  async function procesarProcedimiento(estadoProcedimiento, estadoMaquina, costoProcedimiento, estante = "", nivel = "") {
+    const clienteActualizado = {
+      nombre: nombreInput.value,
+      apellido: apellidoInput.value,
+      telefono: telefonoInput.value,
+      correo: correoInput.value,
+      direccion: direccionInput.value,
+    };
+    const maquinaActualizada = {
+      descripcion: descripcionInput.value,
+      observaciones: observacionesInput.value,
+      estado: estadoMaquina,
+    };
+    const procedimientoActualizado = {
+      descripcion: procedimientoInput.value,
+      costo_revision: costoRevisionInput.value,
+      costo_procedimiento: costoProcedimiento,
+      estado: estadoProcedimiento,
+    };
+
+    const cambiosCliente = JSON.stringify(clienteActualizado) !== JSON.stringify(clienteOriginal);
+
+    try {
+      await fetch(`${link}/procedimientos/${id_procedimiento}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(procedimientoActualizado),
+      });
+      await fetch(`${link}/maquinas/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...maquinaActualizada, estante, nivel }),
+      });
+      if (cambiosCliente) {
+        await fetch(`${link}/clientes/${cedula}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(clienteActualizado),
+        });
       }
 
-      // Verificar cambios en cliente, máquina y procedimiento
-      const clienteActualizado = {
-        nombre: nombreInput.value,
-        apellido: apellidoInput.value,
-        telefono: telefonoInput.value,
-        correo: correoInput.value,
-        direccion: direccionInput.value,
-      };
-      const maquinaActualizada = {
-        descripcion: descripcionInput.value,
-        observaciones: observacionesInput.value,
-        estado: estadoMaquina,
-      };
-      const procedimientoActualizado = {
-        descripcion: procedimientoInput.value,
-        costo_revision: costoRevisionInput.value,
-        costo_procedimiento: costo_procedimiento,
-        estado: estadoProcedimiento,
-      };
-
-      const cambiosCliente =
-        JSON.stringify(clienteActualizado) !== JSON.stringify(clienteOriginal);
-
-      try {
-        await fetch(`${link}/procedimientos/${id_procedimiento}`, {
-          method: "PUT",
+      if (estadoProcedimiento === "rechazado") {
+        await fetch(`${link}/recibos`, {
+          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(procedimientoActualizado),
+          body: JSON.stringify({ id_maquina: id }),
         });
-        await fetch(`${link}/maquinas/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(maquinaActualizada),
-        });
+      }
 
-        if (cambiosCliente) {
-          await fetch(`${link}/clientes/${cedula}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(clienteActualizado),
-          });
-        }
-        mostrarModal("Procedimineto confirmado correctamente.", () => {
+      if (estadoProcedimiento === "rechazado") {
+        mostrarModal("Procedimiento rechazado correctamente.", () => {
           window.location.href = "index.html";
         });
-      } catch (error) {
-        console.error("Error al actualizar los datos:", error);
-        alert("Hubo un error al actualizar los datos.");
+      } else {
+        mostrarModal("Procedimiento aprobado correctamente.", () => {
+          window.location.href = "index.html";
+        });
       }
-    });
+    } catch (error) {
+      console.error("Error al actualizar los datos:", error);
+      alert("Hubo un error al actualizar los datos.");
+    }
+  }
+
+  // Confirmación desde el modal de estante y nivel
+  btnConfirmar.addEventListener("click", async () => {
+    const estante = inputEstante.value.trim();
+    const nivel = inputNivel.value.trim();
+
+    if (!estante || !nivel) {
+      alert("Por favor ingrese estante y nivel.");
+      return;
+    }
+
+    modalEstanteNivel.style.display = "none";
+    await procesarProcedimiento("rechazado", "pendiente por recoger", 0, estante, nivel);
+  });
+
+  closeModal.addEventListener("click", () => {
+    modalEstanteNivel.style.display = "none";
+  });
 });
 
+// Función para mostrar el modal de confirmación
 function mostrarModal(mensaje, callback) {
   const modal = document.getElementById("modal-confirmacion");
   const modalMensaje = document.getElementById("modal-mensaje");
@@ -161,8 +174,7 @@ function mostrarModal(mensaje, callback) {
   modal.style.display = "flex";
 
   btnCerrar.onclick = function () {
-      modal.style.display = "none";
-      if (callback) callback();
+    modal.style.display = "none";
+    if (callback) callback();
   };
 }
-

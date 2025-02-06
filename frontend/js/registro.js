@@ -108,7 +108,7 @@ async function validarFormulario(event) {
     mostrarModal(
       "Usuario y máquina registrados correctamente.",
       () => {
-        window.location.href = "index.html";
+        location.href = "recibo_registro.html";
       }
     );
   } catch (error) {
