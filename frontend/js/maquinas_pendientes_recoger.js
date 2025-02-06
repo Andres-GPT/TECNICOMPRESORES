@@ -55,10 +55,10 @@ function renderizarTabla(data) {
           <td>${maquina.apellido}</td>
           <td>${maquina.descripcion}</td>
           <td>${maquina.procedimiento}</td>
-          <td class="estante-input">
+          <td class="estante">
             <input type="number" class="estante-input" data-id="${maquina.id}" value="${maquina.estante}">
           </td>
-          <td class="nivel-input">
+          <td class="nivel">
             <input type="number" class="nivel-input" data-id="${maquina.id}" value="${maquina.nivel}">
           </td>
           <td>${maquina.fecha}</td>
@@ -72,7 +72,7 @@ function renderizarTabla(data) {
   // Agregar evento de clic a cada fila (excepto en los inputs)
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
     row.addEventListener("click", function (event) {
-      if (!event.target.classList.contains("estante-input") && !event.target.classList.contains("nivel-input")) {
+      if (!event.target.classList.contains("estante-input") && !event.target.classList.contains("nivel-input") &&!event.target.classList.contains("estante") && !event.target.classList.contains("nivel")) {
         const id = this.getAttribute("data-id");
         const cedula = this.getAttribute("data-cedula");
         window.location.href = `confirmar_entrega.html?id=${id}&cedula=${cedula}`;
