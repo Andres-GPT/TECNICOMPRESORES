@@ -223,7 +223,8 @@ nav a {
 
 .btn-accion {
   background-color: #1fd000;
-  color: rgb(0, 0, 0);
+  color: white;
+  font-weight: bold;
   padding: 10px 15px;
   font-size: 16px;
   border: none;

@@ -81,6 +81,7 @@ nav a {
   border-radius: 5px;
   cursor: pointer;
   max-height: 40px;
+  font-size: 1rem;
 }
 
 .history-button:hover {

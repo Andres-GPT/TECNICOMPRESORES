@@ -15,18 +15,17 @@ async function mostrarUsuarios() {
       }
 
       // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map(maquina => ({
+      maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
         observaciones: maquina.observaciones,
-        fecha: maquina.fecha 
+        fecha: maquina.fecha,
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
-
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
@@ -53,6 +52,9 @@ function renderizarTabla(data) {
           <td>${maquina.descripcion}</td>
           <td>${maquina.observaciones}</td>
           <td>${maquina.fecha}</td>
+          <td class="devolver">
+          <button class="devolver-btn" onclick="devolverMaquina(this)" data-id="${maquina.id}">Devolver</button>
+          </td>
       </tr>
     `;
   });
@@ -61,12 +63,36 @@ function renderizarTabla(data) {
 
   // Agregar evento de clic a cada fila
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
-    row.addEventListener("click", function () {
-      const id = this.getAttribute("data-id");
-      const cedula = this.getAttribute("data-cedula");
-      window.location.href = `generar_recibo_final.html?id=${id}&cedula=${cedula}`;
+    row.addEventListener("click", function (event) {
+      if (
+        !event.target.classList.contains("devolver-btn") &&
+        !event.target.classList.contains("devolver")
+      ) {
+        const id = this.getAttribute("data-id");
+        const cedula = this.getAttribute("data-cedula");
+        window.location.href = `generar_recibo_final.html?id=${id}&cedula=${cedula}`;
+      }
     });
   });
+}
+
+// Función para devolver la máquina
+function devolverMaquina(btn) {
+  const id = btn.getAttribute("data-id");
+  const response = fetch(`${link}/maquinas/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ estado: "pendiente por recoger" }),
+  });
+
+  if (!response.status === 200) {
+    throw new Error("Error al devolver la máquina");
+  }
+
+  alert("Máquina devuelta con éxito");
+  location.reload();
 }
 
 // Filtrar por Cédula
@@ -76,7 +102,9 @@ function filtroCedula() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.cedula == cedula);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.cedula == cedula
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -87,7 +115,9 @@ function filtroFecha() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.fecha === fecha);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.fecha === fecha
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
