@@ -142,12 +142,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             body: JSON.stringify(clienteActualizado),
           });
         }
-
-        alert("Actualización realizada correctamente");
-        window.location.href = "index.html";
+        mostrarModal("Procedimineto confirmado correctamente.", () => {
+          window.location.href = "index.html";
+        });
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
         alert("Hubo un error al actualizar los datos.");
       }
     });
 });
+
+function mostrarModal(mensaje, callback) {
+  const modal = document.getElementById("modal-confirmacion");
+  const modalMensaje = document.getElementById("modal-mensaje");
+  const btnCerrar = document.getElementById("modal-cerrar");
+
+  modalMensaje.textContent = mensaje;
+  modal.style.display = "flex";
+
+  btnCerrar.onclick = function () {
+      modal.style.display = "none";
+      if (callback) callback();
+  };
+}
+

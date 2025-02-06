@@ -105,12 +105,30 @@ async function validarFormulario(event) {
     };
 
     sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
-    alert("Usuario y máquina registrados correctamente");
-    location.href = "recibo_registro.html";
+    mostrarModal(
+      "Usuario y máquina registrados correctamente.",
+      () => {
+        window.location.href = "index.html";
+      }
+    );
   } catch (error) {
     console.error(error);
     alert(error.message);
   }
+}
+
+function mostrarModal(mensaje, callback) {
+  const modal = document.getElementById("modal-confirmacion");
+  const modalMensaje = document.getElementById("modal-mensaje");
+  const btnCerrar = document.getElementById("modal-cerrar");
+
+  modalMensaje.textContent = mensaje;
+  modal.style.display = "flex";
+
+  btnCerrar.onclick = function () {
+    modal.style.display = "none";
+    if (callback) callback();
+  };
 }
 
 async function crearUsuario(data) {
@@ -230,7 +248,6 @@ function limpiarFormulario() {
   document.getElementById("correo").value = "";
   document.getElementById("direccion").value = "";
 }
-
 
 // Validar cédula en tiempo real
 inputCedula.addEventListener("input", function () {
