@@ -289,13 +289,9 @@ export const getMaquinasProceso = async (req, res) => {
             )?.descripcion || "N/A",
           estante: maquina.estante,
           nivel: maquina.nivel,
-          nota: notaEncontrada
-            ? {
-                nota: notaEncontrada.nota,
-              }
-            : {
-                nota: "Sin notas",
-              }, // Si no hay nota, se asigna null
+          nota: notaEncontrada && notaEncontrada.nota.length > 0
+            ? { nota: notaEncontrada.nota }
+            : { nota: "Sin notas" },
         };
       }),
     });
@@ -308,3 +304,4 @@ export const getMaquinasProceso = async (req, res) => {
     });
   }
 };
+

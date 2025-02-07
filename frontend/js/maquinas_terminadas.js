@@ -91,8 +91,23 @@ function devolverMaquina(btn) {
     throw new Error("Error al devolver la máquina");
   }
 
-  alert("Máquina devuelta con éxito");
-  location.reload();
+  mostrarModal("Máquina devuelta con éxito.", () => {
+    window.location.href = "index.html";
+  });
+}
+
+function mostrarModal(mensaje, callback) {
+  const modal = document.getElementById("modal-confirmacion");
+  const modalMensaje = document.getElementById("modal-mensaje");
+  const btnCerrar = document.getElementById("modal-cerrar");
+
+  modalMensaje.textContent = mensaje;
+  modal.style.display = "flex";
+
+  btnCerrar.onclick = function () {
+    modal.style.display = "none";
+    if (callback) callback();
+  };
 }
 
 // Filtrar por Cédula
