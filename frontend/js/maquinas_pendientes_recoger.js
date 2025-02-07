@@ -72,7 +72,12 @@ function renderizarTabla(data) {
   // Agregar evento de clic a cada fila (excepto en los inputs)
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
     row.addEventListener("click", function (event) {
-      if (!event.target.classList.contains("estante-input") && !event.target.classList.contains("nivel-input") &&!event.target.classList.contains("estante") && !event.target.classList.contains("nivel")) {
+      if (
+        !event.target.classList.contains("estante-input") &&
+        !event.target.classList.contains("nivel-input") &&
+        !event.target.classList.contains("estante") &&
+        !event.target.classList.contains("nivel")
+      ) {
         const id = this.getAttribute("data-id");
         const cedula = this.getAttribute("data-cedula");
         window.location.href = `confirmar_entrega.html?id=${id}&cedula=${cedula}`;
@@ -80,14 +85,29 @@ function renderizarTabla(data) {
     });
   });
 
-  // Agregar eventos a los inputs para actualizar datos al cambiar
-  document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
-    input.addEventListener("blur", async function () {
-      const id = this.getAttribute("data-id");
-      const campo = this.classList.contains("estante-input") ? "estante" : "nivel";
-      const valor = this.value;
+  // // Agregar eventos a los inputs para actualizar datos al cambiar
+  // document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
+  //   input.addEventListener("blur", async function () {
+  //     const id = this.getAttribute("data-id");
+  //     const campo = this.classList.contains("estante-input") ? "estante" : "nivel";
+  //     const valor = this.value;
 
-      await actualizarDato(id, campo, valor);
+  //     await actualizarDato(id, campo, valor);
+  //   });
+  // });
+  // Agregar eventos a los inputs para actualizar datos al presionar Enter
+  document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
+    input.addEventListener("keydown", async function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const id = this.getAttribute("data-id");
+        const campo = this.classList.contains("estante-input")
+          ? "estante"
+          : "nivel";
+        const valor = this.value;
+
+        await actualizarDato(id, campo, valor);
+      }
     });
   });
 }
