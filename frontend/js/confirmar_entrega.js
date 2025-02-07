@@ -26,6 +26,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
   const notasInput = document.getElementById("notas");
 
+  // validar la nota en tiempo real
+  notasInput.addEventListener("input", function () {
+    if (this.value.length > 255) {
+      this.value = this.value.slice(0, 255);
+      document.getElementById("notas-error").style.display = "block";
+    } else {
+      document.getElementById("notas-error").style.display = "none";
+    }
+  });
+
   // Hacer todos los inputs readonly, excepto el de notas
   document.querySelectorAll("input, textarea").forEach((input) => {
     if (input.id !== "notas") input.readOnly = true;

@@ -11,6 +11,25 @@ const inputNivel = document.getElementById("inputNivel");
 const btnConfirmar = document.getElementById("btnConfirmar");
 const closeModal = document.querySelector(".close");
 
+// validar el estante y nivel
+inputEstante.addEventListener("input", function () {
+  if (this.value.length > 10) {
+    this.value = this.value.slice(0, 10);
+    document.getElementById("inputEstante-error").style.display = "block";
+  } else {
+    document.getElementById("inputEstante-error").style.display = "none";
+  }
+});
+
+inputNivel.addEventListener("input", function () {
+  if (this.value.length > 10) {
+    this.value = this.value.slice(0, 10);
+    document.getElementById("inputNivel-error").style.display = "block";
+  } else {
+    document.getElementById("inputNivel-error").style.display = "none";
+  }
+});
+
 // Mostrar datos al cargar la página
 document.addEventListener("DOMContentLoaded", async () => {
   await mostrarUsuarios();

@@ -43,10 +43,14 @@
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" required>
+                        <small id="nombre-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="nombre-error-letras" style="color: red; display: none;">Solo letras</small>
                     </div>
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
                         <input type="text" id="apellido" name="apellido" required>
+                        <small id="apellido-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="apellido-error-letras" style="color: red; display: none;">Solo letras</small>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
@@ -56,10 +60,12 @@
                     <div class="form-group">
                         <label for="correo">Correo</label>
                         <input type="email" id="correo" name="correo">
+                        <small id="correo-error" style="color: red; display: none;">Correo inválido</small>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección</label>
                         <input type="text" id="direccion" name="direccion" required>
+                        <small id="direccion-error" style="color: red; display: none;">Máximo 100 caracteres</small>
                     </div>
 
                     <h3>Técnico</h3>
@@ -76,22 +82,27 @@
                     <div class="form-group">
                         <label for="descripcion">Descripción</label>
                         <textarea id="descripcion" name="descripcion" required></textarea>
+                        <small id="descripcion-error" style="color: red; display: none;">Máximo 255 caracteres</small>
                     </div>
                     <div class="form-group">
                         <label for="observaciones">Observaciones</label>
                         <textarea id="observaciones" name="observaciones" required></textarea>
+                        <small id="observaciones-error" style="color: red; display: none;">Máximo 255 caracteres</small>
                     </div>
                     <div class="form-group">
                         <label for="descripcion_procedimiento">Descripción del procedimiento</label>
                         <textarea id="descripcion_procedimiento" name="descripcion_procedimiento" required></textarea>
+                        <small id="descripcion_procedimiento-error" style="color: red; display: none;">Máximo 255 caracteres</small>
                     </div>
                     <div class="form-group">
                         <label for="costo_revision">Costo de la revisión</label>
-                        <input type="number" id="costo_revision" name="costo_revision" required>
+                        <input type="number" id="costo_revision" name="costo_revision" required step="0.01">
+                        <small id="costo_revision-error" style="color: red; display: none;">Máximo 10 dígitos</small>
                     </div>
                     <div class="form-group">
                         <label for="costo_procedimiento">Costo del procedimiento</label>
-                        <input type="number" id="costo_procedimiento" name="costo_procedimiento" required>
+                        <input type="number" id="costo_procedimiento" name="costo_procedimiento" required step="0.01">
+                        <small id="costo_procedimiento-error" style="color: red; display: none;">Máximo 10 dígitos</small>
                     </div>
                 </div>
             </div>

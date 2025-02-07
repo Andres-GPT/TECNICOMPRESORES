@@ -34,6 +34,136 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnConfirmar = document.getElementById("btnConfirmar");
   const closeModal = document.querySelector("#modalEstanteNivel .close");
 
+  // validar tamaño del nombre y que solo se introduzcan letras
+  nombreInput.addEventListener("input", function () {
+    if (this.value.length > 30) {
+      this.value = this.value.slice(0, 30);
+      document.getElementById("nombre-error").style.display = "block";
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+      this.value = this.value.replace(/[0-9]/g, "");
+      document.getElementById("nombre-error-letras").style.display = "block";
+    } else {
+      document.getElementById("nombre-error-letras").style.display = "none";
+      document.getElementById("nombre-error").style.display = "none";
+    }
+  });
+
+  // validar apellido en tiempo real
+  apellidoInput.addEventListener("input", function () {
+    if (this.value.length > 30) {
+      this.value = this.value.slice(0, 30);
+      document.getElementById("apellido-error").style.display = "block";
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+      this.value = this.value.replace(/[0-9]/g, "");
+      document.getElementById("apellido-error-letras").style.display = "block";
+    } else {
+      document.getElementById("apellido-error-letras").style.display = "none";
+      document.getElementById("apellido-error").style.display = "none";
+    }
+  });
+
+  // Validar teléfono en tiempo real
+  telefonoInput.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("telefono-error").style.display = "block";
+    } else {
+      document.getElementById("telefono-error").style.display = "none";
+    }
+  });
+
+  // Validar correo en tiempo real
+  correoInput.addEventListener("input", function () {
+    if (!this.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      document.getElementById("correo-error").style.display = "block";
+    } else {
+      document.getElementById("correo-error").style.display = "none";
+    }
+  });
+
+  // Validar dirección en tiempo real
+  direccionInput.addEventListener("input", function () {
+    if (this.value.length > 100) {
+      this.value = this.value.slice(0, 100);
+      document.getElementById("direccion-error").style.display = "block";
+    } else {
+      document.getElementById("direccion-error").style.display = "none";
+    }
+  });
+
+  // Validar descripción en tiempo real
+  descripcionInput.addEventListener("input", function () {
+    if (this.value.length > 255) {
+      this.value = this.value.slice(0, 255);
+      document.getElementById("descripcion-error").style.display = "block";
+    } else {
+      document.getElementById("descripcion-error").style.display = "none";
+    }
+  });
+
+  // Validar observaciones en tiempo real
+  observacionesInput.addEventListener("input", function () {
+    if (this.value.length > 255) {
+      this.value = this.value.slice(0, 255);
+      document.getElementById("observaciones-error").style.display = "block";
+    } else {
+      document.getElementById("observaciones-error").style.display = "none";
+    }
+  });
+
+  // Validar descripción del procedimiento en tiempo real
+  procedimientoInput.addEventListener("input", function () {
+    if (this.value.length > 255) {
+      this.value = this.value.slice(0, 255);
+      document.getElementById("descripcion_procedimiento-error").style.display =
+        "block";
+    } else {
+      document.getElementById("descripcion_procedimiento-error").style.display =
+        "none";
+    }
+  });
+
+  // Validar costo de revisión en tiempo real
+  costoRevisionInput.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("costo_revision-error").style.display = "block";
+    } else {
+      document.getElementById("costo_revision-error").style.display = "none";
+    }
+  });
+
+  // Validar costo del procedimiento en tiempo real
+  costoProcedimientoInput.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("costo_procedimiento-error").style.display =
+        "block";
+    } else {
+      document.getElementById("costo_procedimiento-error").style.display =
+        "none";
+    }
+  }); 
+
+  // validar el estante y nivel
+  inputEstante.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("inputEstante-error").style.display = "block";
+    } else {
+      document.getElementById("inputEstante-error").style.display = "none";
+    }
+  });
+
+  inputNivel.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("inputNivel-error").style.display = "block";
+    } else {
+      document.getElementById("inputNivel-error").style.display = "none";
+    }
+  });
+
   let clienteOriginal = {};
   let maquinaOriginal = {};
   let procedimientoOriginal = {};
@@ -214,11 +344,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    const tecnicoSeleccionado = tecnicoSelect.value; // Obtener cédula del técnico seleccionado
+
+    if (!tecnicoSeleccionado) {
+      alert("Debe seleccionar un técnico a cargo.");
+      return;
+    }
+
     modalEstanteNivel.style.display = "none";
     await procesarProcedimiento(
       "rechazado",
       "pendiente por recoger",
       0,
+      tecnicoSeleccionado,
       estante,
       nivel
     );

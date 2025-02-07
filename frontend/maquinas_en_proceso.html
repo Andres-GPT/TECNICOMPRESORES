@@ -69,11 +69,13 @@
             <h2>Confirmar Registro</h2>
             <div class="div-input">
                 <label for="inputEstante">Estante:</label>
-                <input class="input" type="text" id="inputEstante" placeholder="Ingrese el estante">
+                <input class="input" type="number" id="inputEstante" placeholder="Ingrese el estante">
+                <small id="inputEstante-error" style="color: red; display: none;">Máximo 10 dígitos</small>
             </div>
             <div class="div-input">
                 <label for="inputNivel">Nivel:</label>
-                <input class="input" type="text" id="inputNivel" placeholder="Ingrese el nivel">
+                <input class="input" type="number" id="inputNivel" placeholder="Ingrese el nivel">
+                <small id="inputNivel-error" style="color: red; display: none;">Máximo 10 dígitos</small>
             </div>
             <button class="btnModal" id="btnConfirmar">Confirmar</button>
         </div>

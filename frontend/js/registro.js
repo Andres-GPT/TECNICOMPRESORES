@@ -105,12 +105,9 @@ async function validarFormulario(event) {
     };
 
     sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
-    mostrarModal(
-      "Usuario y máquina registrados correctamente.",
-      () => {
-        location.href = "recibo_registro.html";
-      }
-    );
+    mostrarModal("Usuario y máquina registrados correctamente.", () => {
+      location.href = "recibo_registro.html";
+    });
   } catch (error) {
     console.error(error);
     alert(error.message);
@@ -259,6 +256,33 @@ inputCedula.addEventListener("input", function () {
   }
 });
 
+// validar nombre en tiempo real
+inputNombre.addEventListener("input", function () {
+  if (this.value.length > 30) {
+    this.value = this.value.slice(0, 30);
+    document.getElementById("nombre-error").style.display = "block";
+  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+    this.value = this.value.replace(/[0-9]/g, "");
+    document.getElementById("nombre-error-letras").style.display = "block";
+  } else {
+    document.getElementById("nombre-error-letras").style.display = "none";
+    document.getElementById("nombre-error").style.display = "none";
+  }
+});
+
+// validar apellido en tiempo real
+inputApellido.addEventListener("input", function () {
+  if (this.value.length > 30) {
+    this.value = this.value.slice(0, 30);
+    document.getElementById("apellido-error").style.display = "block";
+  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+    this.value = this.value.replace(/[0-9]/g, "");
+    document.getElementById("apellido-error-letras").style.display = "block";
+  } else {
+    document.getElementById("apellido-error").style.display = "none";
+  }
+});
+
 // Validar teléfono en tiempo real
 inputTelefono.addEventListener("input", function () {
   if (this.value.length > 10) {
@@ -266,5 +290,44 @@ inputTelefono.addEventListener("input", function () {
     document.getElementById("telefono-error").style.display = "block";
   } else {
     document.getElementById("telefono-error").style.display = "none";
+  }
+});
+
+// Validar correo en tiempo real
+inputCorreo.addEventListener("input", function () {
+  if (!this.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    document.getElementById("correo-error").style.display = "block";
+  } else {
+    document.getElementById("correo-error").style.display = "none";
+  }
+});
+
+// Validar dirección en tiempo real
+inputDireccion.addEventListener("input", function () {
+  if (this.value.length > 100) {
+    this.value = this.value.slice(0, 100);
+    document.getElementById("direccion-error").style.display = "block";
+  } else {
+    document.getElementById("direccion-error").style.display = "none";
+  }
+});
+
+// Validar descripción en tiempo real
+inputDescripcion.addEventListener("input", function () {
+  if (this.value.length > 255) {
+    this.value = this.value.slice(0, 255);
+    document.getElementById("descripcion-error").style.display = "block";
+  } else {
+    document.getElementById("descripcion-error").style.display = "none";
+  }
+});
+
+// Validar observaciones en tiempo real
+inputObservaciones.addEventListener("input", function () {
+  if (this.value.length > 255) {
+    this.value = this.value.slice(0, 255);
+    document.getElementById("observaciones-error").style.display = "block";
+  } else {
+    document.getElementById("observaciones-error").style.display = "none";
   }
 });

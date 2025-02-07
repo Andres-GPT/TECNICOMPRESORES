@@ -43,10 +43,14 @@
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" required>
+                        <small id="nombre-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="nombre-error-letras" style="color: red; display: none;">Solo letras</small>
                     </div>
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
                         <input type="text" id="apellido" name="apellido" required>
+                        <small id="apellido-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="apellido-error-letras" style="color: red; display: none;">Solo letras</small>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
@@ -56,10 +60,12 @@
                     <div class="form-group">
                         <label for="correo">Correo</label>
                         <input type="email" id="correo" name="correo">
+                        <small id="correo-error" style="color: red; display: none;">Correo inválido</small>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección</label>
                         <input type="text" id="direccion" name="direccion" required>
+                        <small id="direccion-error" style="color: red; display: none;">Máximo 100 caracteres</small>
                     </div>
                 </div>
 
@@ -68,10 +74,12 @@
                     <div class="form-group">
                         <label for="descripcion">Descripción</label>
                         <textarea id="descripcion" name="descripcion" required></textarea>
+                        <small id="descripcion-error" style="color: red; display: none;">Máximo 255 caracteres</small>
                     </div>
                     <div class="form-group">
                         <label for="observaciones">Observaciones</label>
                         <textarea id="observaciones" name="observaciones" required></textarea>
+                        <small id="observaciones-error" style="color: red; display: none;">Máximo 255 caracteres</small>
                     </div>
                 </div>
             </div>
