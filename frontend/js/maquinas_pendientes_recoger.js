@@ -85,31 +85,33 @@ function renderizarTabla(data) {
     });
   });
 
-  // // Agregar eventos a los inputs para actualizar datos al cambiar
-  // document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
-  //   input.addEventListener("blur", async function () {
-  //     const id = this.getAttribute("data-id");
-  //     const campo = this.classList.contains("estante-input") ? "estante" : "nivel";
-  //     const valor = this.value;
-
-  //     await actualizarDato(id, campo, valor);
-  //   });
-  // });
-  // Agregar eventos a los inputs para actualizar datos al presionar Enter
+  // Agregar eventos a los inputs para actualizar datos al cambiar
   document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
-    input.addEventListener("keydown", async function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        const id = this.getAttribute("data-id");
-        const campo = this.classList.contains("estante-input")
-          ? "estante"
-          : "nivel";
-        const valor = this.value;
+    input.addEventListener("blur", async function () {
+      const id = this.getAttribute("data-id");
+      const campo = this.classList.contains("estante-input")
+        ? "estante"
+        : "nivel";
+      const valor = this.value;
 
-        await actualizarDato(id, campo, valor);
-      }
+      await actualizarDato(id, campo, valor);
     });
   });
+  // // Agregar eventos a los inputs para actualizar datos al presionar Enter
+  // document.querySelectorAll(".estante-input, .nivel-input").forEach((input) => {
+  //   input.addEventListener("keydown", async function (event) {
+  //     if (event.key === "Enter") {
+  //       event.preventDefault();
+  //       const id = this.getAttribute("data-id");
+  //       const campo = this.classList.contains("estante-input")
+  //         ? "estante"
+  //         : "nivel";
+  //       const valor = this.value;
+
+  //       await actualizarDato(id, campo, valor);
+  //     }
+  //   });
+  // });
 }
 
 // Función para actualizar el dato en la API
