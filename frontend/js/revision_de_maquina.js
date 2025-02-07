@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     "costo_procedimiento"
   );
 
+  const tecnicoSelect = document.getElementById("tecnico");
+
   // Validar teléfono en tiempo real
   telefonoInput.addEventListener("input", function () {
     if (this.value.length > 10) {
@@ -69,6 +71,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       console.error("Error obteniendo la máquina:", maquinaData.mensaje);
     }
+
+    // Obtener lista de técnicos
+    const tecnicosResponse = await fetch(`${link}/tecnicos`);
+    const tecnicosData = await tecnicosResponse.json();
+
+    if (!tecnicosData.error) {
+      tecnicosData.tecnicos.forEach((tecnico) => {
+        const option = document.createElement("option");
+        option.value = tecnico.cedula;
+        option.textContent = `${tecnico.cedula} - ${tecnico.nombre}`;
+        tecnicoSelect.appendChild(option);
+      });
+    } else {
+      console.error("Error obteniendo técnicos:", tecnicosData.mensaje);
+    }
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
@@ -80,6 +97,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       let clienteModificado = false;
       let maquinaModificada = false;
+
+      const tecnicoSeleccionado = tecnicoSelect.value; // Obtener cédula del técnico seleccionado
+
+      if (!tecnicoSeleccionado) {
+        alert("Debe seleccionar un técnico a cargo.");
+        return;
+      }
 
       // Datos del cliente a actualizar
       const clienteActualizado = {
@@ -145,12 +169,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             descripcion: procedimientoInput.value,
             costo_revision: costoRevisionInput.value,
             costo_procedimiento: costoProcedimientoInput.value,
+            id_tecnico: tecnicoSeleccionado,
           }),
         });
 
-        mostrarModal("Datos actualizados y procedimiento registrado correctamente.", () => {
-          window.location.href = "index.html";
-      });
+        mostrarModal(
+          "Datos actualizados y procedimiento registrado correctamente.",
+          () => {
+            window.location.href = "index.html";
+          }
+        );
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
         alert("Hubo un error al actualizar los datos.");
@@ -167,7 +195,7 @@ function mostrarModal(mensaje, callback) {
   modal.style.display = "flex";
 
   btnCerrar.onclick = function () {
-      modal.style.display = "none";
-      if (callback) callback();
+    modal.style.display = "none";
+    if (callback) callback();
   };
 }

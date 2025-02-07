@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let clienteOriginal = {};
   let maquinaOriginal = {};
   let procedimientoOriginal = {};
+  let tecnico = {};
   let id_procedimiento;
   let notaExistente = null;
 
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     const procedimientoData = await procedimientoResponse.json();
     id_procedimiento = procedimientoData.procedimiento.id;
+    const id_tecnico = procedimientoData.procedimiento.id_tecnico;
 
     if (!procedimientoData.error) {
       clienteOriginal = {
@@ -82,6 +84,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       notasInput.value = "";
     }
+
+    // Obtener lista de técnicos
+    const tecnicoResponse = await fetch(`${link}/tecnicos/${id_tecnico}`);
+    const tecnicoData = await tecnicoResponse.json();
+
+    if (!tecnicoData.error) {
+      tecnico = { ...tecnicoData.tecnico };
+    } else {
+      console.error("Error obteniendo técnico:", tecnicoData.mensaje);
+    }
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
@@ -95,8 +107,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (accion === "btn-entregar") {
         // formetear la fecha de entrada
-        const fechaEntradaFormateada = maquinaOriginal.fecha_entrada.split("T")[0];
-        const fechaRevisionFormateada = procedimientoOriginal.fecha_revision.split("T")[0];
+        const fechaEntradaFormateada =
+          maquinaOriginal.fecha_entrada.split("T")[0];
+        const fechaRevisionFormateada =
+          procedimientoOriginal.fecha_revision.split("T")[0];
         let costo_procedimiento = 0;
         if (procedimientoOriginal.estado_cliente === "aceptado") {
           costo_procedimiento = procedimientoOriginal.costo_procedimiento;
@@ -113,6 +127,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           fecha: fechaEntradaFormateada,
           procedimiento: procedimientoOriginal.descripcion,
           estado: procedimientoOriginal.estado_cliente,
+          cedula_tecnico: tecnico.cedula,
+          nombre_tecnico: tecnico.nombre,
+          apellido_tecnico: tecnico.apellido,
+          telefono_tecnico: tecnico.telefono,
           fecha_revision: fechaRevisionFormateada,
           costo_revision: procedimientoOriginal.costo_revision,
           costo_procedimiento: costo_procedimiento,

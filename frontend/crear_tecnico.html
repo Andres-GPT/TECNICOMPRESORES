@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/revision_maquina.css">
+    <link rel="stylesheet" href="css/crear_tecnico.css">
     <script src="js/config.js"></script>
     <title>Tecnicompresores</title>
 </head>
@@ -21,24 +21,25 @@
             <a href="registro.html">Registro</a>
             <a href="maquinas.html">Máquinas</a>
             <a href="configurar_recibo.html">Configuración</a>
+            <a href="tecnicos.html">Técnicos</a>
         </nav>
     </header>
 
     <div class="container">
 
         <div class="titulo">
-            <h1>Revisión de la máquina</h1>
+            <h1>Crear Técnico</h1>
         </div>
 
         <form action="" id="form-register">
             <div class="form-container">
                 <div class="form-section">
-                    <h3>Datos del Cliente</h3>
+                    <h3>Datos del Técnico</h3>
                     <div class="form-group">
                         <label for="cedula">Cédula</label>
-                        <input type="text" id="cedula" name="cedula" oninput="obtenerCliente(this.value)">
+                        <input type="number" id="cedula" name="cedula"required>
+                        <small id="cedula-error" style="color: red; display: none;">Máximo 11 dígitos</small>
                     </div>
-
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" required>
@@ -51,56 +52,16 @@
                         <label for="telefono">Teléfono</label>
                         <input type="number" id="telefono" name="telefono" required>
                         <small id="telefono-error" style="color: red; display: none;">Máximo 10 dígitos</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="correo">Correo</label>
-                        <input type="email" id="correo" name="correo">
-                    </div>
-                    <div class="form-group">
-                        <label for="direccion">Dirección</label>
-                        <input type="text" id="direccion" name="direccion" required>
-                    </div>
-                    <h3>Técnico a cargo</h3>
-                    <div class="form-group">
-                        <label for="tecnico">Técnico a cargo:</label>
-                        <select id="tecnico" name="tecnico">
-                            <option value="">Seleccione un técnico</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>Datos de la Máquina</h3>
-                    <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <textarea id="descripcion" name="descripcion"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones</label>
-                        <textarea id="observaciones" name="observaciones"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion_procedimiento">Descripción del procedimiento</label>
-                        <textarea id="descripcion_procedimiento" name="descripcion_procedimiento"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="costo_revision">Costo de la revisión</label>
-                        <input type="number" id="costo_revision" name="costo_revision">
-                    </div>
-                    <div class="form-group">
-                        <label for="costo_procedimiento">Costo del procedimiento</label>
-                        <input type="number" id="costo_procedimiento" name="costo_procedimiento">
-                    </div>
+                    </div>                    
                 </div>
             </div>
 
             <div class="button-container">
-                <button type="submit" id="btn-aceptar">Aceptar</button>
+                <button type="submit">Registrar</button>
             </div>
         </form>
 
     </div>
-
     <!-- Modal de Confirmación -->
     <div id="modal-confirmacion" class="modal">
         <div class="modal-content">
@@ -145,6 +106,6 @@
         }
     </style>
 </body>
-<script src="js/revision_de_maquina.js"></script>
+<script src="js/crear_tecnico.js"></script>
 
 </html>

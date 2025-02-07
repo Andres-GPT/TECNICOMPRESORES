@@ -6,8 +6,7 @@ import Cliente from "../models/cliente.js";
 
 export const registerProcedimiento = async (req, res) => {
   try {
-    const { descripcion, costo_revision, costo_procedimiento, id_maquina } =
-      req.body;
+    const { descripcion, costo_revision, costo_procedimiento, id_maquina, id_tecnico } = req.body;
 
     //Crear el procedimiento
     const nuevoProcedimiento = await Procedimiento.create({
@@ -16,6 +15,7 @@ export const registerProcedimiento = async (req, res) => {
       costo_revision,
       costo_procedimiento,
       id_maquina,
+      id_tecnico,
     });
     res.status(201).json({
       error: false,
@@ -35,7 +35,7 @@ export const registerProcedimiento = async (req, res) => {
 export const editProcedimiento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion, costo_revision, costo_procedimiento, estado } =
+    const { descripcion, costo_revision, costo_procedimiento, estado, id_tecnico } =
       req.body;
 
     //Obtener el procedimiento
@@ -52,6 +52,7 @@ export const editProcedimiento = async (req, res) => {
       costo_revision,
       costo_procedimiento,
       estado_cliente: estado,
+      id_tecnico,
     });
 
     res.status(200).json({

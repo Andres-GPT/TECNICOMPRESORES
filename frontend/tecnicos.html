@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/tecnicos.css">
+    <script src="js/config.js"></script>
+    <title>Tecnicompresores</title>
+</head>
+
+<body>
+    <header>
+        <div id="logo" onclick="location.href='index.html'" style="cursor: pointer;">
+            <img src="img/logo.png" alt="Logo">
+            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="registro.html">Registro</a>
+            <a href="maquinas.html">Máquinas</a>
+            <a href="configurar_recibo.html">Configuración</a>
+            <a href="tecnicos.html">Técnicos</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div id="title">
+            <h1 class="title">Técnicos</h1>
+            <button class="history-button" onclick="location.href='crear_tecnico.html'">Crear Técnico</button>
+        </div>
+
+        <div class="filtros">
+            <h3 class="tituloFiltros">Filtros</h3>
+            <h4 class="tituloFiltros">Cédula</h4>
+            <form id="formCedula">
+                <input placeholder="Ingrese la Cédula" type="text" id="cedula">
+                <button onclick="filtroCedula()" type="button">Buscar</button>
+            </form>
+        </div>
+
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th scope="col">Cédula</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+<script src="js/tecnicos.js"></script>
+
+</html>

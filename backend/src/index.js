@@ -11,6 +11,7 @@ import procedimientoRoutes from "./routes/procedimiento.routes.js";
 import reciboRoutes from "./routes/recibo.routes.js";
 import configuracionRoutes from "./routes/configuracion.routes.js";
 import notasRoutes from "./routes/notas.routes.js";
+import tecnicoRoutes from "./routes/tecnico.routes.js";
 
 dotenv.config();
 
@@ -38,12 +39,7 @@ app.use("/procedimientos", procedimientoRoutes);
 app.use("/recibos", reciboRoutes);
 app.use("/configuraciones", configuracionRoutes);
 app.use("/notas", notasRoutes);
-
-// Error handling
-app.use((error, req, res, next) => {
-  console.error(error.message);
-  res.status(500).json({ error: true, mensaje: error.message });
-});
+app.use("/tecnicos", tecnicoRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

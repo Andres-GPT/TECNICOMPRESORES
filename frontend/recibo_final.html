@@ -162,12 +162,23 @@
 
         <div class="section">
             <h2>Datos del Procedimiento</h2>
-            <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
-            <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
-            <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
-            <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
-            <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
-            <p><strong>Notas Cliente:</strong> <span id="notasCliente"></span></p>
+            <div class="data-row">
+                <div>
+                    <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
+                    <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
+                    <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
+                    <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
+                    <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
+                    <p><strong>Notas Cliente:</strong> <span id="notasCliente"></span></p>
+                </div>
+                <div>
+                    <p><strong>Cédula Técnico:</strong> <span id="cedulaTecnico"></span></p>
+                    <p><strong>Nombre Técnico:</strong> <span id="nombreTecnico"></span></p>
+                    <p><strong>Apellido Técnico:</strong> <span id="apellidoTecnico"></span></p>
+                    <p><strong>Teléfono Técnico:</strong> <span id="telefonoTecnico"></span></p>
+                </div>
+            </div>
+
         </div>
 
         <div class="footer">
@@ -221,6 +232,10 @@
                 document.getElementById("costoRevision").textContent = reciboDatos.costo_revision;
                 document.getElementById("costoProcedimiento").textContent = reciboDatos.costo_procedimiento;
                 document.getElementById("notasCliente").textContent = reciboDatos.notas;
+                document.getElementById("cedulaTecnico").textContent = reciboDatos.cedula_tecnico;
+                document.getElementById("nombreTecnico").textContent = reciboDatos.nombre_tecnico;
+                document.getElementById("apellidoTecnico").textContent = reciboDatos.apellido_tecnico;
+                document.getElementById("telefonoTecnico").textContent = reciboDatos.telefono_tecnico;
 
                 // Agregar la fecha/hora actual
                 const fechaActual = new Date();

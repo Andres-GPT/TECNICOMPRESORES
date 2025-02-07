@@ -39,6 +39,10 @@ const Procedimiento = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    id_tecnico: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
   },
   {
     tableName: "procedimientos",
@@ -51,6 +55,13 @@ Procedimiento.belongsTo(Maquina, {
   foreignKey: "id_maquina",
   targetkey: "id",
   as: "maquina_procedimiento",
+});
+
+//Relacion con el id del técnico
+Procedimiento.belongsTo(Maquina, {
+  foreignKey: "id_tecnico",
+  targetkey: "id",
+  as: "tecnico_procedimiento",
 });
 
 export default Procedimiento;
