@@ -91,6 +91,17 @@ function renderizarTabla(data) {
 
   tbody.innerHTML = filas;
 
+  // Agregar evento de clic a cada fila
+  document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
+    row.addEventListener("click", function (event) {
+      if (!event.target.classList.contains("btn-accion")) {
+        const id = this.getAttribute("data-id");
+        const cedula = this.getAttribute("data-cedula");
+        window.location.href = `/confirmar_terminar_proceso.html#id=${id}&cedula=${cedula}`;
+      }
+    });
+  });
+
   // Agregar eventos a los botones de acción
   document.querySelectorAll(".btn-accion").forEach((button) => {
     button.addEventListener("click", (event) => {

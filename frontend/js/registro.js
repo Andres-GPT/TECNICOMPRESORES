@@ -19,7 +19,6 @@ async function validarFormulario(event) {
     !inputNombre.value.trim() ||
     !inputApellido.value.trim() ||
     !inputTelefono.value.trim() ||
-    !inputCorreo.value.trim() ||
     !inputDireccion.value.trim() ||
     !inputDescripcion.value.trim() ||
     !inputObservaciones.value.trim()
@@ -34,9 +33,9 @@ async function validarFormulario(event) {
     return;
   }
 
-  // Validar formato del correo
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(inputCorreo.value.trim())) {
+  // Validar formato del correo solo si no está vacío
+  const correo = inputCorreo.value.trim();
+  if (correo !== "" && !correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
     alert("Correo inválido");
     return;
   }
@@ -262,8 +261,8 @@ inputNombre.addEventListener("input", function () {
   if (this.value.length > 30) {
     this.value = this.value.slice(0, 30);
     document.getElementById("nombre-error").style.display = "block";
-  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-    this.value = this.value.replace(/[0-9]/g, "");
+  } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+    this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
     document.getElementById("nombre-error-letras").style.display = "block";
   } else {
     document.getElementById("nombre-error-letras").style.display = "none";
@@ -276,8 +275,8 @@ inputApellido.addEventListener("input", function () {
   if (this.value.length > 30) {
     this.value = this.value.slice(0, 30);
     document.getElementById("apellido-error").style.display = "block";
-  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-    this.value = this.value.replace(/[0-9]/g, "");
+  } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+    this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
     document.getElementById("apellido-error-letras").style.display = "block";
   } else {
     document.getElementById("apellido-error").style.display = "none";
@@ -297,9 +296,15 @@ inputTelefono.addEventListener("input", function () {
 
 // Validar correo en tiempo real
 inputCorreo.addEventListener("input", function () {
-  if (!this.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+  const correo = this.value.trim();
+  if (correo === "") {
+    // Si el campo está vacío, no mostrar error
+    document.getElementById("correo-error").style.display = "none";
+  } else if (!correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    // Si el campo no está vacío y no cumple con el formato, mostrar error
     document.getElementById("correo-error").style.display = "block";
   } else {
+    // Si el campo está vacío o tiene un formato válido, ocultar error
     document.getElementById("correo-error").style.display = "none";
   }
 });

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/confirmacion_procedimiento.css">
+    <script src="js/config.js"></script>
+    <title>Tecnicompresores</title>
+</head>
+
+<body>
+    <header>
+        <div id="logo" onclick="location.href='index.html'" style="cursor: pointer;">
+            <img src="img/logo.png" alt="Logo">
+            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="registro.html">Registro</a>
+            <a href="maquinas.html">Máquinas</a>
+            <a href="configurar_recibo.html">Configuración</a>
+            <a href="tecnicos.html">Técnicos</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="titulo">
+            <h1>Editar Procedimiento</h1>
+        </div>
+
+        <form action="" id="form-register">
+            <div class="form-container">
+                <div class="form-section">
+                    <h3>Datos del Cliente</h3>
+                    <div class="form-group">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" id="cedula" name="cedula" oninput="obtenerCliente(this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        <small id="nombre-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="nombre-error-letras" style="color: red; display: none;">Solo letras</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required>
+                        <small id="apellido-error" style="color: red; display: none;">Máximo 30 caracteres</small>
+                        <small id="apellido-error-letras" style="color: red; display: none;">Solo letras</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="number" id="telefono" name="telefono" required>
+                        <small id="telefono-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" name="correo">
+                        <small id="correo-error" style="color: red; display: none;">Correo inválido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" id="direccion" name="direccion" required>
+                        <small id="direccion-error" style="color: red; display: none;">Máximo 100 caracteres</small>
+                    </div>
+                    <h3>Técnico a cargo</h3>
+                    <div class="form-group">
+                        <label for="tecnico">Técnico a cargo:</label>
+                        <select id="tecnico" name="tecnico">
+                            <option value="">Seleccione un técnico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Datos de la Máquina</h3>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion"></textarea>
+                        <small id="descripcion-error" style="color: red; display: none;">Máximo 255 caracteres</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" name="observaciones"></textarea>
+                        <small id="observaciones-error" style="color: red; display: none;">Máximo 255 caracteres</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion_procedimiento">Descripción del procedimiento</label>
+                        <textarea id="descripcion_procedimiento" name="descripcion_procedimiento"></textarea>
+                        <small id="descripcion_procedimiento-error" style="color: red; display: none;">Máximo 255 caracteres</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="costo_revision">Costo de la revisión</label>
+                        <input type="number" id="costo_revision" name="costo_revision" step="0.01">
+                        <small id="costo_revision-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="costo_procedimiento">Costo del procedimiento</label>
+                        <input type="number" id="costo_procedimiento" name="costo_procedimiento" step="0.01">
+                        <small id="costo_procedimiento-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" id="btn-aceptar">Aceptar</button>
+                <button type="submit" id="btn-cancelar">Atrás</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div id="modal-confirmacion" class="modal">
+        <div class="modal-content">
+            <h2>Confirmación</h2>
+            <p id="modal-mensaje"></p>
+            <button id="modal-cerrar">Aceptar</button>
+        </div>
+    </div>
+
+    <style>
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            border: solid 1px #000000;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .modal-content button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+
+    <!-- Modal -->
+    <div id="modalEstanteNivel" class="modal-estante-nivel">
+        <div class="modal-content-estante-nivel">
+            <span class="close">&times;</span>
+            <h2>Confirmar Registro</h2>
+            <div class="div-input">
+                <label for="inputEstante">Estante:</label>
+                <input class="input" type="number" id="inputEstante" placeholder="Ingrese el estante">
+                <small id="inputEstante-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+
+            </div>
+            <div class="div-input">
+                <label for="inputNivel">Nivel:</label>
+                <input class="input" type="number" id="inputNivel" placeholder="Ingrese el nivel">
+                <small id="inputNivel-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+            </div>
+            <button class="btnModal" id="btnConfirmar">Confirmar</button>
+        </div>
+    </div>
+
+    <style>
+        /* Estilos básicos para el modal */
+        .modal-estante-nivel {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content-estante-nivel {
+            background: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .close {
+            float: right;
+            font-size: 22px;
+            cursor: pointer;
+        }
+    </style>
+
+
+</body>
+<script src="js/confirmar_terminar_proceso.js"></script>
+
+</html>
