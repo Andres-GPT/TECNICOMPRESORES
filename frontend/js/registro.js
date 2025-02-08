@@ -131,7 +131,7 @@ function mostrarModal(mensaje, callback) {
 async function crearUsuario(data) {
   try {
     const body = JSON.stringify(data);
-    const response = await fetch(`${link}/clientes`, {
+    const response = await fetch(`${link}/clientes/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -142,6 +142,7 @@ async function crearUsuario(data) {
       throw new Error("Error al registrar el usuario");
     }
     const json = await response.json();
+    console.log("json", json);
     return json;
   } catch (error) {
     return {
@@ -280,6 +281,7 @@ inputApellido.addEventListener("input", function () {
     document.getElementById("apellido-error-letras").style.display = "block";
   } else {
     document.getElementById("apellido-error").style.display = "none";
+    document.getElementById("apellido-error-letras").style.display = "none";
   }
 });
 

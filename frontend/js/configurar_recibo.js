@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       leyendaInput.value = configuracion.leyenda;
 
       if (configuracion.logo) {
-        previewImage.src = `../../backend/src/${configuracion.logo}`;
+        previewImage.src = `http://192.168.101.9:8000${configuracion.logo}`;
       } else {
         previewImage.src = "placeholder.png"; // Imagen por defecto si no hay logo
       }
@@ -61,13 +61,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.ok) {
         const respuesta = await response.json();
-        console.log(respuesta);
 
         // Verificar si la respuesta indica éxito
         if (!respuesta.error) {
           alert("Configuración actualizada exitosamente");
+          //window.location.href = "index.html";
         } else {
-          console.error("Error en la actualización:", respuesta.mensaje);
           alert("Error al actualizar la configuración");
         }
       } else {
@@ -75,9 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Hubo un error al intentar actualizar la configuración");
       }
     } catch (error) {
-      // console.error("Error en la solicitud:", error);
-      // alert(error || "Hubo un error al intentar actualizar la configuración");
-      alert("Configuración actualizada exitosamente");
+      alert(error || "Hubo un error al intentar actualizar la configuración");
     }
   });
 

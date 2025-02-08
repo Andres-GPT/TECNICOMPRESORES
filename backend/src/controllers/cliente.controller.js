@@ -4,7 +4,7 @@ import Cliente from "../models/cliente.js";
 
 export const registerCliente = async (req, res) => {
   try {
-    const { cedula, nombre, apellido, correo, telefono, direccion } = req.body;
+    const { cedula, nombre, apellido, telefono, correo, direccion } = req.body;
 
     //Verificar si existe el cliente
     const clienteExistente = await Cliente.findByPk(cedula);
@@ -25,7 +25,7 @@ export const registerCliente = async (req, res) => {
     //Crear el cliente
 
     const nuevoCliente = await Cliente.create({
-      cedula,
+      cedula: Number(cedula),
       nombre,
       apellido,
       correo,
