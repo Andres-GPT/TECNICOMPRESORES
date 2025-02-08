@@ -243,7 +243,7 @@ nav a {
   transform: translateY(0); /* Efecto al hacer clic */
 }
 
-.input[type="text"] {
+.input[type="text"], .input[type="number"] {
   width: 200px; /* Ajusta el ancho según sea necesario */
   padding: 8px;
   font-size: 16px;
@@ -253,7 +253,7 @@ nav a {
   height: 20px;
 }
 
-.input[type="text"]:focus {
+.input[type="text"]:focus, .input[type="number"]:focus {
   border-color: #d9d9d9;
   box-shadow: 0 0 5px rgba(236, 48, 55, 0.5);
   outline: none;

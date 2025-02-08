@@ -22,6 +22,11 @@ const Tecnico = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    estado: {
+      type: Sequelize.ENUM("activo", "inactivo"),
+      allowNull: false,
+      defaultValue: "activo",
+    },
   },
   {
     tableName: "tecnicos",

@@ -78,6 +78,7 @@ export const editTecnico = async (req, res) => {
       nombre,
       apellido,
       telefono,
+      estado: "activo",
     });
 
     res.status(200).json({
@@ -107,8 +108,8 @@ export const deleteTecnico = async (req, res) => {
       return;
     }
 
-    //Eliminar el tecnico
-    await tecnicoExistente.destroy();
+    // desactivar el tecnico
+    await tecnicoExistente.update({ estado: "inactivo" });
 
     res.status(200).json({
       error: false,

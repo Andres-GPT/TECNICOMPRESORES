@@ -14,8 +14,8 @@ async function mostrarUsuarios() {
         return;
       }
 
-      // Guardamos los datos en la variable global
-      tecnicosData = data.tecnicos.map((tecnico) => ({
+      // Guardamos los datos en la variable global, excepto los de estado inactivo
+      tecnicosData = data.tecnicos.filter(tecnico => tecnico.estado === 'activo').map((tecnico) => ({
         cedula: tecnico.cedula,
         nombre: tecnico.nombre,
         apellido: tecnico.apellido,

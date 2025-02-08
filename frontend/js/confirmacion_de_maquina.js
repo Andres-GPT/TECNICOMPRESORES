@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("costo_procedimiento-error").style.display =
         "none";
     }
-  }); 
+  });
 
   // validar el estante y nivel
   inputEstante.addEventListener("input", function () {
@@ -212,19 +212,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tecnicosData = await tecnicosResponse.json();
 
     if (!tecnicosData.error) {
-      tecnicosData.tecnicos.forEach((tecnico) => {
-        const option = document.createElement("option");
-        option.value = tecnico.cedula;
-        option.textContent = `${tecnico.cedula} - ${tecnico.nombre}`;
+      // poner los datos en el select, excepto los de estado inactivo
+      tecnicosData.tecnicos
+        .filter((tecnico) => tecnico.estado === "activo")
+        .forEach((tecnico) => {
+          const option = document.createElement("option");
+          option.value = tecnico.cedula;
+          option.textContent = `${tecnico.cedula} - ${tecnico.nombre}`;
 
-        // Agregar opción al select
-        tecnicoSelect.appendChild(option);
+          // Agregar opción al select
+          tecnicoSelect.appendChild(option);
 
-        // Si el técnico corresponde al procedimiento, seleccionarlo
-        if (procedimientoOriginal.id_tecnico === tecnico.cedula) {
-          option.selected = true;
-        }
-      });
+          // Si el técnico corresponde al procedimiento, seleccionarlo
+          if (procedimientoOriginal.id_tecnico === tecnico.cedula) {
+            option.selected = true;
+          }
+        });
     } else {
       console.error("Error obteniendo técnicos:", tecnicosData.mensaje);
     }

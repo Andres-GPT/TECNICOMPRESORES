@@ -19,7 +19,10 @@ async function validarFormulario(event) {
 
   // Validación de que sean solo números
   const soloNumeros = /^\d+$/;
-  if (!soloNumeros.test(inputCedula.value) || !soloNumeros.test(inputTelefono.value)) {
+  if (
+    !soloNumeros.test(inputCedula.value) ||
+    !soloNumeros.test(inputTelefono.value)
+  ) {
     mostrarModal("Cédula y teléfono deben ser valores numéricos");
     return;
   }
@@ -77,6 +80,33 @@ inputCedula.addEventListener("input", function () {
     document.getElementById("cedula-error").style.display = "block";
   } else {
     document.getElementById("cedula-error").style.display = "none";
+  }
+});
+
+// validar nombre en tiempo real
+inputNombre.addEventListener("input", function () {
+  if (this.value.length > 30) {
+    this.value = this.value.slice(0, 30);
+    document.getElementById("nombre-error").style.display = "block";
+  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+    this.value = this.value.replace(/[0-9]/g, "");
+    document.getElementById("nombre-error-letras").style.display = "block";
+  } else {
+    document.getElementById("nombre-error-letras").style.display = "none";
+    document.getElementById("nombre-error").style.display = "none";
+  }
+});
+
+// validar apellido en tiempo real
+inputApellido.addEventListener("input", function () {
+  if (this.value.length > 30) {
+    this.value = this.value.slice(0, 30);
+    document.getElementById("apellido-error").style.display = "block";
+  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+    this.value = this.value.replace(/[0-9]/g, "");
+    document.getElementById("apellido-error-letras").style.display = "block";
+  } else {
+    document.getElementById("apellido-error").style.display = "none";
   }
 });
 

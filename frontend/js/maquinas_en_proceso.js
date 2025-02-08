@@ -76,7 +76,6 @@ function renderizarTabla(data) {
   data.forEach((maquina) => {
     filas += `
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
-          <th scope="row">${maquina.id}</th>
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>

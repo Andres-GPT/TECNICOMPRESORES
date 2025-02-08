@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (this.value.length > 30) {
       this.value = this.value.slice(0, 30);
       document.getElementById("nombre-error").style.display = "block";
-    } else if(!this.value.match(/^[a-zA-Z]+$/)){
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
       this.value = this.value.replace(/[0-9]/g, "");
       document.getElementById("nombre-error-letras").style.display = "block";
-    } else{
+    } else {
       document.getElementById("nombre-error-letras").style.display = "none";
       document.getElementById("nombre-error").style.display = "none";
     }
@@ -50,10 +50,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (this.value.length > 30) {
       this.value = this.value.slice(0, 30);
       document.getElementById("apellido-error").style.display = "block";
-    } else if(!this.value.match(/^[a-zA-Z]+$/)){
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
       this.value = this.value.replace(/[0-9]/g, "");
       document.getElementById("apellido-error-letras").style.display = "block";
-    }else{
+    } else {
       document.getElementById("apellido-error-letras").style.display = "none";
       document.getElementById("apellido-error").style.display = "none";
     }
@@ -178,12 +178,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tecnicosData = await tecnicosResponse.json();
 
     if (!tecnicosData.error) {
-      tecnicosData.tecnicos.forEach((tecnico) => {
-        const option = document.createElement("option");
-        option.value = tecnico.cedula;
-        option.textContent = `${tecnico.cedula} - ${tecnico.nombre}`;
-        tecnicoSelect.appendChild(option);
-      });
+      // poner los datos en el select, excepto los de estado inactivo
+      tecnicosData.tecnicos
+        .filter((tecnico) => tecnico.estado === "activo")
+        .forEach((tecnico) => {
+          const option = document.createElement("option");
+          option.value = tecnico.cedula;
+          option.textContent = `${tecnico.cedula} - ${tecnico.nombre}`;
+
+          // Agregar opción al select
+          tecnicoSelect.appendChild(option);
+        });
     } else {
       console.error("Error obteniendo técnicos:", tecnicosData.mensaje);
     }

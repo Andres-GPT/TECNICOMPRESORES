@@ -19,7 +19,7 @@ router.get("/:cedula", getTecnico);
 router.put("/:cedula", editTecnico);
 
 //Eliminar un tecnico
-router.delete("/:cedula", deleteTecnico);
+router.put("/eliminar/:cedula", deleteTecnico);
 
 //Obtener todos los tecnicos
 router.get("/", getTecnicos);

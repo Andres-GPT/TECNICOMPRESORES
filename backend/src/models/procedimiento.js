@@ -41,7 +41,7 @@ const Procedimiento = sequelize.define(
     },
     id_tecnico: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

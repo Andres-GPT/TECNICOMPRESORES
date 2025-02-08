@@ -17,6 +17,43 @@ document.addEventListener("DOMContentLoaded", async () => {
   cedulaInput.value = cedula;
   cedulaInput.readOnly = true;
 
+  // validar nombre en tiempo real
+  nombreInput.addEventListener("input", function () {
+    if (this.value.length > 30) {
+      this.value = this.value.slice(0, 30);
+      document.getElementById("nombre-error").style.display = "block";
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+      this.value = this.value.replace(/[0-9]/g, "");
+      document.getElementById("nombre-error-letras").style.display = "block";
+    } else {
+      document.getElementById("nombre-error-letras").style.display = "none";
+      document.getElementById("nombre-error").style.display = "none";
+    }
+  });
+
+  // validar apellido en tiempo real
+  apellidoInput.addEventListener("input", function () {
+    if (this.value.length > 30) {
+      this.value = this.value.slice(0, 30);
+      document.getElementById("apellido-error").style.display = "block";
+    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
+      this.value = this.value.replace(/[0-9]/g, "");
+      document.getElementById("apellido-error-letras").style.display = "block";
+    } else {
+      document.getElementById("apellido-error").style.display = "none";
+    }
+  });
+
+  // Validar teléfono en tiempo real
+  telefonoInput.addEventListener("input", function () {
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+      document.getElementById("telefono-error").style.display = "block";
+    } else {
+      document.getElementById("telefono-error").style.display = "none";
+    }
+  });
+
   try {
     const tecnicoResponse = await fetch(`${link}/tecnicos/${cedula}`);
     const tecnicoData = await tecnicoResponse.json();
@@ -99,9 +136,11 @@ async function actualizarTecnico(cedula, data) {
 
 async function eliminarTecnico(cedula) {
   try {
-    const response = await fetch(`${link}/tecnicos/${cedula}`, {
-      method: "DELETE",
+    const response = await fetch(`${link}/tecnicos/eliminar/${cedula}`, {
+      method: "PUT",
     });
+
+    console.log(response);
 
     if (!response.ok) {
       throw new Error("Error al eliminar el técnico");
