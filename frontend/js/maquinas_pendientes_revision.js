@@ -69,7 +69,7 @@ function renderizarTabla(data) {
       if (!event.target.classList.contains("generar-recibo-btn")) {
         const id = this.getAttribute("data-id");
         const cedula = this.getAttribute("data-cedula");
-        window.location.href = `revision_de_maquina.html?id=${id}&cedula=${cedula}`;
+        window.location.href = `/revision_de_maquina.html#id=${id}&cedula=${cedula}`;
       }
     });
   });

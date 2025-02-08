@@ -182,7 +182,7 @@
                 const data = await response.json();
                 console.log(data.configuracion);
                 if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('logo').src = `../../backend/src/${data.configuracion.logo}`;
+                    document.getElementById('logo').src = `http://192.168.101.9:8000${data.configuracion.logo}`;
                     document.getElementById('leyenda').textContent = data.configuracion.leyenda;
                 }
             } catch (error) {
@@ -219,30 +219,24 @@
         async function downloadPDF() {
             const reciboDatos = JSON.parse(sessionStorage.getItem("reciboDatos"));
             const { jsPDF } = window.jspdf;
+
             const pdf = new jsPDF({
-                orientation: "portrait", // Cambiar a "landscape" si prefieres horizontal.
+                orientation: "portrait",
                 unit: "px",
-                format: [850, 900], // Define un tamaño de página personalizado.
+                format: [850, 900],
             });
 
-            // Agregar la fecha/hora actual
             const fechaActual = new Date();
             const fechaFormateada = fechaActual.toISOString().split("T")[0];
 
-
-            // Seleccionamos el contenedor del recibo
             const receipt = document.getElementById("recibo");
 
-            // Convertimos el HTML a texto seleccionable en el PDF
-            await pdf.html(receipt, {
-                callback: function (pdf) {
-                    pdf.save(`recibo-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
-                },
-                x: 5, // Margen izquierdo.
-                y: 0, // Margen superior.
-                width: 780, // Ajusta el ancho disponible en el PDF.
-            });
+            // Usa html2canvas para capturar el recibo como imagen
+            const canvas = await html2canvas(receipt, { scale: 2 });
+            const imgData = canvas.toDataURL("image/png");
 
+            pdf.addImage(imgData, "PNG", 10, 10, 780, 900); // Ajusta la posición y tamaño
+            pdf.save(`recibo-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
         }
         function goBack() {
             sessionStorage.removeItem("reciboDatos");

@@ -79,7 +79,7 @@ function renderizarTabla(data) {
       ) {
         const id = this.getAttribute("data-id");
         const cedula = this.getAttribute("data-cedula");
-        window.location.href = `confirmar_entrega.html?id=${id}&cedula=${cedula}`;
+        window.location.href = `confirmar_entrega.html#id=${id}&cedula=${cedula}`;
       }
     });
   });
