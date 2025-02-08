@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(window.location.search);
-  const cedula = params.get("cedula"); // Cédula del usuario
+  const hashParams = new URLSearchParams(window.location.hash.substring(1));
+  const cedula = hashParams.get("cedula");
 
   if (!cedula) {
     console.error("Faltan parámetros en la URL");

@@ -57,7 +57,7 @@ function renderizarTabla(data) {
     row.addEventListener("click", function () {
       {
         const cedula = this.getAttribute("data-cedula");
-        window.location.href = `editar_tecnico.html?cedula=${cedula}`;
+        window.location.href = `editar_tecnico.html#cedula=${cedula}`;
       }
     });
   });
