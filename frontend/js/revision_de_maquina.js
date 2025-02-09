@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (this.value.length > 30) {
       this.value = this.value.slice(0, 30);
       document.getElementById("nombre-error").style.display = "block";
-    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-      this.value = this.value.replace(/[0-9]/g, "");
+    } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+      this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
       document.getElementById("nombre-error-letras").style.display = "block";
     } else {
       document.getElementById("nombre-error-letras").style.display = "none";
@@ -50,8 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (this.value.length > 30) {
       this.value = this.value.slice(0, 30);
       document.getElementById("apellido-error").style.display = "block";
-    } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-      this.value = this.value.replace(/[0-9]/g, "");
+    } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+      this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
       document.getElementById("apellido-error-letras").style.display = "block";
     } else {
       document.getElementById("apellido-error-letras").style.display = "none";
@@ -71,9 +71,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Validar correo en tiempo real
   correoInput.addEventListener("input", function () {
-    if (!this.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    const correo = this.value.trim();
+    if (correo === "") {
+      // Si el campo está vacío, no mostrar error
+      document.getElementById("correo-error").style.display = "none";
+    } else if (!correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      // Si el campo no está vacío y no cumple con el formato, mostrar error
       document.getElementById("correo-error").style.display = "block";
     } else {
+      // Si el campo está vacío o tiene un formato válido, ocultar error
       document.getElementById("correo-error").style.display = "none";
     }
   });
@@ -122,24 +128,50 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Validar costo de revisión en tiempo real
   costoRevisionInput.addEventListener("input", function () {
-    if (this.value.length > 10) {
-      this.value = this.value.slice(0, 10);
+    // Eliminar cualquier carácter no numérico (excepto números)
+    let value = this.value.replace(/\D/g, "");
+
+    // Limitar la cantidad de dígitos a 10 (sin contar los puntos de formato)
+    if (value.length > 10) {
+      value = value.slice(0, 10);
       document.getElementById("costo_revision-error").style.display = "block";
     } else {
       document.getElementById("costo_revision-error").style.display = "none";
     }
+
+    // Si el campo no tiene valor, evitar que muestre un "0"
+    if (value === "") {
+      this.value = "";
+      return;
+    }
+
+    // Aplicar formato con separadores de miles
+    this.value = new Intl.NumberFormat("es-ES").format(Number(value));
   });
 
   // Validar costo del procedimiento en tiempo real
   costoProcedimientoInput.addEventListener("input", function () {
-    if (this.value.length > 10) {
-      this.value = this.value.slice(0, 10);
+    // Eliminar cualquier carácter no numérico (excepto números)
+    let value = this.value.replace(/\D/g, "");
+
+    // Limitar la cantidad de dígitos a 10 (sin contar los puntos de formato)
+    if (value.length > 10) {
+      value = value.slice(0, 10);
       document.getElementById("costo_procedimiento-error").style.display =
         "block";
     } else {
       document.getElementById("costo_procedimiento-error").style.display =
         "none";
     }
+
+    // Si el campo no tiene valor, evitar que muestre un "0"
+    if (value === "") {
+      this.value = "";
+      return;
+    }
+
+    // Aplicar formato con separadores de miles
+    this.value = new Intl.NumberFormat("es-ES").format(Number(value));
   });
 
   let clienteOriginal = {};
@@ -196,10 +228,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error al obtener los datos:", error);
   }
 
+  // Función para eliminar el formato de separación de miles
+  function eliminarFormato(valorFormateado) {
+    return valorFormateado.replace(/\./g, "");
+  }
+
   document
     .getElementById("form-register")
     .addEventListener("submit", async (event) => {
       event.preventDefault();
+
+      // Limpiar los valores de los costos antes de enviar el formulario
+      const costoRevisionSinFormato = eliminarFormato(costoRevisionInput.value);
+      const costoProcedimientoSinFormato = eliminarFormato(
+        costoProcedimientoInput.value
+      );
 
       let clienteModificado = false;
       let maquinaModificada = false;
@@ -273,8 +316,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           body: JSON.stringify({
             id_maquina: id,
             descripcion: procedimientoInput.value,
-            costo_revision: costoRevisionInput.value,
-            costo_procedimiento: costoProcedimientoInput.value,
+            costo_revision: costoRevisionSinFormato, // Enviar el valor sin formato
+            costo_procedimiento: costoProcedimientoSinFormato, // Enviar el valor sin formato
             id_tecnico: tecnicoSeleccionado,
           }),
         });

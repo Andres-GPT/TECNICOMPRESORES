@@ -70,9 +70,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       procedimientoOriginal = { ...procedimientoData.procedimiento };
       delete procedimientoOriginal.maquina;
       procedimientoInput.value = procedimientoOriginal.descripcion || "";
-      costoRevisionInput.value = procedimientoOriginal.costo_revision || "";
-      costoProcedimientoInput.value =
-        procedimientoOriginal.costo_procedimiento || "";
+
+      // Formatear los valores de costos al cargar los datos
+      costoRevisionInput.value = procedimientoOriginal.costo_revision
+        ? new Intl.NumberFormat("es-ES").format(
+            parseFloat(procedimientoOriginal.costo_revision)
+          )
+        : "";
+
+      costoProcedimientoInput.value = procedimientoOriginal.costo_procedimiento
+        ? new Intl.NumberFormat("es-ES").format(
+            parseFloat(procedimientoOriginal.costo_procedimiento)
+          )
+        : "";
     }
 
     // Obtener la nota existente
@@ -111,10 +121,17 @@ document.addEventListener("DOMContentLoaded", async () => {
           maquinaOriginal.fecha_entrada.split("T")[0];
         const fechaRevisionFormateada =
           procedimientoOriginal.fecha_revision.split("T")[0];
-        let costo_procedimiento = 0;
-        if (procedimientoOriginal.estado_cliente === "aceptado") {
-          costo_procedimiento = procedimientoOriginal.costo_procedimiento;
-        }
+
+        // Formatear los valores de costos
+
+        const costoRevisionFormateado = new Intl.NumberFormat("es-ES").format(
+          parseFloat(procedimientoOriginal.costo_revision)
+        );
+
+        const costoProcedimientoFormateado = new Intl.NumberFormat(
+          "es-ES"
+        ).format(parseFloat(procedimientoOriginal.costo_procedimiento));
+
         const reciboFinalDatos = {
           cedula: cedula,
           nombre: clienteOriginal.nombre,
@@ -132,8 +149,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           apellido_tecnico: tecnico.apellido,
           telefono_tecnico: tecnico.telefono,
           fecha_revision: fechaRevisionFormateada,
-          costo_revision: procedimientoOriginal.costo_revision,
-          costo_procedimiento: costo_procedimiento,
+          costo_revision: costoRevisionFormateado,
+          costo_procedimiento: costoProcedimientoFormateado,
           notas: notasInput.value,
         };
         sessionStorage.setItem(

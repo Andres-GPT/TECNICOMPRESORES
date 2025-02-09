@@ -6,13 +6,15 @@ let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 async function mostrarUsuarios() {
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const response = await fetch(`${link}/maquinas/estado/2`); // Reemplaza con tu endpoint real
+      const response = await fetch(`${link}/maquinas/proceso/2`); // Reemplaza con tu endpoint real
       const data = await response.json();
 
       if (data.error) {
         console.error("Error obteniendo las máquinas:", data.mensaje);
         return;
       }
+
+      console.log(data.maquinas);
 
       // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map(maquina => ({
@@ -21,9 +23,11 @@ async function mostrarUsuarios() {
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
-        observaciones: maquina.observaciones,
+        procedimiento: maquina.procedimiento,
         fecha: maquina.fecha 
       }));
+
+      console.log(maquinasData);
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
 
@@ -31,6 +35,14 @@ async function mostrarUsuarios() {
       console.error("Error al obtener los datos:", error);
     }
   });
+}
+
+// Función para truncar el texto y agregar "..." si es necesario
+function truncarTexto(texto, limite) {
+  if (texto.length > limite) {
+    return texto.substring(0, limite) + "...";
+  }
+  return texto;
 }
 
 function renderizarTabla(data) {
@@ -44,13 +56,16 @@ function renderizarTabla(data) {
   let filas = "";
 
   data.forEach((maquina) => {
+    // Truncar la descripción y el procedimiento
+    const descripcionTruncada = truncarTexto(maquina.descripcion, 50); // Limitar a 50 caracteres
+    const procedimientoTruncado = truncarTexto(maquina.procedimiento, 50); // Limitar a 50 caracteres
     filas += `
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>
-          <td>${maquina.descripcion}</td>
-          <td>${maquina.observaciones}</td>
+          <td>${descripcionTruncada}</td>
+          <td>${procedimientoTruncado}</td>
           <td>${maquina.fecha}</td>
       </tr>
     `;

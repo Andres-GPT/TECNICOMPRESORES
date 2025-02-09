@@ -36,6 +36,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Validar costo de revisión en tiempo real
+  costoRevisionInput.addEventListener("input", function () {
+    let value = this.value;
+
+    // Si el campo no tiene valor, evitar que muestre un "0"
+    if (value === "") {
+      this.value = "";
+      return;
+    }
+
+    // Aplicar formato con separadores de miles
+    this.value = new Intl.NumberFormat("es-ES").format(Number(value));
+  });
+
+  // Validar costo del procedimiento en tiempo real
+  costoProcedimientoInput.addEventListener("input", function () {
+    let value = this.value;
+
+    // Si el campo no tiene valor, evitar que muestre un "0"
+    if (value === "") {
+      this.value = "";
+      return;
+    }
+
+    // Aplicar formato con separadores de miles
+    this.value = new Intl.NumberFormat("es-ES").format(Number(value));
+  });
+
   // Hacer todos los inputs readonly, excepto el de notas
   document.querySelectorAll("input, textarea").forEach((input) => {
     if (input.id !== "notas") input.readOnly = true;
@@ -78,9 +106,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       procedimientoOriginal = { ...procedimientoData.procedimiento };
       delete procedimientoOriginal.maquina;
       procedimientoInput.value = procedimientoOriginal.descripcion || "";
-      costoRevisionInput.value = procedimientoOriginal.costo_revision || "";
-      costoProcedimientoInput.value =
-        procedimientoOriginal.costo_procedimiento || "";
+
+      // Formatear los valores de costos al cargar los datos
+      costoRevisionInput.value = procedimientoOriginal.costo_revision
+        ? new Intl.NumberFormat("es-ES").format(
+            parseFloat(procedimientoOriginal.costo_revision)
+          )
+        : "";
+
+      costoProcedimientoInput.value = procedimientoOriginal.costo_procedimiento
+        ? new Intl.NumberFormat("es-ES").format(
+            parseFloat(procedimientoOriginal.costo_procedimiento)
+          )
+        : "";
     }
 
     // Obtener la nota existente

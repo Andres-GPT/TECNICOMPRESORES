@@ -88,8 +88,8 @@ inputNombre.addEventListener("input", function () {
   if (this.value.length > 30) {
     this.value = this.value.slice(0, 30);
     document.getElementById("nombre-error").style.display = "block";
-  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-    this.value = this.value.replace(/[0-9]/g, "");
+  } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+    this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
     document.getElementById("nombre-error-letras").style.display = "block";
   } else {
     document.getElementById("nombre-error-letras").style.display = "none";
@@ -102,8 +102,8 @@ inputApellido.addEventListener("input", function () {
   if (this.value.length > 30) {
     this.value = this.value.slice(0, 30);
     document.getElementById("apellido-error").style.display = "block";
-  } else if (!this.value.match(/^[a-zA-Z]+$/)) {
-    this.value = this.value.replace(/[0-9]/g, "");
+  } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+    this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
     document.getElementById("apellido-error-letras").style.display = "block";
   } else {
     document.getElementById("apellido-error").style.display = "none";

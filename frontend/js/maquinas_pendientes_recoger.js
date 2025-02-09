@@ -36,6 +36,14 @@ async function mostrarUsuarios() {
   });
 }
 
+// Función para truncar el texto y agregar "..." si es necesario
+function truncarTexto(texto, limite) {
+  if (texto.length > limite) {
+    return texto.substring(0, limite) + "...";
+  }
+  return texto;
+}
+
 function renderizarTabla(data) {
   const tbody = document.querySelector(".table-custom tbody");
 
@@ -47,13 +55,16 @@ function renderizarTabla(data) {
   let filas = "";
 
   data.forEach((maquina) => {
+    // Truncar la descripción y el procedimiento
+    const descripcionTruncada = truncarTexto(maquina.descripcion, 50); // Limitar a 50 caracteres
+    const procedimientoTruncado = truncarTexto(maquina.procedimiento, 50); // Limitar a 50 caracteres
     filas += `
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
           <td>${maquina.apellido}</td>
-          <td>${maquina.descripcion}</td>
-          <td>${maquina.procedimiento}</td>
+          <td>${descripcionTruncada}</td>
+          <td>${procedimientoTruncado}</td>
           <td class="estante">
             <input type="number" class="estante-input" data-id="${maquina.id}" value="${maquina.estante}">
           </td>
