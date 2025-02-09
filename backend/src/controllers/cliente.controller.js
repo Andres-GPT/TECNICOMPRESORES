@@ -12,15 +12,7 @@ export const registerCliente = async (req, res) => {
     if (clienteExistente) {
       res.status(409).json({ mensaje: "El cliente ya existe" });
       return;
-    }
-
-    //Verificar si el email existe
-    const emailExistente = await Cliente.findOne({ where: { correo } });
-
-    if (emailExistente) {
-      res.status(409).json({ mensaje: "El email ya existe" });
-      return;
-    }
+    }   
 
     //Crear el cliente
 

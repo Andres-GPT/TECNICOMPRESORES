@@ -25,7 +25,7 @@ const Cliente = sequelize.define(
     correo: {
       type: Sequelize.STRING,
       allowNull: true,
-      unique: true,
+      unique: false,
     },
     direccion: {
       type: Sequelize.STRING,
