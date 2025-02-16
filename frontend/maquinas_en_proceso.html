@@ -41,6 +41,14 @@
             <input type="date" id="fecha">
             <button onclick="filtroFecha()" type="button">Buscar</button>
         </div>
+        <div class="filtros">
+            <!-- Nuevo checkbox para garantía -->
+            <h4 class="tituloFiltros">Garantía</h4>
+            <label>
+                <input type="checkbox" id="filtroGarantia"> Mostrar solo con garantía
+            </label>
+
+        </div>
 
         <table class="table-custom">
             <thead>
@@ -50,6 +58,7 @@
                     <th scope="col">Apellido</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Procedimiento</th>
+                    <th scope="col">Garantía</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Accion</th>
                 </tr>

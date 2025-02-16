@@ -43,6 +43,10 @@ const Procedimiento = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: true,
     },
+    garantia: {
+      type: Sequelize.ENUM("si", "no"),
+      defaultValue: "no",
+    },
   },
   {
     tableName: "procedimientos",

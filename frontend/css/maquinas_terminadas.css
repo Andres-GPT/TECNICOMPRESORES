@@ -226,6 +226,22 @@ body {
   .filtros button:active {
     transform: translateY(0); /* Efecto al hacer clic */
   }
+
+  .garantia-btn {
+    background-color: #1fd000;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .garantia-btn:hover {
+    background-color: #248f00;
+    transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
+  }
   
   .devolver-btn {
     background-color: #ec3037;

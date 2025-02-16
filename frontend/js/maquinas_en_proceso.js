@@ -1,5 +1,6 @@
 const inputCedula = document.getElementById("cedula");
 const inputFecha = document.getElementById("fecha");
+const filtroGarantia = document.getElementById("filtroGarantia");
 
 let maquinasData = [];
 let idMaquinaSeleccionada = null; // Se almacenará el ID de la máquina seleccionada
@@ -10,6 +11,11 @@ const inputEstante = document.getElementById("inputEstante");
 const inputNivel = document.getElementById("inputNivel");
 const btnConfirmar = document.getElementById("btnConfirmar");
 const closeModal = document.querySelector(".close");
+
+// Evento para el checkbox de garantía
+filtroGarantia.addEventListener("change", () => {
+  aplicarFiltros();
+});
 
 // validar el estante y nivel
 inputEstante.addEventListener("input", function () {
@@ -40,6 +46,7 @@ async function mostrarUsuarios() {
   try {
     const response = await fetch(`${link}/maquinas/proceso/3`);
     const data = await response.json();
+    console.log(data.maquinas);
 
     if (data.error) {
       console.error("Error obteniendo las máquinas:", data.mensaje);
@@ -54,9 +61,10 @@ async function mostrarUsuarios() {
       descripcion: maquina.descripcion,
       procedimiento: maquina.procedimiento,
       fecha: maquina.fecha,
+      garantia: maquina.garantia || "no", // Asegúrate de que garantía tenga un valor por defecto
     }));
 
-    renderizarTabla(maquinasData);
+    aplicarFiltros(); // Renderizar la tabla con los datos iniciales
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
@@ -93,6 +101,7 @@ function renderizarTabla(data) {
           <td>${maquina.apellido}</td>
           <td>${descripcionTruncada}</td>
           <td>${procedimientoTruncado}</td>
+          <td>${maquina.garantia}</td>
           <td>${maquina.fecha}</td>
           <td>
               <button class="btn-accion" data-id="${maquina.id}">Confirmar</button>
@@ -182,30 +191,43 @@ btnConfirmar.addEventListener("click", async () => {
   }
 });
 
+function aplicarFiltros() {
+  let maquinasFiltradas = maquinasData;
+
+  // Filtrar por cédula
+  const cedula = inputCedula.value.trim();
+  if (cedula) {
+    maquinasFiltradas = maquinasFiltradas.filter(
+      (maquina) => maquina.cedula == cedula
+    );
+  }
+
+  // Filtrar por fecha
+  const fecha = inputFecha.value.trim();
+  if (fecha) {
+    maquinasFiltradas = maquinasFiltradas.filter(
+      (maquina) => maquina.fecha === fecha
+    );
+  }
+
+  // Filtrar por garantía
+  if (filtroGarantia.checked) {
+    maquinasFiltradas = maquinasFiltradas.filter(
+      (maquina) => maquina.garantia === "si"
+    );
+  }
+
+  renderizarTabla(maquinasFiltradas);
+}
+
 // Filtrar por Cédula
 function filtroCedula() {
-  const cedula = inputCedula.value.trim();
-  if (!cedula) {
-    renderizarTabla(maquinasData);
-    return;
-  }
-  const maquinasFiltradas = maquinasData.filter(
-    (maquina) => maquina.cedula == cedula
-  );
-  renderizarTabla(maquinasFiltradas);
+  aplicarFiltros();
 }
 
 // Filtrar por Fecha
 function filtroFecha() {
-  const fecha = inputFecha.value.trim();
-  if (!fecha) {
-    renderizarTabla(maquinasData);
-    return;
-  }
-  const maquinasFiltradas = maquinasData.filter(
-    (maquina) => maquina.fecha === fecha
-  );
-  renderizarTabla(maquinasFiltradas);
+  aplicarFiltros();
 }
 
 // Escuchar Enter en los campos de filtro

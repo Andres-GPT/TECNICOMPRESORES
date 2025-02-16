@@ -287,6 +287,15 @@ export const getMaquinasProceso = async (req, res) => {
             procedimientos.find(
               (procedimiento) => procedimiento.id_maquina === maquina.id
             )?.descripcion || "N/A",
+          garantia: procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.garantia || "N/A",
+          estado_cliente: procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.estado_cliente || "N/A",
+          id_procedimiento: procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.id || "N/A",
           estante: maquina.estante,
           nivel: maquina.nivel,
           nota: notaEncontrada && notaEncontrada.nota.length > 0

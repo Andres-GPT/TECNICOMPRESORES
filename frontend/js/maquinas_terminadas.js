@@ -6,8 +6,9 @@ let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 async function mostrarUsuarios() {
   document.addEventListener("DOMContentLoaded", async () => {
     try {
-      const response = await fetch(`${link}/maquinas/estado/5`); // Reemplaza con tu endpoint real
+      const response = await fetch(`${link}/maquinas/proceso/5`); // Reemplaza con tu endpoint real
       const data = await response.json();
+      console.log(data.maquinas);
 
       if (data.error) {
         console.error("Error obteniendo las máquinas:", data.mensaje);
@@ -17,12 +18,14 @@ async function mostrarUsuarios() {
       // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
+        id_procedimiento: maquina.id_procedimiento,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
-        observaciones: maquina.observaciones,
+        procedimiento: maquina.procedimiento,
         fecha: maquina.fecha,
+        estado_cliente: maquina.estado_cliente,
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
@@ -44,18 +47,25 @@ function renderizarTabla(data) {
 
   data.forEach((maquina) => {
     filas += `
-      <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
-          <td>${maquina.cedula}</td>
-          <td>${maquina.nombre}</td>
-          <td>${maquina.apellido}</td>
-          <td>${maquina.descripcion}</td>
-          <td>${maquina.observaciones}</td>
-          <td>${maquina.fecha}</td>
-          <td class="devolver">
-          <button class="devolver-btn" onclick="devolverMaquina(this)" data-id="${maquina.id}">Devolver</button>
-          </td>
-      </tr>
-    `;
+  <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
+      <td>${maquina.cedula}</td>
+      <td>${maquina.nombre}</td>
+      <td>${maquina.apellido}</td>
+      <td>${maquina.descripcion}</td>
+      <td>${maquina.procedimiento}</td>
+      <td>${maquina.fecha}</td>
+      <td class="devolver">
+          ${
+            maquina.estado_cliente === "aceptado"
+              ? `<button class="garantia-btn" onclick="activarGarantia(this)" maquina-id="${maquina.id}" procedimiento-id="${maquina.id_procedimiento}">Garantía</button>`
+              : ""
+          }
+          <button class="devolver-btn" onclick="devolverMaquina(this)" data-id="${
+            maquina.id
+          }">Devolver</button>
+      </td>
+  </tr>
+`;
   });
 
   tbody.innerHTML = filas;
@@ -63,11 +73,10 @@ function renderizarTabla(data) {
   // Agregar evento de clic a cada fila
   document.querySelectorAll(".table-custom tbody tr").forEach((row) => {
     row.addEventListener("click", function (event) {
-      if (
-        !event.target.classList.contains("devolver-btn") &&
-        !event.target.classList.contains("devolver")
-      ) {
+      if (!event.target.closest("button")) {
         const id = this.getAttribute("data-id");
+        const procedimientoId = this.getAttribute("procedimiento-id");
+        const maquinaId = this.getAttribute("maquina-id");
         const cedula = this.getAttribute("data-cedula");
         window.location.href = `generar_recibo_final.html#id=${id}&cedula=${cedula}`;
       }
@@ -93,6 +102,43 @@ function devolverMaquina(btn) {
   mostrarModal("Máquina devuelta con éxito.", () => {
     window.location.href = "index.html";
   });
+}
+
+// Función para activar la garantía
+async function activarGarantia(btn) {
+  const maquinaId = btn.getAttribute("maquina-id");
+  const procedimientoId = btn.getAttribute("procedimiento-id");
+  console.log(maquinaId, procedimientoId);
+
+  try {
+    // Actualizar procedimientos
+    const responseProc = await fetch(
+      `${link}/procedimientos/${procedimientoId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ garantia: "si" }),
+      }
+    );
+
+    if (!responseProc.ok) throw new Error("Error en procedimientos");
+
+    // Actualizar máquinas
+    const responseMaq = await fetch(`${link}/maquinas/${maquinaId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ estado: "en proceso" }),
+    });
+
+    if (!responseMaq.ok) throw new Error("Error en máquinas");
+
+    mostrarModal("Garantía activada. Máquina en proceso.", () => {
+      window.location.reload(); // Recargar para ver cambios
+    });
+  } catch (error) {
+    console.error(error);
+    mostrarModal("Error al activar garantía: " + error.message);
+  }
 }
 
 function mostrarModal(mensaje, callback) {

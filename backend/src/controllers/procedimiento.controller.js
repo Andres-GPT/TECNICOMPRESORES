@@ -35,7 +35,7 @@ export const registerProcedimiento = async (req, res) => {
 export const editProcedimiento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion, costo_revision, costo_procedimiento, estado, id_tecnico } =
+    const { descripcion, costo_revision, costo_procedimiento, estado, id_tecnico, garantia } =
       req.body;
 
     //Obtener el procedimiento
@@ -53,6 +53,7 @@ export const editProcedimiento = async (req, res) => {
       costo_procedimiento,
       estado_cliente: estado,
       id_tecnico,
+      garantia,
     });
 
     res.status(200).json({
