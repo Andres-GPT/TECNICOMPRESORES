@@ -379,11 +379,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (estadoProcedimiento === "rechazado") {
         mostrarModal("Procedimiento rechazado correctamente.", () => {
-          window.location.href = "index.html";
+          window.location.href = "maquinas_pendientes_revision.html";
         });
       } else {
         mostrarModal("Procedimiento aprobado correctamente.", () => {
-          window.location.href = "index.html";
+          window.location.href = "maquinas_pendientes_revision.html";
         });
       }
     } catch (error) {
