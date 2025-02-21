@@ -8,12 +8,13 @@ import { Op } from "sequelize";
 
 export const registerMaquina = async (req, res) => {
   try {
-    const { descripcion, observacion, id_cliente } = req.body;
+    const { descripcion, observacion, id_cliente, fecha_entrada } = req.body;
     //Crear la maquina
     const nuevaMaquina = await Maquina.create({
       descripcion,
       observacion,
       estado: "pendiente por revisión",
+      fecha_entrada,
       estante: 0,
       nivel: 0,
       id_cliente,

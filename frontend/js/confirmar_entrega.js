@@ -176,8 +176,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
           }
         }
-        mostrarModal("Actualización realizada correctamente.", () => {
-          window.location.href = "index.html";
+        mostrarModal("Operación realizada correctamente.", () => {
+          window.location.href = "maquinas_pendientes_recoger.html";
         });
       } catch (error) {
         console.error("Error al actualizar los datos:", error);

@@ -11,19 +11,22 @@ async function validarFormulario(event) {
   event.preventDefault();
 
   // Validación de campos vacíos
-  const campos = [inputCedula, inputNombre, inputApellido, inputTelefono];
+  const campos = [inputCedula, inputNombre, inputApellido];
   if (campos.some((campo) => !campo.value.trim())) {
-    mostrarModal("Todos los campos son obligatorios");
+    mostrarModal("Cédula, nombre y apellido son obligatorios");
     return;
   }
 
   // Validación de que sean solo números
   const soloNumeros = /^\d+$/;
-  if (
-    !soloNumeros.test(inputCedula.value) ||
-    !soloNumeros.test(inputTelefono.value)
-  ) {
-    mostrarModal("Cédula y teléfono deben ser valores numéricos");
+  if (!soloNumeros.test(inputCedula.value)) {
+    mostrarModal("Cédula debe ser un valor numérico");
+    return;
+  }
+
+  // Validación de teléfono solo si existe
+  if (inputTelefono.value.trim() && !soloNumeros.test(inputTelefono.value)) {
+    mostrarModal("El teléfono debe ser un valor numérico");
     return;
   }
 

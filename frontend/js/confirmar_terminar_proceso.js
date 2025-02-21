@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.querySelectorAll("input, textarea").forEach((input) => {
     if (
       input.id !== "tecnico" &&
-      input.id !== "costo_revision" &&
       input.id !== "costo_procedimiento" &&
       input.id !== "descripcion_procedimiento"
     ) {
@@ -252,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       mostrarModal("Procedimiento actualizado correctamente.", () => {
-        window.location.href = "index.html";
+        window.location.href = "maquinas_en_proceso.html";
       });
     } catch (error) {
       console.error("Error al actualizar los datos:", error);

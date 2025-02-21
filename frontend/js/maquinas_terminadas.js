@@ -43,9 +43,19 @@ function renderizarTabla(data) {
     return;
   }
 
+  // Ordenar los datos por fecha (de más reciente a más antigua)
+  const datosOrdenados = data.sort((a, b) => {
+    const fechaA = new Date(a.fecha);
+    const fechaB = new Date(b.fecha);
+    return fechaB - fechaA; // Orden descendente (más reciente primero)
+  });
+
+  // Si prefieres ordenar por ID de máquina (de mayor a menor), usa esto:
+  // const datosOrdenados = data.sort((a, b) => b.id - a.id);
+
   let filas = "";
 
-  data.forEach((maquina) => {
+  datosOrdenados.forEach((maquina) => {
     filas += `
   <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
       <td>${maquina.cedula}</td>

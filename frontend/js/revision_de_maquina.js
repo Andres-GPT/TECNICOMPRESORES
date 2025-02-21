@@ -27,6 +27,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const tecnicoSelect = document.getElementById("tecnico");
 
+  // Evento para el botón "Atrás"
+  document
+    .getElementById("btn-cancelar")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "maquinas_pendientes_revision.html";
+    });
+
   // Bloquear la edición de la cédula
   cedulaInput.value = cedula;
   cedulaInput.readOnly = true;

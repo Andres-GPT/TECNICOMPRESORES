@@ -27,6 +27,8 @@
             border-bottom: 2px solid #000;
             padding-bottom: 10px;
             margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .header img {
@@ -127,13 +129,19 @@
 <body>
     <div class="recibo-container" id="recibo">
         <div class="header">
-            <div id="logo-container">
-                <img id="logo" src="img/logo.png" alt="Logo Empresa">
-                <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
+            <div>
+                <div id="logo-container">
+                    <img id="logo" src="img/logo.png" alt="Logo Empresa">
+                    <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>\
+                    <h1>Recibo #<span id="nroMaquina"></span></h1>
+                </div>
             </div>
 
-            <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
-            <p>NIT: 901418845-0</p>
+            <div>
+                <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
+                <p>NIT: 901418845-0</p>
+            </div>
+
         </div>
 
         <div class="section">
@@ -204,6 +212,7 @@
                 document.getElementById("direccionCliente").textContent = reciboDatos.direccion;
                 document.getElementById("descripcionMaquina").textContent = reciboDatos.descripcion;
                 document.getElementById("observacionesMaquina").textContent = reciboDatos.observaciones;
+                document.getElementById("nroMaquina").textContent = reciboDatos.idMaquina;
 
                 // Agregar la fecha/hora actual
                 const fechaActual = new Date();
@@ -240,7 +249,7 @@
         }
         function goBack() {
             sessionStorage.removeItem("reciboDatos");
-            window.location.href = "index.html";
+            window.history.back();
         }
     </script>
 </body>

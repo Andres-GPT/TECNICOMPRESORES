@@ -128,13 +128,19 @@
 <body>
     <div class="recibo-container" id="recibo">
         <div class="header">
-            <div id="logo-container">
-                <img id="logo" src="img/logo.png" alt="Logo Empresa">
-                <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
+            <div>
+                <div id="logo-container">
+                    <img id="logo" src="img/logo.png" alt="Logo Empresa">
+                    <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>\
+                    <h1>Recibo #<span id="nroMaquina"></span></h1>
+                </div>
             </div>
 
-            <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
-            <p>NIT: 901418845-0</p>
+            <div>
+                <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
+                <p>NIT: 901418845-0</p>
+            </div>
+
         </div>
 
         <div class="section">
@@ -166,6 +172,7 @@
                 <div>
                     <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
                     <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
+                    <p><strong>Garantia:</strong> <span id="garantia"></span></p>
                     <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
                     <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
                     <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
@@ -236,6 +243,8 @@
                 document.getElementById("nombreTecnico").textContent = reciboDatos.nombre_tecnico;
                 document.getElementById("apellidoTecnico").textContent = reciboDatos.apellido_tecnico;
                 document.getElementById("telefonoTecnico").textContent = reciboDatos.telefono_tecnico;
+                document.getElementById("nroMaquina").textContent = reciboDatos.idMaquina;
+                document.getElementById("garantia").textContent = reciboDatos.garantia;
 
                 // Agregar la fecha/hora actual
                 const fechaActual = new Date();
@@ -277,7 +286,7 @@
 
         function goBack() {
             sessionStorage.removeItem("reciboFinalDatos");
-            window.history.back();
+            window.location.href = "maquinas_terminadas.html";
         }
     </script>
 </body>

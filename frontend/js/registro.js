@@ -7,6 +7,7 @@ const inputCorreo = document.getElementById("correo");
 const inputDireccion = document.getElementById("direccion");
 const inputDescripcion = document.getElementById("descripcion");
 const inputObservaciones = document.getElementById("observaciones");
+const inputFechaEntrada = document.getElementById("fecha_entrada");
 
 formRegister.addEventListener("submit", validarFormulario);
 
@@ -21,7 +22,8 @@ async function validarFormulario(event) {
     !inputTelefono.value.trim() ||
     !inputDireccion.value.trim() ||
     !inputDescripcion.value.trim() ||
-    !inputObservaciones.value.trim()
+    !inputObservaciones.value.trim() ||
+    !inputFechaEntrada.value.trim()
   ) {
     alert("Todos los campos son obligatorios");
     return;
@@ -35,7 +37,10 @@ async function validarFormulario(event) {
 
   // Validar formato del correo solo si no está vacío
   const correo = inputCorreo.value.trim();
-  if (correo !== "" && !correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+  if (
+    correo !== "" &&
+    !correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+  ) {
     alert("Correo inválido");
     return;
   }
@@ -78,34 +83,25 @@ async function validarFormulario(event) {
       if (usuarioNuevo.error) throw new Error("Error al registrar el usuario");
     }
 
+    // Formatear la fecha de entrada
+    const fechaEntrada = new Date(inputFechaEntrada.value);
+    const fechaEntradaFormateada = fechaEntrada
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
     // Registrar la máquina
     const maquinaNueva = await crearMaquina({
       id_cliente: clienteExistente?.cliente?.id || inputCedula.value.trim(),
       descripcion: inputDescripcion.value.trim(),
       observacion: inputObservaciones.value.trim(),
+      fecha_entrada: fechaEntradaFormateada,
     });
 
     if (maquinaNueva.error) throw new Error("Error al registrar la máquina");
 
-    // Fecha
-    const fechaActual = new Date();
-    const fechaFormateada = fechaActual.toISOString().split("T")[0];
-
-    const reciboDatos = {
-      cedula: inputCedula.value.trim(),
-      nombre: inputNombre.value.trim(),
-      apellido: inputApellido.value.trim(),
-      telefono: inputTelefono.value.trim(),
-      correo: inputCorreo.value.trim(),
-      direccion: inputDireccion.value.trim(),
-      descripcion: inputDescripcion.value.trim(),
-      observaciones: inputObservaciones.value.trim(),
-      fecha: fechaFormateada,
-    };
-
-    sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
     mostrarModal("Usuario y máquina registrados correctamente.", () => {
-      location.href = "recibo_registro.html";
+      location.href = "index.html";
     });
   } catch (error) {
     console.error(error);

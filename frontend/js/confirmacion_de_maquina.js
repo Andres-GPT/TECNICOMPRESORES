@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await procesarProcedimiento(
           "aceptado",
           "en proceso",
-          costoRevisionSinFormato,
+          0,
           costoProcedimientoSinFormato,
           tecnicoSeleccionado
         );

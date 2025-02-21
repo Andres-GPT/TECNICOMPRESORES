@@ -65,7 +65,7 @@ function renderizarTabla(data) {
           <td>${observacionesTruncada}</td>
           <td>${maquina.fecha}</td>
           <td>
-            <button onclick="generarRecibo('${maquina.cedula}', '${maquina.nombre}', '${maquina.apellido}', '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
+            <button onclick="generarRecibo('${maquina.id}', '${maquina.cedula}', '${maquina.nombre}', '${maquina.apellido}', '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
           </td>
       </tr>
     `;
@@ -87,6 +87,7 @@ function renderizarTabla(data) {
 
 // Generar Recibo
 function generarRecibo(
+  idMaquina,
   cedula,
   nombre,
   apellido,
@@ -98,6 +99,7 @@ function generarRecibo(
   fecha
 ) {
   const reciboDatos = {
+    idMaquina: idMaquina,
     cedula: cedula,
     nombre: nombre,
     apellido: apellido,

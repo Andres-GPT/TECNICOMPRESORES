@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ).format(parseFloat(procedimientoOriginal.costo_procedimiento));
 
         const reciboFinalDatos = {
+          idMaquina: maquinaOriginal.id,
           cedula: cedula,
           nombre: clienteOriginal.nombre,
           apellido: clienteOriginal.apellido,
@@ -152,6 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           costo_revision: costoRevisionFormateado,
           costo_procedimiento: costoProcedimientoFormateado,
           notas: notasInput.value,
+          garantia: procedimientoOriginal.garantia,
         };
         sessionStorage.setItem(
           "reciboFinalDatos",

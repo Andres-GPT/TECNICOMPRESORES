@@ -20,7 +20,7 @@ const Tecnico = sequelize.define(
     },
     telefono: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     estado: {
       type: Sequelize.ENUM("activo", "inactivo"),
