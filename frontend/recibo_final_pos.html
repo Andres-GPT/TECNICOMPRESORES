@@ -4,58 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo</title>
-    <script src="js/config.js"></script>
+    <title>Recibo POS</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            width: 80mm;
+            /* Ancho típico para impresoras POS */
+            margin: 0 auto;
+            padding: 10px;
         }
 
-        .recibo-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
+        .header,
+        .section,
+        .footer {
             text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .header img {
-            max-width: 150px;
-            text-align: start;
         }
 
         .header h1 {
-            margin: 10px 30px 5px;
-            text-align: center;
-        }
-
-        .header p {
+            font-size: 14px;
             margin: 5px 0;
         }
 
         .section {
-            margin-bottom: 20px;
+            margin: 10px 0;
         }
 
         .section h2 {
-            font-size: 16px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
-
-        .section p {
+            font-size: 12px;
             margin: 5px 0;
         }
 
@@ -64,26 +40,8 @@
             justify-content: space-between;
         }
 
-        .data-row div {
-            width: 48%;
-        }
-
         .footer {
-            text-align: center;
             margin-top: 20px;
-        }
-
-        .footer p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .footer .leyenda {
-            font-size: 12px;
-            color: #555;
-            margin-top: 10px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
         }
 
         .btn-container {
@@ -104,73 +62,29 @@
         .btn-download:hover {
             background-color: #0056b3;
         }
-
-        .btn-back {
-            background-color: #ec3037;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .btn-back:hover {
-            background-color: rgb(195, 10, 10);
-        }
-
-        .btn-pos {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .btn-pos:hover {
-            background-color: #218838;
-        }
-
-        #logo-container {
-            display: flex;
-        }
     </style>
 </head>
 
 <body>
-    <div class="recibo-container" id="recibo">
+    <div class="recibo-container" id="recibo-pos">
         <div class="header">
-            <div>
-                <div id="logo-container">
-                    <img id="logo" src="img/logo.png" alt="Logo Empresa">
-                    <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>\
-                    <h1>Recibo #<span id="nroMaquina"></span></h1>
-                </div>
-            </div>
-
-            <div>
-                <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
-                <p>NIT: 901418845-0</p>
-            </div>
-
+            <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
+            <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
+            <p>NIT: 901418845-0</p>
+            <h1>Recibo #<span id="nroMaquina"></span></h1>
         </div>
 
         <div class="section">
             <h2>Datos del Cliente</h2>
             <div class="data-row">
-                <div>
-                    <p><strong>Cédula:</strong> <span id="cedulaCliente"></span></p>
-                    <p><strong>Nombre:</strong> <span id="nombreCliente"></span></p>
-                    <p><strong>Apellido:</strong> <span id="apellidoCliente"></span></p>
-                    <p><strong>Teléfono:</strong> <span id="telefonoCliente"></span></p>
-                </div>
-                <div>
-                    <p><strong>Correo:</strong> <span id="correoCliente"></span></p>
-                    <p><strong>Dirección:</strong> <span id="direccionCliente"></span></p>
-                </div>
+                <p><strong>Cédula:</strong> <span id="cedulaCliente"></span></p>
+                <p><strong>Nombre:</strong> <span id="nombreCliente"></span></p>
             </div>
+            <div class="data-row">
+                <p><strong>Teléfono:</strong> <span id="telefonoCliente"></span></p>
+                <p><strong>Correo:</strong> <span id="correoCliente"></span></p>
+            </div>
+            <p><strong>Dirección:</strong> <span id="direccionCliente"></span></p>
         </div>
 
         <div class="section">
@@ -182,24 +96,21 @@
 
         <div class="section">
             <h2>Datos del Procedimiento</h2>
-            <div class="data-row">
-                <div>
-                    <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
-                    <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
-                    <p><strong>Garantia:</strong> <span id="garantia"></span></p>
-                    <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
-                    <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
-                    <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
-                    <p><strong>Notas Cliente:</strong> <span id="notasCliente"></span></p>
-                </div>
-                <div>
-                    <p><strong>Cédula Técnico:</strong> <span id="cedulaTecnico"></span></p>
-                    <p><strong>Nombre Técnico:</strong> <span id="nombreTecnico"></span></p>
-                    <p><strong>Apellido Técnico:</strong> <span id="apellidoTecnico"></span></p>
-                    <p><strong>Teléfono Técnico:</strong> <span id="telefonoTecnico"></span></p>
-                </div>
-            </div>
+            <p><strong>Descripción:</strong> <span id="descripcionProcedimiento"></span></p>
+            <p><strong>Estado:</strong> <span id="estadoProcedimiento"></span></p>
+            <p><strong>Garantía:</strong> <span id="garantia"></span></p>
+            <p><strong>Fecha de Revisión:</strong> <span id="fechaRevision"></span></p>
+            <p><strong>Costo Revisión:</strong> <span id="costoRevision"></span></p>
+            <p><strong>Costo Procedimiento:</strong> <span id="costoProcedimiento"></span></p>
+            <p><strong>Notas Cliente:</strong> <span id="notasCliente"></span></p>
+        </div>
 
+        <div class="section">
+            <h2>Datos del Técnico</h2>
+            <p><strong>Cédula Técnico:</strong> <span id="cedulaTecnico"></span></p>
+            <p><strong>Nombre Técnico:</strong> <span id="nombreTecnico"></span></p>
+            <p><strong>Apellido Técnico:</strong> <span id="apellidoTecnico"></span></p>
+            <p><strong>Teléfono Técnico:</strong> <span id="telefonoTecnico"></span></p>
         </div>
 
         <div class="footer">
@@ -212,10 +123,9 @@
     </div>
 
     <div class="btn-container">
-        <button class="btn-download" onclick="downloadPDF()">Descargar como PDF</button>
-        <button class="btn-pos" onclick="goToPOS()">Formato POS</button>
-        <button class="btn-back" onclick="goBack()">Atrás</button>
+        <button class="btn-download" onclick="downloadPOSPDF()">Descargar como PDF</button>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
@@ -232,79 +142,70 @@
                 console.error('Error al cargar la configuración:', error);
             }
         }
-
         document.addEventListener("DOMContentLoaded", function () {
-            // Obtener los datos guardados en sessionStorage
             const reciboDatos = JSON.parse(sessionStorage.getItem("reciboFinalDatos"));
 
             if (reciboDatos) {
                 // Llenar los datos del cliente
                 document.getElementById("cedulaCliente").textContent = reciboDatos.cedula;
                 document.getElementById("nombreCliente").textContent = reciboDatos.nombre + " " + reciboDatos.apellido;
-                document.getElementById("apellidoCliente").textContent = reciboDatos.apellido;
                 document.getElementById("telefonoCliente").textContent = reciboDatos.telefono;
                 document.getElementById("correoCliente").textContent = reciboDatos.correo;
                 document.getElementById("direccionCliente").textContent = reciboDatos.direccion;
+
+                // Llenar los datos de la máquina
                 document.getElementById("descripcionMaquina").textContent = reciboDatos.descripcion;
                 document.getElementById("observacionesMaquina").textContent = reciboDatos.observaciones;
+                document.getElementById("fechaHoraEntrada").textContent = reciboDatos.fecha;
 
+                // Llenar los datos del procedimiento
                 document.getElementById("descripcionProcedimiento").textContent = reciboDatos.procedimiento;
                 document.getElementById("estadoProcedimiento").textContent = reciboDatos.estado;
                 document.getElementById("fechaRevision").textContent = reciboDatos.fecha_revision;
                 document.getElementById("costoRevision").textContent = reciboDatos.costo_revision;
                 document.getElementById("costoProcedimiento").textContent = reciboDatos.costo_procedimiento;
                 document.getElementById("notasCliente").textContent = reciboDatos.notas;
+                document.getElementById("garantia").textContent = reciboDatos.garantia;
+
+                // Llenar los datos del técnico
                 document.getElementById("cedulaTecnico").textContent = reciboDatos.cedula_tecnico;
                 document.getElementById("nombreTecnico").textContent = reciboDatos.nombre_tecnico;
                 document.getElementById("apellidoTecnico").textContent = reciboDatos.apellido_tecnico;
                 document.getElementById("telefonoTecnico").textContent = reciboDatos.telefono_tecnico;
+
+                // Llenar el número de máquina
                 document.getElementById("nroMaquina").textContent = reciboDatos.idMaquina;
-                document.getElementById("garantia").textContent = reciboDatos.garantia;
 
                 // Agregar la fecha/hora actual
                 const fechaActual = new Date();
                 const fechaFormateada = fechaActual.toISOString().split("T")[0];
                 const horaFormateada = fechaActual.toLocaleTimeString();
                 document.getElementById("fechaRegistro").textContent = `${fechaFormateada} ${horaFormateada}`;
-                document.getElementById("fechaHoraEntrada").textContent = reciboDatos.fecha;
-
-                // Cargar configuraciones (logo y leyenda)
-                fetchConfiguracion();
             } else {
                 alert("No hay datos del recibo almacenados.");
             }
         });
 
-        async function downloadPDF() {
+        async function downloadPOSPDF() {
             const reciboDatos = JSON.parse(sessionStorage.getItem("reciboFinalDatos"));
             const { jsPDF } = window.jspdf;
 
             const pdf = new jsPDF({
                 orientation: "portrait",
-                unit: "px",
-                format: [850, 900],
+                unit: "mm",
+                format: [80, 200], // Tamaño para impresoras POS
             });
 
             const fechaActual = new Date();
             const fechaFormateada = fechaActual.toISOString().split("T")[0];
 
-            const receipt = document.getElementById("recibo");
+            const receipt = document.getElementById("recibo-pos");
 
-            // Usa html2canvas para capturar el recibo como imagen
             const canvas = await html2canvas(receipt, { scale: 2 });
             const imgData = canvas.toDataURL("image/png");
 
-            pdf.addImage(imgData, "PNG", 10, 10, 780, 900); // Ajusta la posición y tamaño
-            pdf.save(`recibo-final-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
-        }
-
-        function goToPOS() {
-            window.open("recibo_final_pos.html", "_blank");
-        }
-
-        function goBack() {
-            sessionStorage.removeItem("reciboFinalDatos");
-            window.location.href = "maquinas_terminadas.html";
+            pdf.addImage(imgData, "PNG", 5, 5, 70, 0); // Ajusta la posición y tamaño
+            pdf.save(`recibo-pos-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
         }
     </script>
 </body>
