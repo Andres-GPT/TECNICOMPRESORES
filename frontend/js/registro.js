@@ -99,9 +99,28 @@ async function validarFormulario(event) {
     });
 
     if (maquinaNueva.error) throw new Error("Error al registrar la máquina");
+    const  res = await maquinaNueva.maquina;
+    console.log("respuesta",res);
 
+    // Fecha
+    const fechaFormateada = fechaEntrada.toISOString().split("T")[0];
+
+    const reciboDatos = {
+      idMaquina: res.id,
+      cedula: inputCedula.value.trim(),
+      nombre: inputNombre.value.trim(),
+      apellido: inputApellido.value.trim(),
+      telefono: inputTelefono.value.trim(),
+      correo: inputCorreo.value.trim(),
+      direccion: inputDireccion.value.trim(),
+      descripcion: inputDescripcion.value.trim(),
+      observaciones: inputObservaciones.value.trim(),
+      fecha: fechaFormateada,
+    };
+
+    sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
     mostrarModal("Usuario y máquina registrados correctamente.", () => {
-      location.href = "index.html";
+      location.href = "recibo_registro.html";
     });
   } catch (error) {
     console.error(error);

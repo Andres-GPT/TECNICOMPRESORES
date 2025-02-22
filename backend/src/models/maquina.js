@@ -9,6 +9,7 @@ const Maquina = sequelize.define(
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     descripcion: {
       type: Sequelize.STRING,
