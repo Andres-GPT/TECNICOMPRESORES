@@ -1,265 +1,256 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f1f1f1;
-  }
-  
-  header {
-    background-color: #3c3c3c;
-    color: white;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  header img {
-    height: 50px;
-  }
-  
-  nav {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  nav a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.1rem;
-  }
-  
-  .container {
-    padding: 2rem;
-    margin: 0 auto;
-    max-width: 900px;
-  }
-  
-  .form-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    background: #fff;
-    border: 2px solid #f9e217;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-section {
-    width: 48%;
-  }
-  
-  .form-section h3 {
-    margin-bottom: 1rem;
-    color: #ec3037;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  .form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .form-group textarea {
-    resize: none;
-    height: 100px;
-  }
-  
-  .button-container {
-    text-align: right;
-    padding-top: 15px;
-  }
-  
-  .button-container button {
-    background-color: #ec3037;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .button-container button:hover {
-    background-color: #ec3037;
-  }
-  
-  #logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Estilos generales de la tabla */
-  .table-custom {
-    width: 100%;
-    border-collapse: collapse; /* Junta los bordes de las celdas */
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilos para las celdas del encabezado */
-  .table-custom thead {
-    background-color: #e5e5e5;
-    color: rgb(0, 0, 0);
-    text-align: left;
-  }
-  
-  .table-custom thead th {
-    padding: 12px;
-    border-left: 1px solid #ddd; /* Línea a la izquierda */
-    border-right: 1px solid #ddd; /* Línea a la derecha */
-  }
-  
-  /* Estilos para las filas */
-  .table-custom tbody tr {
-    transition: background-color 0.2s ease-in-out;
-    cursor: pointer;
-  }
-  
-  /* Estilos para las celdas */
-  .table-custom tbody td,
-  .table-custom tbody th {
-    padding: 10px; /* Espaciado interno */
-    border-bottom: 1px solid #ddd; /* Línea de separación entre filas */
-    border-left: 1px solid #ddd; /* Línea a la izquierda */
-    border-right: 1px solid #ddd; /* Línea a la derecha */
-  }
-  
-  /* Efecto hover */
-  .table-custom tbody tr:hover {
-    background-color: #f8f9fa;
-  }
-  
-  /* Alternar colores de filas */
-  .table-custom tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Bordes para la primera y última celda de cada fila */
-  .table-custom tbody tr td:first-child,
-  .table-custom thead th:first-child {
-    border-left: 1px solid #ddd; /* Línea más fina a la izquierda */
-  }
-  
-  .table-custom tbody tr td:last-child,
-  .table-custom thead th:last-child {
-    border-right: 1px solid #ddd; /* Línea más fina a la derecha */
-  }
-  
-  .titulo {
-    display: flex;
-    justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
-    align-items: center; /* Alinea los elementos verticalmente */
-    gap: 1rem; /* Espacio entre el título y el botón */
-    height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
-    margin-bottom: 5px;
-  }
-  
-  .filtros {
-    margin-left: 10px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .tituloFiltros {
-    margin-left: 20px;
-    margin-right: 10px;
-  }
-  
-  .estante-input,
-  .nivel-input {
-    width: 50px;
-  }
-  
-  .filtros input[type="text"],
-  .filtros input[type="date"] {
-    width: 200px; /* Ajusta el ancho según sea necesario */
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    height: 20px;
-  }
-  
-  .filtros input[type="text"]:focus,
-  .filtros input[type="date"]:focus {
-    border-color: #d9d9d9;
-    box-shadow: 0 0 5px rgba(236, 48, 55, 0.5);
-    outline: none;
-  }
-  
-  .filtros button {
-    background-color: #d9d9d9;
-    color: rgb(0, 0, 0);
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px; /* Espaciado entre botones y inputs */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .filtros button:hover {
-    background-color: #bbb;
-    transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
-  }
-  
-  .filtros button:active {
-    transform: translateY(0); /* Efecto al hacer clic */
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+}
 
-  .garantia-btn {
-    background-color: #1fd000;
-    color: white;
-    padding: 5px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .garantia-btn:hover {
-    background-color: #248f00;
-    transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
-  }
-  
-  .devolver-btn {
-    background-color: #ec3037;
-    color: white;
-    padding: 5px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .devolver-btn:hover {
-    background-color: #cf292e;
-    transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
-  }
-  
-  .devolver-btn:active {
-    transform: translateY(0); /* Efecto al hacer clic */
-  }
-  
+header {
+  background-color: #3c3c3c;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header img {
+  height: 50px;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.container {
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #fff;
+  border: 2px solid #f9e217;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  width: 48%;
+}
+
+.form-section h3 {
+  margin-bottom: 1rem;
+  color: #ec3037;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  resize: none;
+  height: 100px;
+}
+
+.button-container {
+  text-align: right;
+  padding-top: 15px;
+}
+
+.button-container button {
+  background-color: #ec3037;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.button-container button:hover {
+  background-color: #ec3037;
+}
+
+#logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos generales de la tabla */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse; /* Junta los bordes de las celdas */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para las celdas del encabezado */
+.table-custom thead {
+  background-color: #e5e5e5;
+  color: rgb(0, 0, 0);
+  text-align: left;
+}
+
+.table-custom thead th {
+  padding: 12px;
+  border-left: 1px solid #ddd; /* Línea a la izquierda */
+  border-right: 1px solid #ddd; /* Línea a la derecha */
+}
+
+/* Estilos para las filas */
+.table-custom tbody tr {
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+/* Estilos para las celdas */
+.table-custom tbody td,
+.table-custom tbody th {
+  padding: 10px; /* Espaciado interno */
+  border-bottom: 1px solid #ddd; /* Línea de separación entre filas */
+  border-left: 1px solid #ddd; /* Línea a la izquierda */
+  border-right: 1px solid #ddd; /* Línea a la derecha */
+}
+
+/* Efecto hover */
+.table-custom tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Alternar colores de filas */
+.table-custom tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Bordes para la primera y última celda de cada fila */
+.table-custom tbody tr td:first-child,
+.table-custom thead th:first-child {
+  border-left: 1px solid #ddd; /* Línea más fina a la izquierda */
+}
+
+.table-custom tbody tr td:last-child,
+.table-custom thead th:last-child {
+  border-right: 1px solid #ddd; /* Línea más fina a la derecha */
+}
+
+.titulo {
+  display: flex;
+  justify-content: space-between; /* Mantiene el título y el botón en los extremos horizontales */
+  align-items: center; /* Alinea los elementos verticalmente */
+  gap: 1rem; /* Espacio entre el título y el botón */
+  height: 60px; /* (Opcional) Controla la altura del contenedor para facilitar el centrado */
+  margin-bottom: 5px;
+}
+
+.filtros {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tituloFiltros {
+  text-align: start;
+  margin: 10px 10px;
+}
+
+.container-filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.estante-input,
+.nivel-input {
+  width: 50px;
+}
+
+.filtros input[type="text"],
+.filtros input[type="date"] {
+  width: 200px; /* Ajusta el ancho según sea necesario */
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 20px;
+}
+
+.filtros input[type="text"]:focus,
+.filtros input[type="date"]:focus {
+  border-color: #d9d9d9;
+  box-shadow: 0 0 5px rgba(236, 48, 55, 0.5);
+  outline: none;
+}
+
+.garantia-btn {
+  background-color: #1fd000;
+  margin: 2px;
+  color: white;
+  padding: 5px;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.garantia-btn:hover {
+  background-color: #248f00;
+  transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
+}
+
+.devolver-btn {
+  background-color: #ec3037;
+  margin: 2px;
+  color: white;
+  padding: 5px;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.devolver-btn:hover {
+  background-color: #cf292e;
+  transform: translateY(-2px); /* Efecto sutil al pasar el cursor */
+}
+
+.devolver-btn:active {
+  transform: translateY(0); /* Efecto al hacer clic */
+}
+
+.devolver {
+  width: 20%;
+}

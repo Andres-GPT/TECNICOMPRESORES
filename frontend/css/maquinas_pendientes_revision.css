@@ -172,15 +172,26 @@ nav a {
 }
 
 .filtros {
-  margin-left: 10px;
   margin-bottom: 30px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .tituloFiltros {
-  margin-left: 20px;
-  margin-right: 10px;
+  text-align: start;
+  margin: 10px 10px ;
+}
+
+.container-filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.container-filtros button {
+  margin: 10px auto;
 }
 
 .estante-input,

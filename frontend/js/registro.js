@@ -301,8 +301,8 @@ inputApellido.addEventListener("input", function () {
 
 // Validar teléfono en tiempo real
 inputTelefono.addEventListener("input", function () {
-  if (this.value.length > 10) {
-    this.value = this.value.slice(0, 10);
+  if (this.value.length > 15) {
+    this.value = this.value.slice(0, 15);
     document.getElementById("telefono-error").style.display = "block";
   } else {
     document.getElementById("telefono-error").style.display = "none";

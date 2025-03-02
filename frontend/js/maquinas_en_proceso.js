@@ -1,5 +1,6 @@
 const inputCedula = document.getElementById("cedula");
 const inputFecha = document.getElementById("fecha");
+const inputNombre = document.getElementById("nombre");
 const filtroGarantia = document.getElementById("filtroGarantia");
 
 let maquinasData = [];
@@ -202,6 +203,14 @@ function aplicarFiltros() {
     );
   }
 
+  // Filtrar por nombre
+  const nombre = inputNombre.value.trim().toLowerCase(); // Convertir a minúsculas para hacer la búsqueda insensible a mayúsculas
+  if (nombre) {
+    maquinasFiltradas = maquinasFiltradas.filter((maquina) =>
+      maquina.nombre.toLowerCase().includes(nombre)
+    );
+  }
+
   // Filtrar por fecha
   const fecha = inputFecha.value.trim();
   if (fecha) {
@@ -225,22 +234,27 @@ function filtroCedula() {
   aplicarFiltros();
 }
 
+function filtroNombre() {
+  aplicarFiltros();
+}
+
 // Filtrar por Fecha
 function filtroFecha() {
   aplicarFiltros();
 }
 
 // Escuchar Enter en los campos de filtro
-inputCedula.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroCedula();
-  }
+inputCedula.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroCedula();
 });
 
-inputFecha.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroFecha();
-  }
+inputNombre.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroNombre();
+});
+
+inputFecha.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroFecha();
 });

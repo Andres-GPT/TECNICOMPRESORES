@@ -1,5 +1,6 @@
 const inputCedula = document.getElementById("cedula");
 const inputFecha = document.getElementById("fecha");
+const inputNombre = document.getElementById("nombre");
 
 let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 
@@ -17,20 +18,19 @@ async function mostrarUsuarios() {
       console.log(data.maquinas);
 
       // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map(maquina => ({
+      maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
         apellido: maquina.apellido,
         descripcion: maquina.descripcion,
         procedimiento: maquina.procedimiento,
-        fecha: maquina.fecha 
+        fecha: maquina.fecha,
       }));
 
       console.log(maquinasData);
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
-
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
@@ -90,7 +90,21 @@ function filtroCedula() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.cedula == cedula);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.cedula == cedula
+  );
+  renderizarTabla(maquinasFiltradas);
+}
+
+function filtroNombre() {
+  const nombre = inputNombre.value.trim().toLowerCase(); // Convertir a minúsculas para hacer la búsqueda insensible a mayúsculas
+  if (!nombre) {
+    renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
+    return;
+  }
+  const maquinasFiltradas = maquinasData.filter((maquina) =>
+    maquina.nombre.toLowerCase().includes(nombre)
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
@@ -101,23 +115,26 @@ function filtroFecha() {
     renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
     return;
   }
-  const maquinasFiltradas = maquinasData.filter(maquina => maquina.fecha === fecha);
+  const maquinasFiltradas = maquinasData.filter(
+    (maquina) => maquina.fecha === fecha
+  );
   renderizarTabla(maquinasFiltradas);
 }
 
 // Escuchar Enter en los campos de filtro
-inputCedula.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroCedula();
-  }
+inputCedula.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroCedula();
 });
 
-inputFecha.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroFecha();
-  }
+inputNombre.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroNombre();
+});
+
+inputFecha.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroFecha();
 });
 
 // Inicializar la carga de datos

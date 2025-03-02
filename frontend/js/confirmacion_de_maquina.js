@@ -64,8 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Validar teléfono en tiempo real
   telefonoInput.addEventListener("input", function () {
-    if (this.value.length > 10) {
-      this.value = this.value.slice(0, 10);
+    if (this.value.length > 15) {
+      this.value = this.value.slice(0, 15);
       document.getElementById("telefono-error").style.display = "block";
     } else {
       document.getElementById("telefono-error").style.display = "none";
@@ -379,11 +379,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (estadoProcedimiento === "rechazado") {
         mostrarModal("Procedimiento rechazado correctamente.", () => {
-          window.location.href = "maquinas_pendientes_revision.html";
+          window.location.href = "maquinas_pendientes_confirmacion.html";
         });
       } else {
         mostrarModal("Procedimiento aprobado correctamente.", () => {
-          window.location.href = "maquinas_pendientes_revision.html";
+          window.location.href = "maquinas_pendientes_confirmacion.html";
         });
       }
     } catch (error) {

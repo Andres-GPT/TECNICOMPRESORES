@@ -32,16 +32,37 @@
 
         <div class="filtros">
             <h3 class="tituloFiltros">Filtros</h3>
-            <h4 class="tituloFiltros">Cédula</h4>
-            <form id="formCedula">
-                <input placeholder="Ingrese la Cédula" type="text" id="cedula">
-                <button onclick="filtroCedula()" type="button">Buscar</button>
-            </form>
-            <h4 class="tituloFiltros">Fecha</h4>
-            <input type="date" id="fecha">
-            <button onclick="filtroFecha()" type="button">Buscar</button>
+            <div>
+                <h4 class="tituloFiltros">Documento</h4>
+                <div class="container-filtros">
+                    <form id="formCedula">
+                        <input placeholder="Ingrese el documento" type="text" id="cedula">
+                    </form>
+                </div>
+
+            </div>
+
+            <div>
+                <h4 class="tituloFiltros">Nombre</h4>
+                <div class="container-filtros">
+                    <form id="formNombre">
+                        <input placeholder="Ingrese el nombre" type="text" id="nombre">
+                    </form>
+                </div>
+
+            </div>
+            <div>
+                <h4 class="tituloFiltros">Fecha</h4>
+                <div class="container-filtros">
+                    <div>
+                        <input type="date" id="fecha">
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-        <div class="filtros">
+        <div class="filtros-2">
             <!-- Nuevo checkbox para garantía -->
             <h4 class="tituloFiltros">Garantía</h4>
             <label>
@@ -53,7 +74,7 @@
         <table class="table-custom">
             <thead>
                 <tr>
-                    <th scope="col">Cédula</th>
+                    <th scope="col">Documento</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Descripción</th>

@@ -1,5 +1,6 @@
 const inputCedula = document.getElementById("cedula");
 const inputFecha = document.getElementById("fecha");
+const inputNombre = document.getElementById("nombre");
 
 let maquinasData = []; // Se almacenarán los datos obtenidos de la API
 
@@ -158,6 +159,18 @@ function filtroCedula() {
   renderizarTabla(maquinasFiltradas);
 }
 
+function filtroNombre() {
+  const nombre = inputNombre.value.trim().toLowerCase(); // Convertir a minúsculas para hacer la búsqueda insensible a mayúsculas
+  if (!nombre) {
+    renderizarTabla(maquinasData); // Si está vacío, mostrar todos los datos
+    return;
+  }
+  const maquinasFiltradas = maquinasData.filter((maquina) =>
+    maquina.nombre.toLowerCase().includes(nombre)
+  );
+  renderizarTabla(maquinasFiltradas);
+}
+
 // Filtrar por Fecha
 function filtroFecha() {
   const fecha = inputFecha.value.trim();
@@ -172,18 +185,19 @@ function filtroFecha() {
 }
 
 // Escuchar Enter en los campos de filtro
-inputCedula.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroCedula();
-  }
+inputCedula.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroCedula();
 });
 
-inputFecha.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filtroFecha();
-  }
+inputNombre.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroNombre();
+});
+
+inputFecha.addEventListener("input", (event) => {
+  event.preventDefault();
+  filtroFecha();
 });
 
 // Inicializar la carga de datos

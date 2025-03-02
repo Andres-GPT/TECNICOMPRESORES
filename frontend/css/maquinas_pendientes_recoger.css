@@ -172,15 +172,22 @@ nav a {
 }
 
 .filtros {
-  margin-left: 10px;
   margin-bottom: 30px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .tituloFiltros {
-  margin-left: 20px;
-  margin-right: 10px;
+  text-align: start;
+  margin: 10px 10px;
+}
+
+.container-filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .filtros input[type="text"],
@@ -242,14 +249,15 @@ nav a {
   transform: translateY(0); /* Efecto al hacer clic */
 }
 
-.estante-input, .nivel-input {
+.estante-input,
+.nivel-input {
   width: 50px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;  
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

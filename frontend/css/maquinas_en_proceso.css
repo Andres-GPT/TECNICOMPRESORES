@@ -171,16 +171,35 @@ nav a {
   margin-bottom: 5px;
 }
 
-.filtros {
+.filtros-2 {
   margin-left: 10px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
 }
 
-.tituloFiltros {
+/* .tituloFiltros {
   margin-left: 20px;
   margin-right: 10px;
+} */
+
+.filtros {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tituloFiltros {
+  text-align: start;
+  margin: 10px 10px;
+}
+
+.container-filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .filtros input[type="text"],
@@ -244,7 +263,8 @@ nav a {
   transform: translateY(0); /* Efecto al hacer clic */
 }
 
-.input[type="text"], .input[type="number"] {
+.input[type="text"],
+.input[type="number"] {
   width: 200px; /* Ajusta el ancho según sea necesario */
   padding: 8px;
   font-size: 16px;
@@ -254,7 +274,8 @@ nav a {
   height: 20px;
 }
 
-.input[type="text"]:focus, .input[type="number"]:focus {
+.input[type="text"]:focus,
+.input[type="number"]:focus {
   border-color: #d9d9d9;
   box-shadow: 0 0 5px rgba(236, 48, 55, 0.5);
   outline: none;
@@ -265,7 +286,7 @@ nav a {
 }
 
 .btnModal {
-    background-color: #d9d9d9;
+  background-color: #d9d9d9;
   color: rgb(0, 0, 0);
   padding: 10px 15px;
   font-size: 16px;
