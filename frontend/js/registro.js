@@ -18,9 +18,6 @@ async function validarFormulario(event) {
   if (
     !inputCedula.value.trim() ||
     !inputNombre.value.trim() ||
-    !inputApellido.value.trim() ||
-    !inputTelefono.value.trim() ||
-    !inputDireccion.value.trim() ||
     !inputDescripcion.value.trim() ||
     !inputObservaciones.value.trim() ||
     !inputFechaEntrada.value.trim()
@@ -29,9 +26,9 @@ async function validarFormulario(event) {
     return;
   }
 
-  // Validar que cédula y teléfono sean números
-  if (isNaN(inputCedula.value) || isNaN(inputTelefono.value)) {
-    alert("Cédula y teléfono deben ser valores numéricos");
+  // Validar que el teléfono sean números
+  if (isNaN(inputTelefono.value)) {
+    alert("El teléfono deben ser valores numéricos");
     return;
   }
 
@@ -263,8 +260,8 @@ function limpiarFormulario() {
 
 // Validar cédula en tiempo real
 inputCedula.addEventListener("input", function () {
-  if (this.value.length > 11) {
-    this.value = this.value.slice(0, 11);
+  if (this.value.length > 20) {
+    this.value = this.value.slice(0, 20);
     document.getElementById("cedula-error").style.display = "block";
   } else {
     document.getElementById("cedula-error").style.display = "none";
@@ -273,8 +270,8 @@ inputCedula.addEventListener("input", function () {
 
 // validar nombre en tiempo real
 inputNombre.addEventListener("input", function () {
-  if (this.value.length > 30) {
-    this.value = this.value.slice(0, 30);
+  if (this.value.length > 128) {
+    this.value = this.value.slice(0, 128);
     document.getElementById("nombre-error").style.display = "block";
   } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
     this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");

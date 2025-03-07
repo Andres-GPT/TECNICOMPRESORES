@@ -7,7 +7,7 @@ const Cliente = sequelize.define(
   "clientes",
   {
     cedula: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       primaryKey: true,
     },
     nombre: {
@@ -16,11 +16,11 @@ const Cliente = sequelize.define(
     },
     apellido: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     telefono: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     correo: {
       type: Sequelize.STRING,
@@ -29,7 +29,7 @@ const Cliente = sequelize.define(
     },
     direccion: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

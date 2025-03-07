@@ -17,7 +17,7 @@ export const registerCliente = async (req, res) => {
     //Crear el cliente
 
     const nuevoCliente = await Cliente.create({
-      cedula: Number(cedula),
+      cedula,
       nombre,
       apellido,
       correo,
