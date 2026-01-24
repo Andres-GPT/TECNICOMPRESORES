@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tecnicoSeleccionado = tecnicoSelect.value; // Obtener cédula del técnico seleccionado
 
       if (!tecnicoSeleccionado) {
-        alert("Debe seleccionar un técnico a cargo.");
+        showToast("Debe seleccionar un técnico a cargo.", "warning");
         return;
       }
 
@@ -333,12 +333,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         mostrarModal(
           "Datos actualizados y procedimiento registrado correctamente.",
           () => {
-            window.location.href = "index.html";
+            showToast("Redirigiendo...", "success");
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
           }
         );
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
-        alert("Hubo un error al actualizar los datos.");
+        showToast("Hubo un error al actualizar los datos.", "error");
       }
     });
 });
@@ -348,11 +351,13 @@ function mostrarModal(mensaje, callback) {
   const modalMensaje = document.getElementById("modal-mensaje");
   const btnCerrar = document.getElementById("modal-cerrar");
 
+  modal.classList.add('show');
   modalMensaje.textContent = mensaje;
   modal.style.display = "flex";
 
   btnCerrar.onclick = function () {
     modal.style.display = "none";
+    modal.classList.remove('show');
     if (callback) callback();
   };
 }

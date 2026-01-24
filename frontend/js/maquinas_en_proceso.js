@@ -134,12 +134,12 @@ function renderizarTabla(data) {
 }
 // Abrir el modal
 function abrirModal() {
-  modal.style.display = "block";
+  modal.classList.add("show");
 }
 
 // Cerrar el modal
 closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
+  modal.classList.remove("show");
 });
 
 // Confirmar y enviar los datos
@@ -150,7 +150,7 @@ btnConfirmar.addEventListener("click", async () => {
   const nivel = inputNivel.value.trim();
 
   if (!estante || !nivel) {
-    alert("Por favor ingrese estante y nivel.");
+    showToast("Por favor ingrese estante y nivel.", "warning");
     return;
   }
 
@@ -181,14 +181,18 @@ btnConfirmar.addEventListener("click", async () => {
     if (!responsePost.ok) throw new Error("Error al registrar el recibo.");
 
     // Cerrar modal y limpiar inputs
-    modal.style.display = "none";
+    modal.classList.remove("show");
     inputEstante.value = "";
     inputNivel.value = "";
 
-    // redireccionar al index
-    location.href = "index.html";
+    showToast("Máquina confirmada correctamente.", "success");
+    setTimeout(() => {
+        location.href = "index.html";
+    }, 1500);
+
   } catch (error) {
     console.error("Error en la operación:", error);
+    showToast("Error en la operación: " + error.message, "error");
   }
 });
 
@@ -199,7 +203,7 @@ function aplicarFiltros() {
   const cedula = inputCedula.value.trim();
   if (cedula) {
     maquinasFiltradas = maquinasFiltradas.filter(
-      (maquina) => maquina.cedula == cedula
+      (maquina) => String(maquina.cedula).includes(cedula)
     );
   }
 

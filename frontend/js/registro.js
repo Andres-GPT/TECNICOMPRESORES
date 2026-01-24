@@ -22,13 +22,13 @@ async function validarFormulario(event) {
     !inputObservaciones.value.trim() ||
     !inputFechaEntrada.value.trim()
   ) {
-    alert("Todos los campos son obligatorios");
+    showToast("Todos los campos son obligatorios", "warning");
     return;
   }
 
   // Validar que el teléfono sean números
   if (isNaN(inputTelefono.value)) {
-    alert("El teléfono deben ser valores numéricos");
+    showToast("El teléfono deben ser valores numéricos", "warning");
     return;
   }
 
@@ -38,7 +38,7 @@ async function validarFormulario(event) {
     correo !== "" &&
     !correo.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
   ) {
-    alert("Correo inválido");
+    showToast("Correo inválido", "warning");
     return;
   }
 
@@ -116,12 +116,17 @@ async function validarFormulario(event) {
     };
 
     sessionStorage.setItem("reciboDatos", JSON.stringify(reciboDatos));
+    
+    // Usar el modal existente
     mostrarModal("Usuario y máquina registrados correctamente.", () => {
-      location.href = "recibo_registro.html";
+      showToast("Generando recibo...", "info");
+      setTimeout(() => {
+        location.href = "recibo_registro.html";
+      }, 2000);
     });
   } catch (error) {
     console.error(error);
-    alert(error.message);
+    showToast(error.message, "error");
   }
 }
 
@@ -130,11 +135,15 @@ function mostrarModal(mensaje, callback) {
   const modalMensaje = document.getElementById("modal-mensaje");
   const btnCerrar = document.getElementById("modal-cerrar");
 
+  // Añadir clase show si es necesaria para la animación del global.css
+  modal.classList.add('show');
+  
   modalMensaje.textContent = mensaje;
   modal.style.display = "flex";
 
   btnCerrar.onclick = function () {
     modal.style.display = "none";
+    modal.classList.remove('show');
     if (callback) callback();
   };
 }

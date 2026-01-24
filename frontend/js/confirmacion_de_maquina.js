@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tecnicoSeleccionado = tecnicoSelect.value; // Obtener cédula del técnico seleccionado
 
       if (!tecnicoSeleccionado) {
-        alert("Debe seleccionar un técnico a cargo.");
+        showToast("Debe seleccionar un técnico a cargo.", "warning");
         return;
       }
 
@@ -312,7 +312,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
       } else if (accion === "btn-cancelar") {
         // Abre el modal para ingresar estante y nivel
-        modalEstanteNivel.style.display = "block";
+        // Abre el modal para ingresar estante y nivel
+        modalEstanteNivel.classList.add('show');
+        // modalEstanteNivel.style.display = "block"; (managed by css class)
       }
     });
 
@@ -379,16 +381,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (estadoProcedimiento === "rechazado") {
         mostrarModal("Procedimiento rechazado correctamente.", () => {
-          window.location.href = "maquinas_pendientes_confirmacion.html";
+            showToast("Redirigiendo...", "info");
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
         });
       } else {
         mostrarModal("Procedimiento aprobado correctamente.", () => {
-          window.location.href = "maquinas_pendientes_confirmacion.html";
+            showToast("Redirigiendo...", "success");
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
         });
       }
     } catch (error) {
       console.error("Error al actualizar los datos:", error);
-      alert("Hubo un error al actualizar los datos.");
+      showToast("Hubo un error al actualizar los datos.", "error");
     }
   }
 
@@ -398,7 +406,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const nivel = inputNivel.value.trim();
 
     if (!estante || !nivel) {
-      alert("Por favor ingrese estante y nivel.");
+      showToast("Por favor ingrese estante y nivel.", "warning");
       return;
     }
 
@@ -408,11 +416,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tecnicoSeleccionado = tecnicoSelect.value; // Obtener cédula del técnico seleccionado
 
     if (!tecnicoSeleccionado) {
-      alert("Debe seleccionar un técnico a cargo.");
+      showToast("Debe seleccionar un técnico a cargo.", "warning");
       return;
     }
 
-    modalEstanteNivel.style.display = "none";
+    modalEstanteNivel.classList.remove('show');
     await procesarProcedimiento(
       "rechazado",
       "pendiente por recoger",
@@ -425,21 +433,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   closeModal.addEventListener("click", () => {
-    modalEstanteNivel.style.display = "none";
+    modalEstanteNivel.classList.remove('show');
   });
 });
 
+// Función para mostrar el modal de confirmación
 // Función para mostrar el modal de confirmación
 function mostrarModal(mensaje, callback) {
   const modal = document.getElementById("modal-confirmacion");
   const modalMensaje = document.getElementById("modal-mensaje");
   const btnCerrar = document.getElementById("modal-cerrar");
-
+  
   modalMensaje.textContent = mensaje;
-  modal.style.display = "flex";
+  modal.classList.add('show');
+  // Removed style.display manipulation to rely on toggle class
 
   btnCerrar.onclick = function () {
-    modal.style.display = "none";
+    modal.classList.remove('show');
     if (callback) callback();
   };
 }

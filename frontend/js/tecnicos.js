@@ -69,18 +69,18 @@ function filtroCedula() {
     renderizarTabla(tecnicosData); // Si está vacío, mostrar todos los datos
     return;
   }
+  /* .toString() safe check */
   const tecnicosFiltradas = tecnicosData.filter(
-    (maquina) => maquina.cedula == cedula
+    (maquina) => String(maquina.cedula).includes(cedula)
   );
   renderizarTabla(tecnicosFiltradas);
 }
 
 // Escuchar Enter en los campos de filtro
-inputCedula.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
+// Escuchar input en real time
+inputCedula.addEventListener("input", (event) => {
     event.preventDefault();
     filtroCedula();
-  }
 });
 
 // Inicializar la carga de datos

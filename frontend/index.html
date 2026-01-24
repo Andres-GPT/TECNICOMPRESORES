@@ -1,51 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="js/config.js"></script>
-    <title>Tecnicompresores</title>
+    <title>Inicio - Tecnicompresores</title>
 </head>
 
 <body>
     <header>
-        <div id="logo" onclick="location.href='index.html'" style="cursor: pointer;">
-            <img src="img/logo.png" alt="Logo">
-            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        <div class="header-content">
+            <div id="logo" onclick="location.href='index.html'">
+                <img src="img/logo.png" alt="Logo Tecnicompresores">
+                <span>TECNICOMPRESORES DEL NORTE SAS</span>
+            </div>
+            <nav>
+                <a href="index.html" class="active">Inicio</a>
+                <a href="registro.html">Registro</a>
+                <a href="maquinas.html">Máquinas</a>
+                <a href="configurar_recibo.html">Configuración</a>
+                <a href="tecnicos.html">Técnicos</a>
+            </nav>
         </div>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="registro.html">Registro</a>
-            <a href="maquinas.html">Máquinas</a>
-            <a href="configurar_recibo.html">Configuración</a>
-            <a href="tecnicos.html">Técnicos</a>
-        </nav>
     </header>
 
     <div class="container">
-        <div id="title">
-            <h1 class="title">Inicio</h1>
-            <button class="history-button" onclick="location.href='maquinas_terminadas.html'">Historial de
-                Máquinas</button>
+        <div class="page-header">
+            <h1>Panel de Control</h1>
+            <button class="btn btn-ghost" onclick="location.href='maquinas_terminadas.html'">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm0 1v10h10V3H3zm2 2h6v1H5V5zm0 2h6v1H5V7zm0 2h4v1H5V9z"/>
+                </svg>
+                Historial de Máquinas
+            </button>
         </div>
-        <div class="cards">
-            <div class="card" onclick="location.href='maquinas_pendientes_revision.html'">
-                <h3>Máquinas Pendientes por Revisión</h3>
-                <p>#</p>
+
+        <div class="stats-grid">
+            <div class="stat-card card-clickable" onclick="location.href='maquinas_pendientes_revision.html'">
+                <div class="stat-icon revision-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Pendientes por Revisión</h3>
+                    <p class="stat-number" id="count-revision">-</p>
+                    <span class="stat-label">Máquinas esperando</span>
+                </div>
             </div>
-            <div class="card" onclick="location.href='maquinas_pendientes_confirmacion.html'">
-                <h3>Máquinas Pendientes por Confirmación</h3>
-                <p>#</p>
+
+            <div class="stat-card card-clickable" onclick="location.href='maquinas_pendientes_confirmacion.html'">
+                <div class="stat-icon confirmacion-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Pendientes por Confirmación</h3>
+                    <p class="stat-number" id="count-confirmacion">-</p>
+                    <span class="stat-label">Esperando aprobación</span>
+                </div>
             </div>
-            <div class="card" onclick="location.href='maquinas_en_proceso.html'">
-                <h3>Máquinas en Proceso</h3>
-                <p>#</p>
+
+            <div class="stat-card card-clickable" onclick="location.href='maquinas_en_proceso.html'">
+                <div class="stat-icon proceso-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>En Proceso</h3>
+                    <p class="stat-number" id="count-proceso">-</p>
+                    <span class="stat-label">Reparaciones activas</span>
+                </div>
             </div>
-            <div class="card" onclick="location.href='maquinas_pendientes_recoger.html'">
-                <h3>Máquinas Pendientes por Recoger</h3>
-                <p>#</p>
+
+            <div class="stat-card card-clickable" onclick="location.href='maquinas_pendientes_recoger.html'">
+                <div class="stat-icon recoger-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Pendientes por Recoger</h3>
+                    <p class="stat-number" id="count-recoger">-</p>
+                    <span class="stat-label">Listas para entregar</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2>Acciones Rápidas</h2>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="location.href='registro.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    <span>Nuevo Registro</span>
+                </button>
+                <button class="action-btn" onclick="location.href='maquinas.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
+                    <span>Ver Todas las Máquinas</span>
+                </button>
+                <button class="action-btn" onclick="location.href='tecnicos.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    <span>Gestionar Técnicos</span>
+                </button>
+                <button class="action-btn" onclick="location.href='configurar_recibo.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                    <span>Configuración</span>
+                </button>
             </div>
         </div>
     </div>

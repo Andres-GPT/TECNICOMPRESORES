@@ -5,24 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/revision_maquina.css">
+    <link rel="stylesheet" href="css/global.css">
     <script src="js/config.js"></script>
-    <title>Tecnicompresores</title>
+    <script src="js/ui-utils.js"></script>
+    <title>Tecnicompresores - Configurar Recibo</title>
 </head>
 
 <body>
     <header>
-        <div id="logo" onclick="location.href='index.html'" style="cursor: pointer;">
-            <img src="img/logo.png" alt="Logo">
-            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        <div class="header-content">
+            <div id="logo" onclick="location.href='index.html'">
+                <img src="img/logo.png" alt="Logo Tecnicompresores">
+                <span>TECNICOMPRESORES DEL NORTE SAS</span>
+            </div>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="registro.html">Registro</a>
+                <a href="maquinas.html">Máquinas</a>
+                <a href="configurar_recibo.html" class="active">Configuración</a>
+                <a href="tecnicos.html">Técnicos</a>
+            </nav>
         </div>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="registro.html">Registro</a>
-            <a href="maquinas.html">Máquinas</a>
-            <a href="configurar_recibo.html">Configuración</a>
-            <a href="tecnicos.html">Técnicos</a>
-        </nav>
     </header>
 
     <div class="container">
@@ -41,18 +44,18 @@
                 </div>
                 <div class="form-section">
                     <h3>Logo</h3>
-                    <div class="form-group2">
+                    <div class="form-group" style="position: relative; min-height: 150px; border: 2px dashed var(--color-border); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                         <input type="file" id="logo-recibo" name="logo-recibo" accept="image/*"
-                            style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer;">
+                            style="opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; z-index: 2;">
                         <img id="preview-image" src="" alt="Seleccionar logo"
-                            style="max-width: 150px; cursor: pointer;">
+                            style="max-width: 100%; max-height: 140px; cursor: pointer; z-index: 1;">
                     </div>
                 </div>
             </div>
 
-            <div class="button-container">
-                <button type="button" id="btn-aceptar">Aceptar</button>
-                <button type="button" id="btn-cancelar">Atrás</button>
+            <div class="button-container" style="margin-top: 20px; display: flex; gap: 10px;">
+                <button type="button" id="btn-aceptar" class="btn btn-primary">Aceptar</button>
+                <button type="button" id="btn-cancelar" class="btn btn-secondary">Atrás</button>
             </div>
         </form>
 

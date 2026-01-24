@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         // Actualizar las tarjetas en la vista
-        document.querySelector(".cards .card:nth-child(1) p").textContent = `#${estados["pendiente por revisión"]}`;
-        document.querySelector(".cards .card:nth-child(2) p").textContent = `#${estados["en espera de aprobación"]}`;
-        document.querySelector(".cards .card:nth-child(3) p").textContent = `#${estados["en proceso"]}`;
-        document.querySelector(".cards .card:nth-child(4) p").textContent = `#${estados["pendiente por recoger"]}`;
+        document.getElementById("count-revision").textContent = estados["pendiente por revisión"];
+        document.getElementById("count-confirmacion").textContent = estados["en espera de aprobación"];
+        document.getElementById("count-proceso").textContent = estados["en proceso"];
+        document.getElementById("count-recoger").textContent = estados["pendiente por recoger"];
 
     } catch (error) {
         console.error("Error al obtener los datos:", error);

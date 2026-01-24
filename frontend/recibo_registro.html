@@ -204,7 +204,7 @@
                 const data = await response.json();
                 console.log(data.configuracion);
                 if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('logo').src = `http://192.168.101.9:8000${data.configuracion.logo}`;
+                    document.getElementById('logo').src = `http://192.168.101.76:8080${data.configuracion.logo}`;
                     document.getElementById('leyenda').textContent = data.configuracion.leyenda;
                 }
             } catch (error) {

@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/maquinas_en_proceso.css">
     <script src="js/config.js"></script>
-    <title>Tecnicompresores</title>
+    <script src="js/ui-utils.js"></script>
+    <title>Máquinas en Proceso - Tecnicompresores</title>
 </head>
 
 <body>
     <header>
-        <div id="logo" onclick="location.href='index.html'" style="cursor: pointer;">
-            <img src="img/logo.png" alt="Logo">
-            <span>TECNICOMPRESORES DEL NORTE SAS</span>
+        <div class="header-content">
+            <div id="logo" onclick="location.href='index.html'">
+                <img src="img/logo.png" alt="Logo">
+                <span>TECNICOMPRESORES DEL NORTE SAS</span>
+            </div>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="registro.html">Registro</a>
+                <a href="maquinas.html" class="active">Máquinas</a>
+                <a href="configurar_recibo.html">Configuración</a>
+                <a href="tecnicos.html">Técnicos</a>
+            </nav>
         </div>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="registro.html">Registro</a>
-            <a href="maquinas.html">Máquinas</a>
-            <a href="configurar_recibo.html">Configuración</a>
-            <a href="tecnicos.html">Técnicos</a>
-        </nav>
     </header>
 
     <div class="container">
@@ -31,44 +35,33 @@
         </div>
 
         <div class="filtros">
-            <h3 class="tituloFiltros">Filtros</h3>
-            <div>
-                <h4 class="tituloFiltros">Documento</h4>
-                <div class="container-filtros">
+            <h3 class="filtros-title">Filtros</h3>
+            <div class="filtros-grid">
+                <div class="filtro-group">
+                    <label for="cedula">Documento</label>
                     <form id="formCedula">
                         <input placeholder="Ingrese el documento" type="text" id="cedula">
                     </form>
                 </div>
 
-            </div>
-
-            <div>
-                <h4 class="tituloFiltros">Nombre</h4>
-                <div class="container-filtros">
+                <div class="filtro-group">
+                    <label for="nombre">Nombre</label>
                     <form id="formNombre">
                         <input placeholder="Ingrese el nombre" type="text" id="nombre">
                     </form>
                 </div>
 
-            </div>
-            <div>
-                <h4 class="tituloFiltros">Fecha</h4>
-                <div class="container-filtros">
-                    <div>
-                        <input type="date" id="fecha">
-                    </div>
-
+                <div class="filtro-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha">
                 </div>
 
+                <div class="filtro-group">
+                    <label>
+                        <input type="checkbox" id="filtroGarantia"> Mostrar solo con garantía
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="filtros-2">
-            <!-- Nuevo checkbox para garantía -->
-            <h4 class="tituloFiltros">Garantía</h4>
-            <label>
-                <input type="checkbox" id="filtroGarantia"> Mostrar solo con garantía
-            </label>
-
         </div>
 
         <table class="table-custom">
@@ -94,50 +87,27 @@
     <!-- Modal -->
     <div id="modalEstanteNivel" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Confirmar Registro</h2>
-            <div class="div-input">
-                <label for="inputEstante">Estante:</label>
-                <input class="input" type="number" id="inputEstante" placeholder="Ingrese el estante">
-                <small id="inputEstante-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+            <div class="modal-header">
+                <h2>Confirmar Registro</h2>
+                <span class="close">&times;</span>
             </div>
-            <div class="div-input">
-                <label for="inputNivel">Nivel:</label>
-                <input class="input" type="number" id="inputNivel" placeholder="Ingrese el nivel">
-                <small id="inputNivel-error" style="color: red; display: none;">Máximo 10 dígitos</small>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputEstante">Estante:</label>
+                    <input type="number" id="inputEstante" placeholder="Ingrese el estante">
+                    <small id="inputEstante-error" class="error" style="display: none;">Máximo 10 dígitos</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputNivel">Nivel:</label>
+                    <input type="number" id="inputNivel" placeholder="Ingrese el nivel">
+                    <small id="inputNivel-error" class="error" style="display: none;">Máximo 10 dígitos</small>
+                </div>
             </div>
-            <button class="btnModal" id="btnConfirmar">Confirmar</button>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnConfirmar">Confirmar</button>
+            </div>
         </div>
     </div>
-
-    <style>
-        /* Estilos básicos para el modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 10;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-            border-radius: 8px;
-        }
-
-        .close {
-            float: right;
-            font-size: 22px;
-            cursor: pointer;
-        }
-    </style>
 
 </body>
 <script src="js/maquinas_en_proceso.js"></script>

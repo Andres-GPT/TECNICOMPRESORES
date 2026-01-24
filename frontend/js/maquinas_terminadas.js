@@ -97,59 +97,83 @@ function renderizarTabla(data) {
 
 // Función para devolver la máquina
 function devolverMaquina(btn) {
-  const id = btn.getAttribute("data-id");
-  const response = fetch(`${link}/maquinas/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ estado: "pendiente por recoger" }),
-  });
+  showConfirmDialog(
+      "Devolver Máquina", 
+      "¿Está seguro de que desea devolver esta máquina?", 
+      async () => {
+          const id = btn.getAttribute("data-id");
+          try {
+            const response = await fetch(`${link}/maquinas/${id}`, {
+                method: "PUT",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ estado: "pendiente por recoger" }),
+            });
 
-  if (!response.status === 200) {
-    throw new Error("Error al devolver la máquina");
-  }
+            if (!response.ok) { // Corrected check (response.ok instead of !response.status === 200)
+                throw new Error("Error al devolver la máquina");
+            }
 
-  mostrarModal("Máquina devuelta con éxito.", () => {
-    window.location.href = "index.html";
-  });
+            mostrarModal("Máquina devuelta con éxito.", () => {
+                 showToast("Redirigiendo...", "success");
+                 setTimeout(() => {
+                     window.location.href = "index.html";
+                 }, 1500);
+            });
+          } catch (error) {
+            console.error(error);
+            showToast(error.message, "error");
+          }
+      }
+  );
 }
 
 // Función para activar la garantía
+// Función para activar la garantía
 async function activarGarantia(btn) {
-  const maquinaId = btn.getAttribute("maquina-id");
-  const procedimientoId = btn.getAttribute("procedimiento-id");
-  console.log(maquinaId, procedimientoId);
+    showConfirmDialog(
+        "Activar Garantía", 
+        "¿Está seguro de que desea activar la garantía para esta máquina?", 
+        async () => {
+            const maquinaId = btn.getAttribute("maquina-id");
+            const procedimientoId = btn.getAttribute("procedimiento-id");
+            console.log(maquinaId, procedimientoId);
 
-  try {
-    // Actualizar procedimientos
-    const responseProc = await fetch(
-      `${link}/procedimientos/${procedimientoId}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ garantia: "si" }),
-      }
+            try {
+                // Actualizar procedimientos
+                const responseProc = await fetch(
+                `${link}/procedimientos/${procedimientoId}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ garantia: "si" }),
+                }
+                );
+
+                if (!responseProc.ok) throw new Error("Error en procedimientos");
+
+                // Actualizar máquinas
+                const responseMaq = await fetch(`${link}/maquinas/${maquinaId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ estado: "en proceso" }),
+                });
+
+                if (!responseMaq.ok) throw new Error("Error en máquinas");
+
+                mostrarModal("Garantía activada. Máquina en proceso.", () => {
+                    showToast("Recargando...", "success");
+                    setTimeout(() => {
+                         window.location.reload(); 
+                    }, 1500);
+                });
+            } catch (error) {
+                console.error(error);
+                mostrarModal("Error al activar garantía: " + error.message);
+            }
+        }
     );
-
-    if (!responseProc.ok) throw new Error("Error en procedimientos");
-
-    // Actualizar máquinas
-    const responseMaq = await fetch(`${link}/maquinas/${maquinaId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ estado: "en proceso" }),
-    });
-
-    if (!responseMaq.ok) throw new Error("Error en máquinas");
-
-    mostrarModal("Garantía activada. Máquina en proceso.", () => {
-      window.location.reload(); // Recargar para ver cambios
-    });
-  } catch (error) {
-    console.error(error);
-    mostrarModal("Error al activar garantía: " + error.message);
-  }
 }
 
 function mostrarModal(mensaje, callback) {
@@ -157,11 +181,13 @@ function mostrarModal(mensaje, callback) {
   const modalMensaje = document.getElementById("modal-mensaje");
   const btnCerrar = document.getElementById("modal-cerrar");
 
+  modal.classList.add('show');
   modalMensaje.textContent = mensaje;
   modal.style.display = "flex";
 
   btnCerrar.onclick = function () {
     modal.style.display = "none";
+    modal.classList.remove('show');
     if (callback) callback();
   };
 }
@@ -174,7 +200,7 @@ function filtroCedula() {
     return;
   }
   const maquinasFiltradas = maquinasData.filter(
-    (maquina) => maquina.cedula == cedula
+    (maquina) => String(maquina.cedula).includes(cedula)
   );
   renderizarTabla(maquinasFiltradas);
 }

@@ -154,7 +154,7 @@ function filtroCedula() {
     return;
   }
   const maquinasFiltradas = maquinasData.filter(
-    (maquina) => maquina.cedula == cedula
+    (maquina) => String(maquina.cedula).includes(cedula)
   );
   renderizarTabla(maquinasFiltradas);
 }
