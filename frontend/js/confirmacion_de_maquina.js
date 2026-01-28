@@ -380,19 +380,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (estadoProcedimiento === "rechazado") {
-        mostrarModal("Procedimiento rechazado correctamente.", () => {
-            showToast("Redirigiendo...", "info");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1500);
-        });
+        showToast("Procedimiento rechazado correctamente.", "success");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
       } else {
-        mostrarModal("Procedimiento aprobado correctamente.", () => {
-            showToast("Redirigiendo...", "success");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1500);
-        });
+        showToast("Procedimiento aprobado correctamente.", "success");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
       }
     } catch (error) {
       console.error("Error al actualizar los datos:", error);
@@ -437,19 +433,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-// Función para mostrar el modal de confirmación
-// Función para mostrar el modal de confirmación
-function mostrarModal(mensaje, callback) {
-  const modal = document.getElementById("modal-confirmacion");
-  const modalMensaje = document.getElementById("modal-mensaje");
-  const btnCerrar = document.getElementById("modal-cerrar");
-  
-  modalMensaje.textContent = mensaje;
-  modal.classList.add('show');
-  // Removed style.display manipulation to rely on toggle class
-
-  btnCerrar.onclick = function () {
-    modal.classList.remove('show');
-    if (callback) callback();
-  };
-}

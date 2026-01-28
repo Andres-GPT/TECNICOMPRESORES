@@ -159,7 +159,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           "reciboFinalDatos",
           JSON.stringify(reciboFinalDatos)
         );
-        location.href = "recibo_final.html";
+        window.open("recibo_final.html", "_blank");
+        location.href = "index.html";
       } else if (accion === "btn-noEntregar") {
         location.href = "maquinas_terminadas.html";
       }

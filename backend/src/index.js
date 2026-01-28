@@ -12,11 +12,16 @@ import reciboRoutes from "./routes/recibo.routes.js";
 import configuracionRoutes from "./routes/configuracion.routes.js";
 import notasRoutes from "./routes/notas.routes.js";
 import tecnicoRoutes from "./routes/tecnico.routes.js";
+import { iniciarBackupCron } from "./services/backup.service.js";
 
 dotenv.config();
 
 db.authenticate()
-  .then(() => console.log("Databse connection successful"))
+  .then(() => {
+    console.log("Databse connection successful");
+    // Iniciar cron job de backup después de conectar a la base de datos
+    iniciarBackupCron();
+  })
   .catch((error) => console.log("Connection error: ", error));
 
 const app = express();

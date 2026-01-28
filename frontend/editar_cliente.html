@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/registro.css">
+    <link rel="stylesheet" href="css/crear_tecnico.css">
     <script src="js/config.js"></script>
-    <script src="js/ui-utils.js"></script>
-    <title>Registro de Máquinas - Tecnicompresores</title>
+    <title>Editar Cliente - Tecnicompresores</title>
 </head>
 
 <body>
@@ -21,11 +20,11 @@
             </div>
             <nav>
                 <a href="index.html">Inicio</a>
-                <a href="registro.html" class="active">Registro</a>
+                <a href="registro.html">Registro</a>
                 <a href="maquinas.html">Máquinas</a>
                 <a href="configurar_recibo.html">Configuración</a>
                 <a href="tecnicos.html">Técnicos</a>
-                <a href="clientes.html">Clientes</a>
+                <a href="clientes.html" class="active">Clientes</a>
             </nav>
         </div>
     </header>
@@ -33,7 +32,7 @@
     <div class="container">
 
         <div class="titulo">
-            <h1>Registro</h1>
+            <h1>Editar Cliente</h1>
         </div>
 
         <form action="" id="form-register">
@@ -42,7 +41,7 @@
                     <h3>Datos del Cliente</h3>
                     <div class="form-group">
                         <label for="cedula">Documento</label>
-                        <input type="text" id="cedula" name="cedula" oninput="obtenerCliente(this.value)" required>
+                        <input type="text" id="cedula" name="cedula" required readonly>
                         <small id="cedula-error" style="color: red; display: none;">Máximo 20 dígitos</small>
                     </div>
                     <div class="form-group">
@@ -54,12 +53,12 @@
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
                         <input type="text" id="apellido" name="apellido">
-                        <small id="cedula-error" style="color: red; display: none;">Máximo 128 dígitos</small>
+                        <small id="apellido-error" style="color: red; display: none;">Máximo 128 caracteres</small>
                         <small id="apellido-error-letras" style="color: red; display: none;">Solo letras</small>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
-                        <input type="number" id="telefono" name="telefono">
+                        <input type="text" id="telefono" name="telefono">
                         <small id="telefono-error" style="color: red; display: none;">Máximo 15 dígitos</small>
                     </div>
                     <div class="form-group">
@@ -73,28 +72,12 @@
                         <small id="direccion-error" style="color: red; display: none;">Máximo 100 caracteres</small>
                     </div>
                 </div>
-
-                <div class="form-section">
-                    <h3>Datos de la Máquina</h3>
-                    <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <textarea id="descripcion" name="descripcion" required></textarea>
-                        <small id="descripcion-error" style="color: red; display: none;">Máximo 255 caracteres</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones</label>
-                        <textarea id="observaciones" name="observaciones" required></textarea>
-                        <small id="observaciones-error" style="color: red; display: none;">Máximo 255 caracteres</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="observaciones">Fecha de Entrada</label>
-                        <input type="date" id="fecha_entrada" name="fecha_entrada" required>
-                    </div>
-                </div>
             </div>
 
             <div class="button-container">
-                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='clientes.html'">Atrás</button>
+                <button type="submit" id="btn-aceptar" class="btn btn-primary">Guardar Cambios</button>
+                <button type="submit" id="btn-eliminar" class="btn btn-outline">Eliminar</button>
             </div>
         </form>
 
@@ -114,6 +97,6 @@
         </div>
     </div>
 </body>
-<script src="js/registro.js"></script>
+<script src="js/editar_cliente.js"></script>
 
 </html>

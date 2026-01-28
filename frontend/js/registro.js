@@ -121,7 +121,8 @@ async function validarFormulario(event) {
     mostrarModal("Usuario y máquina registrados correctamente.", () => {
       showToast("Generando recibo...", "info");
       setTimeout(() => {
-        location.href = "recibo_registro.html";
+        window.open("recibo_registro.html", "_blank");
+        location.href = "index.html";
       }, 2000);
     });
   } catch (error) {

@@ -176,12 +176,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
           }
         }
-        mostrarModal("Operación realizada correctamente.", () => {
-          showToast("Redirigiendo...", "success");
-          setTimeout(() => {
-              window.location.href = "index.html";
-          }, 1500);
-        });
+        showToast("Operación realizada correctamente.", "success");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
         showToast("Hubo un error al actualizar los datos.", "error");
@@ -189,18 +187,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-function mostrarModal(mensaje, callback) {
-  const modal = document.getElementById("modal-confirmacion");
-  const modalMensaje = document.getElementById("modal-mensaje");
-  const btnCerrar = document.getElementById("modal-cerrar");
-
-  modal.classList.add('show');
-  modalMensaje.textContent = mensaje;
-  modal.style.display = "flex";
-
-  btnCerrar.onclick = function () {
-    modal.style.display = "none";
-    modal.classList.remove('show');
-    if (callback) callback();
-  };
-}

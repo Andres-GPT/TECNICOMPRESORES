@@ -1,4 +1,5 @@
 import Cliente from "../models/cliente.js";
+import { Op } from "sequelize";
 
 //Registrar un cliente
 
@@ -104,15 +105,44 @@ export const deleteCliente = async (req, res) => {
   }
 };
 
-//Obtener todos los clientes
+//Obtener todos los clientes (con paginación y búsqueda)
 export const getClientes = async (req, res) => {
   try {
-    const clientes = await Cliente.findAll();
+    const { page = 1, limit = 20, search = "" } = req.query;
+    
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+    
+    // Construir condición de búsqueda si existe
+    const whereClause = search
+      ? {
+          [Op.or]: [
+            { cedula: { [Op.like]: `%${search}%` } },
+            { nombre: { [Op.like]: `%${search}%` } },
+            { apellido: { [Op.like]: `%${search}%` } },
+          ],
+        }
+      : {};
+
+    // Obtener clientes con paginación
+    const { count, rows } = await Cliente.findAndCountAll({
+      where: whereClause,
+      limit: parseInt(limit),
+      offset: offset,
+      order: [['cedula', 'ASC']],
+    });
+
+    const totalPages = Math.ceil(count / parseInt(limit));
 
     res.status(200).json({
       error: false,
       mensaje: "Clientes obtenidos correctamente",
-      clientes,
+      clientes: rows,
+      pagination: {
+        currentPage: parseInt(page),
+        itemsPerPage: parseInt(limit),
+        totalItems: count,
+        totalPages: totalPages,
+      },
     });
   } catch (error) {
     res.status(500).json({
