@@ -159,7 +159,7 @@ export const getProcedimientoCompleto = async (req, res) => {
         attributes: [
           "cedula",
           "nombre",
-          "apellido",
+
           "telefono",
           "correo",
           "direccion",

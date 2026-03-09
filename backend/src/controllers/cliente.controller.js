@@ -5,7 +5,7 @@ import { Op } from "sequelize";
 
 export const registerCliente = async (req, res) => {
   try {
-    const { cedula, nombre, apellido, telefono, correo, direccion } = req.body;
+    const { cedula, nombre, telefono, correo, direccion } = req.body;
 
     //Verificar si existe el cliente
     const clienteExistente = await Cliente.findByPk(cedula);
@@ -20,7 +20,7 @@ export const registerCliente = async (req, res) => {
     const nuevoCliente = await Cliente.create({
       cedula,
       nombre,
-      apellido,
+
       correo,
       telefono,
       direccion,
@@ -43,7 +43,7 @@ export const registerCliente = async (req, res) => {
 export const editCliente = async (req, res) => {
   try {
     const { cedula } = req.params;
-    const { nombre, apellido, correo, telefono, direccion } = req.body;
+    const { nombre, correo, telefono, direccion } = req.body;
 
     //Verificar si existe el cliente
     const clienteExistente = await Cliente.findByPk(cedula);
@@ -55,7 +55,7 @@ export const editCliente = async (req, res) => {
     //Actualizar el cliente
     await clienteExistente.update({
       nombre,
-      apellido,
+
       correo,
       telefono,
       direccion,
@@ -118,7 +118,7 @@ export const getClientes = async (req, res) => {
           [Op.or]: [
             { cedula: { [Op.like]: `%${search}%` } },
             { nombre: { [Op.like]: `%${search}%` } },
-            { apellido: { [Op.like]: `%${search}%` } },
+
           ],
         }
       : {};

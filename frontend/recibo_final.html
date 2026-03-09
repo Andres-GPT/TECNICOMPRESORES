@@ -133,6 +133,35 @@
             background-color: #218838;
         }
 
+        .btn-print {
+            background-color: #ffc107;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-print:hover {
+            background-color: #e0a800;
+        }
+
+        @media print {
+            .btn-container {
+                display: none !important;
+            }
+            body {
+                background-color: #fff;
+            }
+            .recibo-container {
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
         #logo-container {
             display: flex;
         }
@@ -145,7 +174,7 @@
             <div>
                 <div id="logo-container">
                     <img id="logo" src="img/logo.png" alt="Logo Empresa">
-                    <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>\
+                    <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
                     <h1>Recibo #<span id="nroMaquina"></span></h1>
                 </div>
             </div>
@@ -163,7 +192,7 @@
                 <div>
                     <p><strong>Documento:</strong> <span id="cedulaCliente"></span></p>
                     <p><strong>Nombre:</strong> <span id="nombreCliente"></span></p>
-                    <p><strong>Apellido:</strong> <span id="apellidoCliente"></span></p>
+
                     <p><strong>Teléfono:</strong> <span id="telefonoCliente"></span></p>
                 </div>
                 <div>
@@ -212,6 +241,7 @@
     </div>
 
     <div class="btn-container">
+        <button class="btn-print" onclick="window.print()">Imprimir</button>
         <button class="btn-download" onclick="downloadPDF()">Descargar como PDF</button>
         <button class="btn-pos" onclick="goToPOS()">Formato POS</button>
         <button class="btn-back" onclick="goBack()">Atrás</button>
@@ -240,8 +270,7 @@
             if (reciboDatos) {
                 // Llenar los datos del cliente
                 document.getElementById("cedulaCliente").textContent = reciboDatos.cedula;
-                document.getElementById("nombreCliente").textContent = reciboDatos.nombre + " " + reciboDatos.apellido;
-                document.getElementById("apellidoCliente").textContent = reciboDatos.apellido;
+                document.getElementById("nombreCliente").textContent = reciboDatos.nombre;
                 document.getElementById("telefonoCliente").textContent = reciboDatos.telefono;
                 document.getElementById("correoCliente").textContent = reciboDatos.correo;
                 document.getElementById("direccionCliente").textContent = reciboDatos.direccion;
@@ -256,7 +285,6 @@
                 document.getElementById("notasCliente").textContent = reciboDatos.notas;
                 document.getElementById("cedulaTecnico").textContent = reciboDatos.cedula_tecnico;
                 document.getElementById("nombreTecnico").textContent = reciboDatos.nombre_tecnico;
-                document.getElementById("apellidoTecnico").textContent = reciboDatos.apellido_tecnico;
                 document.getElementById("telefonoTecnico").textContent = reciboDatos.telefono_tecnico;
                 document.getElementById("nroMaquina").textContent = reciboDatos.idMaquina;
                 document.getElementById("garantia").textContent = reciboDatos.garantia;

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const cedulaInput = document.getElementById("cedula");
   const nombreInput = document.getElementById("nombre");
-  const apellidoInput = document.getElementById("apellido");
+
   const telefonoInput = document.getElementById("telefono");
   const correoInput = document.getElementById("correo");
   const direccionInput = document.getElementById("direccion");
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ...procedimientoData.procedimiento.maquina.cliente_maquina,
       };
       nombreInput.value = clienteOriginal.nombre || "";
-      apellidoInput.value = clienteOriginal.apellido || "";
+
       telefonoInput.value = clienteOriginal.telefono || "";
       correoInput.value = clienteOriginal.correo || "";
       direccionInput.value = clienteOriginal.direccion || "";

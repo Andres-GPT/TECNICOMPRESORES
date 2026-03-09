@@ -58,7 +58,7 @@ async function mostrarUsuarios() {
       id: maquina.id,
       cedula: maquina.cedula,
       nombre: maquina.nombre,
-      apellido: maquina.apellido,
+
       descripcion: maquina.descripcion,
       procedimiento: maquina.procedimiento,
       fecha: maquina.fecha,
@@ -99,7 +99,7 @@ function renderizarTabla(data) {
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
-          <td>${maquina.apellido}</td>
+
           <td>${descripcionTruncada}</td>
           <td>${procedimientoTruncado}</td>
           <td>${maquina.garantia}</td>

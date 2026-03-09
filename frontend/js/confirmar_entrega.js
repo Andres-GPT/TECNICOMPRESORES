@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const cedulaInput = document.getElementById("cedula");
   const nombreInput = document.getElementById("nombre");
-  const apellidoInput = document.getElementById("apellido");
+
   const telefonoInput = document.getElementById("telefono");
   const correoInput = document.getElementById("correo");
   const direccionInput = document.getElementById("direccion");
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let clienteOriginal = {};
   let maquinaOriginal = {};
   let procedimientoOriginal = {};
+  let tecnico = {};
   let id_procedimiento;
   let notaExistente = null;
 
@@ -83,13 +84,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     const procedimientoData = await procedimientoResponse.json();
     id_procedimiento = procedimientoData.procedimiento.id;
+    const id_tecnico = procedimientoData.procedimiento.id_tecnico;
 
     if (!procedimientoData.error) {
       clienteOriginal = {
         ...procedimientoData.procedimiento.maquina.cliente_maquina,
       };
       nombreInput.value = clienteOriginal.nombre || "";
-      apellidoInput.value = clienteOriginal.apellido || "";
+
       telefonoInput.value = clienteOriginal.telefono || "";
       correoInput.value = clienteOriginal.correo || "";
       direccionInput.value = clienteOriginal.direccion || "";
@@ -130,6 +132,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       notasInput.value = "";
     }
+
+    // Obtener lista de técnicos
+    const tecnicoResponse = await fetch(`${link}/tecnicos/${id_tecnico}`);
+    const tecnicoData = await tecnicoResponse.json();
+
+    if (!tecnicoData.error) {
+      tecnico = { ...tecnicoData.tecnico };
+    } else {
+      console.error("Error obteniendo técnico:", tecnicoData.mensaje);
+    }
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
@@ -159,7 +171,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const nuevaNota = notasInput.value.trim();
 
-        if (accion === "btn-noEntregar") {
+        if (accion === "btn-noEntregar" || accion === "btn-entregar") {
           if (notaExistente) {
             // Actualizar la nota existente con PUT
             await fetch(`${link}/notas/${id}`, {
@@ -167,7 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ nota: nuevaNota }),
             });
-          } else {
+          } else if (nuevaNota !== "") {
             // Crear una nueva nota con POST
             await fetch(`${link}/notas`, {
               method: "POST",
@@ -178,6 +190,36 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         showToast("Operación realizada correctamente.", "success");
         setTimeout(() => {
+            if (accion === "btn-entregar") {
+              const fechaEntradaFormateada = maquinaOriginal.fecha_entrada ? maquinaOriginal.fecha_entrada.split("T")[0] : "";
+              const fechaRevisionFormateada = procedimientoOriginal.fecha_revision ? procedimientoOriginal.fecha_revision.split("T")[0] : "";
+              const costoRevisionFormateado = new Intl.NumberFormat("es-ES").format(parseFloat(procedimientoOriginal.costo_revision || 0));
+              const costoProcedimientoFormateado = new Intl.NumberFormat("es-ES").format(parseFloat(procedimientoOriginal.costo_procedimiento || 0));
+
+              const reciboFinalDatos = {
+                idMaquina: maquinaOriginal.id,
+                cedula: cedula,
+                nombre: clienteOriginal.nombre,
+                telefono: clienteOriginal.telefono,
+                correo: clienteOriginal.correo,
+                direccion: clienteOriginal.direccion,
+                descripcion: maquinaOriginal.descripcion,
+                observaciones: maquinaOriginal.observacion,
+                fecha: fechaEntradaFormateada,
+                procedimiento: procedimientoOriginal.descripcion,
+                estado: procedimientoOriginal.estado_cliente,
+                cedula_tecnico: tecnico.cedula,
+                nombre_tecnico: tecnico.nombre,
+                telefono_tecnico: tecnico.telefono,
+                fecha_revision: fechaRevisionFormateada,
+                costo_revision: costoRevisionFormateado,
+                costo_procedimiento: costoProcedimientoFormateado,
+                notas: nuevaNota,
+                garantia: procedimientoOriginal.garantia || "no",
+              };
+              sessionStorage.setItem("reciboFinalDatos", JSON.stringify(reciboFinalDatos));
+              window.open("recibo_final.html", "_blank");
+            }
             window.location.href = "index.html";
         }, 1500);
       } catch (error) {

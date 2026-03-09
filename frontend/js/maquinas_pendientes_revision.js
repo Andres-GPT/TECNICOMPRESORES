@@ -20,7 +20,7 @@ async function mostrarUsuarios() {
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
-        apellido: maquina.apellido,
+
         telefono: maquina.telefono,
         correo: maquina.correo,
         direccion: maquina.direccion,
@@ -61,12 +61,12 @@ function renderizarTabla(data) {
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
-          <td>${maquina.apellido}</td>
+
           <td>${descripcionTruncada}</td>
           <td>${observacionesTruncada}</td>
           <td>${maquina.fecha}</td>
           <td>
-            <button onclick="generarRecibo('${maquina.id}', '${maquina.cedula}', '${maquina.nombre}', '${maquina.apellido}', '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
+            <button onclick="generarRecibo('${maquina.id}', '${maquina.cedula}', '${maquina.nombre}', null, '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
           </td>
       </tr>
     `;
@@ -91,7 +91,7 @@ function generarRecibo(
   idMaquina,
   cedula,
   nombre,
-  apellido,
+
   telefono,
   correo,
   direccion,
@@ -103,7 +103,6 @@ function generarRecibo(
     idMaquina: idMaquina,
     cedula: cedula,
     nombre: nombre,
-    apellido: apellido,
     telefono: telefono,
     correo: correo,
     direccion: direccion,

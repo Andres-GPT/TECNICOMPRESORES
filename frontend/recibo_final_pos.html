@@ -9,10 +9,10 @@
         body {
             font-family: 'Courier New', Courier, monospace;
             font-size: 12px;
-            width: 80mm;
-            /* Ancho típico para impresoras POS */
+            width: 72mm; /* Ancho imprimible efectivo para impresoras POS de 80mm */
             margin: 0 auto;
             padding: 10px;
+            box-sizing: border-box;
         }
 
         .header,
@@ -31,13 +31,21 @@
         }
 
         .section h2 {
-            font-size: 12px;
+            font-size: 13px;
             margin: 5px 0;
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 5px;
         }
 
         .data-row {
-            display: flex;
-            justify-content: space-between;
+            display: block; /* Apilar elementos en lugar de flex hacia los lados para prevenir cortes horizontales */
+        }
+        
+        .data-row p, .section p {
+            margin: 3px 0;
+            text-align: left; /* Alinear a la izquierda */
+            word-wrap: break-word;
         }
 
         .footer {
@@ -61,6 +69,39 @@
 
         .btn-download:hover {
             background-color: #0056b3;
+        }
+        .btn-print {
+            background-color: #ffc107;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-print:hover {
+            background-color: #e0a800;
+        }
+
+        @media print {
+            @page {
+                size: 80mm 297mm; /* Sugerir tamaño al navegador */
+                margin: 0;
+            }
+            body {
+                width: 72mm !important;
+                margin: 0 auto !important;
+                padding: 0 !important;
+            }
+            .recibo-container {
+                width: 72mm !important;
+                padding: 2mm !important;
+                box-sizing: border-box;
+            }
+            .btn-container {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -123,6 +164,7 @@
     </div>
 
     <div class="btn-container">
+        <button class="btn-print" onclick="window.print()">Imprimir</button>
         <button class="btn-download" onclick="downloadPOSPDF()">Descargar como PDF</button>
     </div>
 
@@ -148,7 +190,7 @@
             if (reciboDatos) {
                 // Llenar los datos del cliente
                 document.getElementById("cedulaCliente").textContent = reciboDatos.cedula;
-                document.getElementById("nombreCliente").textContent = reciboDatos.nombre + " " + reciboDatos.apellido;
+                document.getElementById("nombreCliente").textContent = reciboDatos.nombre;
                 document.getElementById("telefonoCliente").textContent = reciboDatos.telefono;
                 document.getElementById("correoCliente").textContent = reciboDatos.correo;
                 document.getElementById("direccionCliente").textContent = reciboDatos.direccion;

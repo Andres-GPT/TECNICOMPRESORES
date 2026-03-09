@@ -71,7 +71,7 @@ function renderizarTabla(clientes) {
       <tr data-cedula="${cliente.cedula}" style="cursor: pointer;">
           <td>${cliente.cedula || ""}</td>
           <td>${cliente.nombre || ""}</td>
-          <td>${cliente.apellido || ""}</td>
+
           <td>${cliente.telefono || ""}</td>
           <td>${cliente.correo || ""}</td>
       </tr>

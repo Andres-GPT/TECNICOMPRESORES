@@ -1,7 +1,7 @@
 const formRegister = document.getElementById("form-register");
 const inputCedula = document.getElementById("cedula");
 const inputNombre = document.getElementById("nombre");
-const inputApellido = document.getElementById("apellido");
+
 const inputTelefono = document.getElementById("telefono");
 const inputCorreo = document.getElementById("correo");
 const inputDireccion = document.getElementById("direccion");
@@ -51,7 +51,6 @@ async function validarFormulario(event) {
       const datosActualizados = {
         cedula: inputCedula.value.trim(),
         nombre: inputNombre.value.trim(),
-        apellido: inputApellido.value.trim(),
         telefono: inputTelefono.value.trim(),
         correo: inputCorreo.value.trim(),
         direccion: inputDireccion.value.trim(),
@@ -71,7 +70,6 @@ async function validarFormulario(event) {
       const usuarioNuevo = await crearUsuario({
         cedula: inputCedula.value.trim(),
         nombre: inputNombre.value.trim(),
-        apellido: inputApellido.value.trim(),
         telefono: inputTelefono.value.trim(),
         correo: inputCorreo.value.trim(),
         direccion: inputDireccion.value.trim(),
@@ -106,7 +104,6 @@ async function validarFormulario(event) {
       idMaquina: res.id,
       cedula: inputCedula.value.trim(),
       nombre: inputNombre.value.trim(),
-      apellido: inputApellido.value.trim(),
       telefono: inputTelefono.value.trim(),
       correo: inputCorreo.value.trim(),
       direccion: inputDireccion.value.trim(),
@@ -246,8 +243,6 @@ inputCedula.addEventListener("blur", async () => {
 
       // Asignar los valores al formulario
       document.getElementById("nombre").value = cliente.cliente.nombre || "";
-      document.getElementById("apellido").value =
-        cliente.cliente.apellido || "";
       document.getElementById("telefono").value =
         cliente.cliente.telefono || "";
       document.getElementById("correo").value = cliente.cliente.correo || "";
@@ -262,7 +257,6 @@ inputCedula.addEventListener("blur", async () => {
 // Función para limpiar el formulario si no se encuentra el cliente
 function limpiarFormulario() {
   document.getElementById("nombre").value = "";
-  document.getElementById("apellido").value = "";
   document.getElementById("telefono").value = "";
   document.getElementById("correo").value = "";
   document.getElementById("direccion").value = "";
@@ -292,19 +286,7 @@ inputNombre.addEventListener("input", function () {
   }
 });
 
-// validar apellido en tiempo real
-inputApellido.addEventListener("input", function () {
-  if (this.value.length > 30) {
-    this.value = this.value.slice(0, 30);
-    document.getElementById("apellido-error").style.display = "block";
-  } else if (!this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
-    this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
-    document.getElementById("apellido-error-letras").style.display = "block";
-  } else {
-    document.getElementById("apellido-error").style.display = "none";
-    document.getElementById("apellido-error-letras").style.display = "none";
-  }
-});
+
 
 // Validar teléfono en tiempo real
 inputTelefono.addEventListener("input", function () {

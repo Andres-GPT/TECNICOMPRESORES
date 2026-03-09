@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const cedulaInput = document.getElementById("cedula");
   const nombreInput = document.getElementById("nombre");
-  const apellidoInput = document.getElementById("apellido");
+
   const telefonoInput = document.getElementById("telefono");
   const correoInput = document.getElementById("correo");
   const direccionInput = document.getElementById("direccion");
@@ -36,22 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Validar apellido en tiempo real
-  apellidoInput.addEventListener("input", function () {
-    if (this.value.length > 128) {
-      this.value = this.value.slice(0, 128);
-      document.getElementById("apellido-error").style.display = "block";
-    } else if (
-      this.value &&
-      !this.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
-    ) {
-      this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
-      document.getElementById("apellido-error-letras").style.display = "block";
-    } else {
-      document.getElementById("apellido-error").style.display = "none";
-      document.getElementById("apellido-error-letras").style.display = "none";
-    }
-  });
+
 
   // Validar teléfono en tiempo real
   telefonoInput.addEventListener("input", function () {
@@ -81,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!clienteData.error) {
       clienteOriginal = { ...clienteData.cliente };
       nombreInput.value = clienteOriginal.nombre || "";
-      apellidoInput.value = clienteOriginal.apellido || "";
+
       telefonoInput.value = clienteOriginal.telefono || "";
       correoInput.value = clienteOriginal.correo || "";
       direccionInput.value = clienteOriginal.direccion || "";
@@ -108,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (accion === "btn-aceptar") {
         const datosActualizados = {
           nombre: nombreInput.value.trim(),
-          apellido: apellidoInput.value.trim(),
+
           telefono: telefonoInput.value.trim(),
           correo: correoInput.value.trim(),
           direccion: direccionInput.value.trim(),
