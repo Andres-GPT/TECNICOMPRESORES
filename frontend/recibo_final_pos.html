@@ -5,13 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recibo POS</title>
+    <script src="js/config.js"></script>
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
-            width: 72mm; /* Ancho imprimible efectivo para impresoras POS de 80mm */
-            margin: 0 auto;
-            padding: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #000;
+            width: 74mm;
+            margin: 0;
+            padding: 0 5mm 0 2mm;
             box-sizing: border-box;
         }
 
@@ -90,13 +93,15 @@
                 margin: 0;
             }
             body {
-                width: 72mm !important;
-                margin: 0 auto !important;
-                padding: 0 !important;
+                width: 74mm !important;
+                margin: 0 !important;
+                padding: 0 2mm !important;
+                font-weight: bold !important;
+                color: #000 !important;
             }
             .recibo-container {
-                width: 72mm !important;
-                padding: 2mm !important;
+                width: 100% !important;
+                padding: 0 !important;
                 box-sizing: border-box;
             }
             .btn-container {
@@ -177,7 +182,7 @@
                 const data = await response.json();
                 console.log(data.configuracion);
                 if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('logo').src = `http://192.168.101.76:8000${data.configuracion.logo}`;
+                    document.getElementById('logo').src = `http://192.168.101.76:8080${data.configuracion.logo}`;
                     document.getElementById('leyenda').textContent = data.configuracion.leyenda;
                 }
             } catch (error) {
@@ -223,6 +228,25 @@
                 const fechaFormateada = fechaActual.toISOString().split("T")[0];
                 const horaFormateada = fechaActual.toLocaleTimeString();
                 document.getElementById("fechaRegistro").textContent = `${fechaFormateada} ${horaFormateada}`;
+
+                // Manejar acciones automáticas desde parámetros de URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const action = urlParams.get('action');
+
+                if (action) {
+                    // Ocultar botones si hay una acción automática
+                    document.querySelector('.btn-container').style.display = 'none';
+
+                    if (action === 'print') {
+                        setTimeout(() => {
+                            window.print();
+                        }, 500);
+                    } else if (action === 'download') {
+                        setTimeout(async () => {
+                            await downloadPOSPDF();
+                        }, 500);
+                    }
+                }
             } else {
                 alert("No hay datos del recibo almacenados.");
             }

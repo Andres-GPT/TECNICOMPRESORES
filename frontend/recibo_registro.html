@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recibo</title>
+    <script src="js/config.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -148,6 +149,20 @@
             background-color: #e0a800;
         }
 
+        .btn-pos-download {
+            background-color: #17a2b8;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-pos-download:hover {
+            background-color: #138496;
+        }
+
         @media print {
             .btn-container {
                 display: none !important;
@@ -220,11 +235,12 @@
     </div>
 
     <div class="btn-container">
-        <button class="btn-print" onclick="window.print()">Imprimir</button>
+        <button class="btn-print" onclick="printPOS()">Imprimir</button>
         <button class="btn-download" onclick="downloadPDF()">Descargar como PDF</button>
-        <button class="btn-pos" onclick="goToPOS()">Formato POS</button>
+        <button class="btn-pos-download" onclick="downloadPOS()">Descargar formato POS</button>
         <button class="btn-back" onclick="goBack()">Atrás</button>
     </div>
+    <iframe id="print-iframe" style="display:none;"></iframe>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
@@ -287,8 +303,12 @@
             pdf.save(`recibo-CC${reciboDatos.cedula}-F${fechaFormateada}.pdf`);
         }
 
-        function goToPOS() {
-            window.open("recibo-registro-pos.html", "_blank");
+        function printPOS() {
+            document.getElementById("print-iframe").src = "recibo-registro-pos.html?action=print";
+        }
+
+        function downloadPOS() {
+            document.getElementById("print-iframe").src = "recibo-registro-pos.html?action=download";
         }
 
         function goBack() {

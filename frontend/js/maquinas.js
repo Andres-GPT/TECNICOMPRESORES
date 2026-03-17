@@ -14,16 +14,13 @@ async function mostrarUsuarios() {
         console.error("Error obteniendo las máquinas:", data.mensaje);
         return;
       }
-
-      // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
-
         descripcion: maquina.descripcion,
         estado: maquina.estado,
-        fecha: maquina.fecha,
+        fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos

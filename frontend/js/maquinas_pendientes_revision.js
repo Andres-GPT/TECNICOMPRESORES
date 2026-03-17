@@ -15,18 +15,16 @@ async function mostrarUsuarios() {
         return;
       }
 
-      // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
-
         telefono: maquina.telefono,
         correo: maquina.correo,
         direccion: maquina.direccion,
         descripcion: maquina.descripcion,
         observaciones: maquina.observaciones,
-        fecha: maquina.fecha,
+        fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
       }));
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos

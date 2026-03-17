@@ -58,10 +58,9 @@ async function mostrarUsuarios() {
       id: maquina.id,
       cedula: maquina.cedula,
       nombre: maquina.nombre,
-
       descripcion: maquina.descripcion,
       procedimiento: maquina.procedimiento,
-      fecha: maquina.fecha,
+      fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
       garantia: maquina.garantia || "no", // Asegúrate de que garantía tenga un valor por defecto
     }));
 

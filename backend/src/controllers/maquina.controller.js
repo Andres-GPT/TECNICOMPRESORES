@@ -250,7 +250,7 @@ export const getMaquinasProceso = async (req, res) => {
       include: {
         model: Cliente,
         as: "cliente_maquina",
-        attributes: ["nombre"],
+        attributes: ["nombre", "telefono"],
       },
     });
 
@@ -277,6 +277,7 @@ export const getMaquinasProceso = async (req, res) => {
           id: maquina.id,
           cedula: maquina.id_cliente,
           nombre: maquina.cliente_maquina?.nombre || "N/A",
+          telefono: maquina.cliente_maquina?.telefono || "N/A",
 
           descripcion: maquina.descripcion,
           estado: maquina.estado,
@@ -297,6 +298,12 @@ export const getMaquinasProceso = async (req, res) => {
           id_procedimiento: procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
           )?.id || "N/A",
+          costo_revision: procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.costo_revision || 0,
+          costo_procedimiento: procedimientos.find(
+            (procedimiento) => procedimiento.id_maquina === maquina.id
+          )?.costo_procedimiento || 0,
           estante: maquina.estante,
           nivel: maquina.nivel,
           nota: notaEncontrada && notaEncontrada.nota.length > 0

@@ -57,4 +57,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Estilos para la tabla de máquinas */
+.table-custom th:nth-child(10),
+.table-custom td:nth-child(10) {
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
 }

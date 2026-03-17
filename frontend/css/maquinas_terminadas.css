@@ -52,3 +52,11 @@
 .devolver {
   width: 20%;
 }
+
+/* Estilos para la tabla de máquinas */
+.table-custom th:nth-child(5),
+.table-custom td:nth-child(5) {
+  white-space: nowrap;
+  min-width: 110px;
+  text-align: center;
+}

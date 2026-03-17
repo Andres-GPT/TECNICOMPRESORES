@@ -17,15 +17,13 @@ async function mostrarUsuarios() {
 
       console.log(data.maquinas);
 
-      // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
-
         descripcion: maquina.descripcion,
         procedimiento: maquina.procedimiento,
-        fecha: maquina.fecha,
+        fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
       }));
 
       console.log(maquinasData);

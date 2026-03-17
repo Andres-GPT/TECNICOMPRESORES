@@ -51,3 +51,11 @@
 .modal-header {
   position: relative;
 }
+
+/* Estilos para la tabla de máquinas */
+.table-custom th:nth-child(6),
+.table-custom td:nth-child(6) {
+  white-space: nowrap;
+  min-width: 110px;
+  text-align: center;
+}

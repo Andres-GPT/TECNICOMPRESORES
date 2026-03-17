@@ -16,16 +16,15 @@ async function mostrarUsuarios() {
         return;
       }
 
-      // Guardamos los datos en la variable global
       maquinasData = data.maquinas.map((maquina) => ({
         id: maquina.id,
         id_procedimiento: maquina.id_procedimiento,
         cedula: maquina.cedula,
         nombre: maquina.nombre,
-
         descripcion: maquina.descripcion,
         procedimiento: maquina.procedimiento,
-        fecha: maquina.fecha,
+        fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
+        fechaRaw: maquina.fecha, // Para ordenar correctamente
         estado_cliente: maquina.estado_cliente,
       }));
 
@@ -46,8 +45,8 @@ function renderizarTabla(data) {
 
   // Ordenar los datos por fecha (de más reciente a más antigua)
   const datosOrdenados = data.sort((a, b) => {
-    const fechaA = new Date(a.fecha);
-    const fechaB = new Date(b.fecha);
+    const fechaA = new Date(a.fechaRaw);
+    const fechaB = new Date(b.fechaRaw);
     return fechaB - fechaA; // Orden descendente (más reciente primero)
   });
 

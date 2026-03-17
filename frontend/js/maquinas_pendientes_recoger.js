@@ -16,19 +16,22 @@ async function mostrarUsuarios() {
         return;
       }
 
-      // Guardamos los datos en la variable global
-      maquinasData = data.maquinas.map((maquina) => ({
-        id: maquina.id,
-        cedula: maquina.cedula,
-        nombre: maquina.nombre,
-
-        descripcion: maquina.descripcion,
-        procedimiento: maquina.procedimiento,
-        fecha: maquina.fecha,
-        estante: maquina.estante,
-        nivel: maquina.nivel,
-        notas: maquina.nota.nota,
-      }));
+      maquinasData = data.maquinas.map((maquina) => {
+        return {
+          id: maquina.id,
+          cedula: maquina.cedula,
+          nombre: maquina.nombre,
+          telefono: maquina.telefono,
+          descripcion: maquina.descripcion,
+          procedimiento: maquina.procedimiento,
+          costo_revision: maquina.costo_revision,
+          costo_procedimiento: maquina.costo_procedimiento,
+          fecha: maquina.fecha ? formatDate(maquina.fecha) : "Fecha no disponible",
+          estante: maquina.estante,
+          nivel: maquina.nivel,
+          notas: maquina.nota.nota,
+        };
+      });
 
       renderizarTabla(maquinasData); // Llenamos la tabla con todos los datos
     } catch (error) {
@@ -63,7 +66,7 @@ function renderizarTabla(data) {
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
-
+          <td>${maquina.telefono || "N/A"}</td>
           <td>${descripcionTruncada}</td>
           <td>${procedimientoTruncado}</td>
           <td class="estante">
@@ -72,6 +75,8 @@ function renderizarTabla(data) {
           <td class="nivel">
             <input type="number" class="nivel-input" data-id="${maquina.id}" value="${maquina.nivel}">
           </td>
+          <td>${new Intl.NumberFormat("es-ES").format(Number(maquina.costo_revision || 0))}</td>
+          <td>${new Intl.NumberFormat("es-ES").format(Number(maquina.costo_procedimiento || 0))}</td>
           <td>${maquina.fecha}</td>
           <td>${maquina.notas}</td>
       </tr>
