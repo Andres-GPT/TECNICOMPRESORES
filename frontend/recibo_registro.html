@@ -237,7 +237,6 @@
     <div class="btn-container">
         <button class="btn-print" onclick="printPOS()">Imprimir</button>
         <button class="btn-download" onclick="downloadPDF()">Descargar como PDF</button>
-        <button class="btn-pos-download" onclick="downloadPOS()">Descargar formato POS</button>
         <button class="btn-back" onclick="goBack()">Atrás</button>
     </div>
     <iframe id="print-iframe" style="display:none;"></iframe>
@@ -250,7 +249,7 @@
                 const data = await response.json();
                 console.log(data.configuracion);
                 if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('logo').src = `http://192.168.101.76:8080${data.configuracion.logo}`;
+                    document.getElementById('logo').src = `${link}${data.configuracion.logo}`;
                     document.getElementById('leyenda').textContent = data.configuracion.leyenda;
                 }
             } catch (error) {
@@ -276,6 +275,9 @@
                 const horaFormateada = fechaActual.toLocaleTimeString();
                 document.getElementById("fechaRegistro").textContent = `${fechaFormateada} ${horaFormateada}`;
                 document.getElementById("fechaHoraEntrada").textContent = reciboDatos.fecha;
+
+                // Cargar configuraciones (logo y leyenda)
+                fetchConfiguracion();
             } else {
                 alert("No hay datos del recibo almacenados.");
             }
@@ -296,7 +298,11 @@
 
             const receipt = document.getElementById("recibo");
 
-            const canvas = await html2canvas(receipt, { scale: 2 });
+            const canvas = await html2canvas(receipt, { 
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            });
             const imgData = canvas.toDataURL("image/png");
 
             pdf.addImage(imgData, "PNG", 10, 10, 780, 900);

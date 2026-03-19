@@ -182,7 +182,6 @@
                 const data = await response.json();
                 console.log(data.configuracion);
                 if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('logo').src = `http://192.168.101.76:8080${data.configuracion.logo}`;
                     document.getElementById('leyenda').textContent = data.configuracion.leyenda;
                 }
             } catch (error) {
@@ -229,6 +228,9 @@
                 const horaFormateada = fechaActual.toLocaleTimeString();
                 document.getElementById("fechaRegistro").textContent = `${fechaFormateada} ${horaFormateada}`;
 
+                // Cargar configuraciones (leyenda)
+                fetchConfiguracion();
+
                 // Manejar acciones automáticas desde parámetros de URL
                 const urlParams = new URLSearchParams(window.location.search);
                 const action = urlParams.get('action');
@@ -267,7 +269,11 @@
 
             const receipt = document.getElementById("recibo-pos");
 
-            const canvas = await html2canvas(receipt, { scale: 2 });
+            const canvas = await html2canvas(receipt, { 
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            });
             const imgData = canvas.toDataURL("image/png");
 
             pdf.addImage(imgData, "PNG", 5, 5, 70, 0); // Ajusta la posición y tamaño

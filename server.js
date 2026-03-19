@@ -10,10 +10,11 @@ const server = http.createServer((req, res) => {
   let filePath;
 
   // Verifica si la solicitud es para una imagen en /uploads/
-  if (req.url.startsWith('/uploads/')) {
-    filePath = path.join(uploadsDirectory, req.url.replace('/uploads/', ''));
+  const urlPath = req.url.split('?')[0];
+  if (urlPath.startsWith('/uploads/')) {
+    filePath = path.join(uploadsDirectory, urlPath.replace('/uploads/', ''));
   } else {
-    filePath = path.join(baseDirectory, req.url === '/' ? 'index.html' : req.url);
+    filePath = path.join(baseDirectory, urlPath === '/' ? 'index.html' : urlPath);
   }
 
   const extname = path.extname(filePath).toLowerCase();
