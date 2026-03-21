@@ -66,7 +66,7 @@ function renderizarTabla(data) {
       <tr data-id="${maquina.id}" data-cedula="${maquina.cedula}">
           <td>${maquina.cedula}</td>
           <td>${maquina.nombre}</td>
-          <td>${maquina.telefono || "N/A"}</td>
+          <td>${maquina.telefono || ""}</td>
           <td>${descripcionTruncada}</td>
           <td>${procedimientoTruncado}</td>
           <td class="estante">

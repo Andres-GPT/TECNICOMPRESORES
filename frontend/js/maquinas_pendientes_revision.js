@@ -64,7 +64,7 @@ function renderizarTabla(data) {
           <td>${observacionesTruncada}</td>
           <td>${maquina.fecha}</td>
           <td>
-            <button onclick="generarRecibo('${maquina.id}', '${maquina.cedula}', '${maquina.nombre}', null, '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
+            <button onclick="generarRecibo('${maquina.id}', '${maquina.cedula}', '${maquina.nombre}', '${maquina.telefono}', '${maquina.correo}', '${maquina.direccion}', '${maquina.descripcion}', '${maquina.observaciones}', '${maquina.fecha}')" type="button" class="generar-recibo-btn">Generar Recibo</button>
           </td>
       </tr>
     `;

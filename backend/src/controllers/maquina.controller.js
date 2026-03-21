@@ -79,11 +79,10 @@ export const getMaquinasEstado = async (req, res) => {
       maquinas: maquinasRevision.map((maquina) => ({
         id: maquina.id,
         cedula: maquina.id_cliente,
-        nombre: maquina.cliente_maquina?.nombre || "N/A",
-
-        telefono: maquina.cliente_maquina?.telefono || "N/A",
-        correo: maquina.cliente_maquina?.correo || "N/A",
-        direccion: maquina.cliente_maquina?.direccion || "N/A",
+        nombre: maquina.cliente_maquina?.nombre || "",
+        telefono: maquina.cliente_maquina?.telefono || "",
+        correo: maquina.cliente_maquina?.correo || "",
+        direccion: maquina.cliente_maquina?.direccion || "",
         descripcion: maquina.descripcion,
         estado: maquina.estado,
         observaciones: maquina.observacion,
@@ -276,8 +275,8 @@ export const getMaquinasProceso = async (req, res) => {
         return {
           id: maquina.id,
           cedula: maquina.id_cliente,
-          nombre: maquina.cliente_maquina?.nombre || "N/A",
-          telefono: maquina.cliente_maquina?.telefono || "N/A",
+          nombre: maquina.cliente_maquina?.nombre || "",
+          telefono: maquina.cliente_maquina?.telefono || "",
 
           descripcion: maquina.descripcion,
           estado: maquina.estado,
@@ -288,16 +287,16 @@ export const getMaquinasProceso = async (req, res) => {
           procedimiento:
             procedimientos.find(
               (procedimiento) => procedimiento.id_maquina === maquina.id
-            )?.descripcion || "N/A",
+            )?.descripcion || "",
           garantia: procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
-          )?.garantia || "N/A",
+          )?.garantia || "",
           estado_cliente: procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
-          )?.estado_cliente || "N/A",
+          )?.estado_cliente || "",
           id_procedimiento: procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
-          )?.id || "N/A",
+          )?.id || "",
           costo_revision: procedimientos.find(
             (procedimiento) => procedimiento.id_maquina === maquina.id
           )?.costo_revision || 0,
