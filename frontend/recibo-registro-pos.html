@@ -113,6 +113,7 @@
 <body>
     <div class="recibo-container" id="recibo-pos">
         <div class="header">
+            <img id="logo-pos" src="" alt="Logo" style="max-width: 30mm; margin: 0 auto 5px auto; display: none;">
             <h1>TECNICOMPRESORES DEL NORTE S.A.S.</h1>
             <p>Avenida 4 #3-28 Barrio Latino, Cúcuta, Norte de Santander</p>
             <p>NIT: 901418845-0</p>
@@ -161,8 +162,15 @@
                 const response = await fetch(`${link}/configuraciones/1`);
                 const data = await response.json();
                 console.log(data.configuracion);
-                if (data && data.configuracion.logo && data.configuracion.leyenda) {
-                    document.getElementById('leyenda').textContent = data.configuracion.leyenda;
+                if (data && data.configuracion) {
+                    if (data.configuracion.logo) {
+                        const logoImg = document.getElementById('logo-pos');
+                        logoImg.src = `${link}${data.configuracion.logo}`;
+                        logoImg.style.display = 'block';
+                    }
+                    if (data.configuracion.leyenda) {
+                        document.getElementById('leyenda').textContent = data.configuracion.leyenda;
+                    }
                 }
             } catch (error) {
                 console.error('Error al cargar la configuración:', error);

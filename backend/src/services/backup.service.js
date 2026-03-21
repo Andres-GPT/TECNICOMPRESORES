@@ -5,10 +5,11 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Cargar variables de entorno desde el archivo .env relativo a este archivo
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 // Configuración desde variables de entorno
 const DB_USER = process.env.DB_USER || "root";
@@ -17,7 +18,7 @@ const DB_NAME = process.env.DB_NAME || "tecnicompresores";
 const BACKUP_DIR = path.resolve(__dirname, process.env.BACKUP_DIR || "../../../backups");
 const MYSQLDUMP_PATH =
   process.env.MYSQLDUMP_PATH ||
-  path.join("C:", "Program Files", "MySQL", "MySQL Server 9.2", "bin", "mysqldump.exe");
+  path.join("C:", "Program Files", "MySQL", "MySQL Server 8.0", "bin", "mysqldump.exe");
 const BACKUP_ENABLED = process.env.BACKUP_ENABLED === "true";
 const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || "30 17 * * *"; // 5:30 PM diario
 
